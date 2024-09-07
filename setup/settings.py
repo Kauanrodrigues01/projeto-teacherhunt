@@ -47,14 +47,20 @@ THIRD_PARTY_APPS = [
     'rest_framework_simplejwt',
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [
     "core.apps.CoreConfig",
     "teachers.apps.TeachersConfig",
     "students.apps.StudentsConfig",
-    "accounts.apps.AccountsConfig"
+    "accounts.apps.AccountsConfig",
 ]
+
+# Swagger
+LANGUAGE_CODE = 'pt-br'
+USE_I18N = True
+USE_L10N = True
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
