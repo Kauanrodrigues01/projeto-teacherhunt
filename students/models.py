@@ -1,27 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
 from django.utils import timezone
-from .managers import StudentManager
 
-# Create your models here.
-class Student(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True, max_length=255)
-    age = models.PositiveIntegerField(null=True)
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+# class Classroom(models.Model):
+#     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms') # Usando um related_name para evitar conflitos, podera acessar as classes de um aluno com student.classrooms
+#     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms') # acessa usando: teacher.classrooms
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name"]
-
-    objects = StudentManager()
-
-    def __str__(self):
-        return self.email
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        return super().save(*args, **kwargs)
+#     def __str__(self):
+#         return f'Aula entre {self.student.name} e {self.teacher.name}'

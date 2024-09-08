@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
-from .models import Teacher, Subject
 from .serializers import TeacherSerializer, TeacherProfileImageSerializer, SubjectSerializer
 from .permissions import TeacherListPermission
 from rest_framework import viewsets
+from accounts.models import Teacher, Subject
 
 class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)

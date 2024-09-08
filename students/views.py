@@ -1,26 +1,43 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
-from teachers.models import Teacher
 from .serializers import StudentSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 
 class StudentList(APIView):
-    def post(self, request, teacher_pk):
-        teacher = get_object_or_404(Teacher, pk=teacher_pk)
+    def post(self, request):
         serializer = StudentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(teacher=teacher)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-class TeacherStudentList(APIView):
-    permission_classes = (IsAuthenticated,)
+# class StudentCreateClassRoom(APIView):
+#     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        '''
-        request.user.students.all() é possível porque o model Student tem um campo ForeignKey para o model User, que tem o related_name='students', então apartir de teacher.students.all() é possível acessar todos os alunos de um professor.
-        '''
-        students = request.user.students.all()
-        serializer = StudentSerializer(students, many=True)
-        return Response(serializer.data)
+#     def post(self, request, teacher_pk):
+#         if not isinstance(request.user, Student):
+#             raise PermissionDenied("Você precisa ser um aluno para agendar uma aula.")
+        
+#         request.data['teacher'] = teacher_pk
+#         request.data['student'] = request.user.id
+        
+#         teacher = get_object_or_404(Teacher, pk=teacher_pk)
+        
+#         serializer = ClassroomSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save(teacher=teacher, student=request.user.student)
+        
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+# class TeacherStudentList(APIView):
+#     permission_classes = (IsAuthenticated,)
+
+#     def get(self, request):
+#         if not isinstance(request.user, Teacher):
+#             raise PermissionDenied("Você precisa ser um professor para acessar esta lista.")
+        
+#         students = request.user.classrooms.all()
+#         serializer = ClassroomSerializer(students, many=True)
+#         return Response(serializer.data)

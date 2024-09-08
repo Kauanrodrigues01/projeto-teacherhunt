@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import Teacher, Subject
 from django.contrib.auth.hashers import make_password
 from decimal import Decimal
+from accounts.serializers import UserSerializer
+from accounts.models import Teacher, Subject
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,70 +24,41 @@ class SubjectSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
         
-
 class TeacherSerializer(serializers.ModelSerializer):
-    nome = serializers.CharField(
-        source='name', required=True, min_length=3, max_length=100
-    )
-    email = serializers.EmailField(
-        required=True, max_length=255
-    )
-    idade = serializers.IntegerField(
-        source='age', required=True, min_value=18, max_value=100
-    )
-    descricao = serializers.CharField(
-        source='description', required=True, min_length=10, max_length=500
-    )
-    valor_hora = serializers.DecimalField(
-        source='hourly_price', required=True, min_value=Decimal(10.0), max_value=Decimal(500.0), max_digits=5, decimal_places=2
-    )
-    password_confirmation = serializers.CharField(
-        write_only=True, required=True, min_length=6, max_length=128
-    )
-    foto_perfil = serializers.ImageField(read_only=True, source="profile_image")
-    subjects_objects = SubjectSerializer(
-        many=True,
-        read_only=True,
-        source="subjects"
-    )
+    user = UserSerializer()  # Aninha o UserSerializer para criar o usuário junto
+    descricao = serializers.CharField(source='description', required=True, write_only=True)
+    valor_hora = serializers.DecimalField(max_digits=5, decimal_places=2, source='hourly_price', required=True, write_only=True)
+    foto = serializers.ImageField(source='profile_image', required=False, write_only=True)
     
     class Meta:
         model = Teacher
-        fields = (
-            "id", "nome", "email", "idade", "descricao",
-            "valor_hora", "foto_perfil", "created_at", "updated_at",
-            "password", "password_confirmation", "subjects", "subjects_objects"
-        )
-        extra_kwargs = {
-            "password": {"write_only": True},
-            "created_at": {"read_only": True},
-            "updated_at": {"read_only": True},
-            "subjects": {"write_only": True}
-        }
-        
-    def validate_password_confirmation(self, value):
-        if self.initial_data.get('password') != value:
-            raise serializers.ValidationError("As senhas não conferem")
-        return value
-    
-    def validate_email(self, value):
-        if Teacher.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Já existe um usuário com este e-mail")
-        return value
-    
+        fields = ['id', 'user', 'descricao', 'valor_hora', 'foto', 'subjects']
+
     def create(self, validated_data):
-        del validated_data['password_confirmation']
-        validated_data['password'] = make_password(validated_data['password'])
-        teacher = super().create(validated_data)
+        user_data = validated_data.pop('user')
+        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
+        teacher = Teacher.objects.create(user=user, **validated_data)
+        teacher.subjects.set(self.initial_data.get('subjects'))
         return teacher
-        
+
     def update(self, instance, validated_data):
-        del validated_data['password_confirmation']
-        if 'password' in validated_data:
-            validated_data['password'] = make_password(validated_data['password'])
-        teacher = super().update(instance, validated_data)
-        return teacher
-    
+        subjects = validated_data.pop('subjects', None)
+        instance.description = validated_data.get('description', instance.description)
+        instance.hourly_price = validated_data.get('hourly_price', instance.hourly_price)
+        instance.profile_image = validated_data.get('profile_image', instance.profile_image)
+
+        if subjects:
+            instance.subjects.set(subjects)
+
+        instance.save()
+
+        user_data = validated_data.get('user', None)
+        if user_data:
+            user_serializer = UserSerializer(instance.user, data=user_data, partial=True)
+            if user_serializer.is_valid(raise_exception=True):
+                user_serializer.save()
+
+        return instance
 
 class TeacherProfileImageSerializer(serializers.ModelSerializer):
     foto = serializers.ImageField(

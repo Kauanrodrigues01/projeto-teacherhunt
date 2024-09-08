@@ -8,10 +8,10 @@ router = SimpleRouter(trailing_slash=False)
 router.register(r'subjects', SubjectsList, basename='subjects')
 
 urlpatterns = [
-    path("teachers", TeacherList.as_view(), name="list"),
-    path("teachers/<int:pk>", TeacherDetail.as_view(), name="detail"),
+    path("professores", TeacherList.as_view(), name="list"),
+    path("professores/<int:pk>", TeacherDetail.as_view(), name="detail"),
     path('me', MeView.as_view(), name='me'),
-    path("teachers/profile-image", TeacherProfileImageView.as_view(), name="profile-image"),
-    path("teachers/<int:pk>/subjects", TeacherListForSubjects.as_view(), name="list-for-teachers"),
+    path("professores/profile-image", TeacherProfileImageView.as_view(), name="profile-image"),
+    path("professores/<int:pk>/subjects", TeacherListForSubjects.as_view(), name="list-for-professores"),
     path('', include(router.urls))
 ]
