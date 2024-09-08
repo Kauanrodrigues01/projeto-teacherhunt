@@ -1,31 +1,24 @@
 from rest_framework import serializers
 from accounts.models import Student
 from accounts.serializers import UserSerializer
+from accounts.models import Subject
 
 class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()  # Aninha o UserSerializer para criar o usuário junto
+    user = UserSerializer()
+    subjects = serializers.PrimaryKeyRelatedField(queryset=Subject.objects.all(), many=True, required=False)
 
     class Meta:
         model = Student
-        fields = ['id', 'user', 'age']
+        fields = ['user', 'subjects']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
+        user_data['is_student'] = True
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-        student = Student.objects.create(user=user, **validated_data)
+        student = Student.objects.create(user=user)
+        if 'subjects' in validated_data:
+            student.subjects.set(validated_data['subjects'])
         return student
-
-    def update(self, instance, validated_data):
-        instance.age = validated_data.get('age', instance.age)
-        instance.save()
-
-        user_data = validated_data.get('user', None)
-        if user_data:
-            user_serializer = UserSerializer(instance.user, data=user_data, partial=True)
-            if user_serializer.is_valid(raise_exception=True):
-                user_serializer.save()
-
-        return instance
 
 # class ClassroomSerializer(serializers.ModelSerializer):
 #     student_name = serializers.CharField(source='student.name', read_only=True)

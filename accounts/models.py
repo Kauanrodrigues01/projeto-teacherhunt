@@ -1,84 +1,49 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser
 from .managers import UserManager
+from django.utils.timezone import now
 
-class User(AbstractBaseUser, PermissionsMixin):
-    """
-    Modelo base para os usuários, tanto professores quanto estudantes. 
-    Atributos como email e nome são compartilhados por ambos.
-    """
-    email = models.EmailField(unique=True, max_length=255)
-    name = models.CharField(max_length=100)  # Nome comum a todos os usuários
+class User(AbstractBaseUser):
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=255)
+    is_teacher = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
-    groups = models.ManyToManyField(
-        Group,
-        related_name="user_groups",  # Nome único para evitar conflito com grupos específicos
-        blank=True
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="user_permissions",  # Nome único para evitar conflito com permissões específicas
-        blank=True
-    )
-
-    objects = UserManager()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
+    objects = UserManager()
+
     def __str__(self):
         return self.email
 
-    def is_teacher(self):
-        return hasattr(self, 'teacher_profile')
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
+    age = models.PositiveIntegerField()
+    description = models.TextField()
+    hourly_price = models.DecimalField(max_digits=6, decimal_places=2)
+    profile_image = models.ImageField(upload_to='teacher_images/', blank=True, null=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
-    def is_student(self):
-        return hasattr(self, 'student_profile')
+    def __str__(self):
+        return f'Teacher: {self.user.name}'
 
 class Subject(models.Model):
-    """
-    Modelo que representa uma matéria, usada no relacionamento ManyToMany com Teacher.
-    """
-    name = models.CharField(max_length=100, null=False, blank=False)
-    code = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'{self.code} - {self.name}'
-
-    def save(self, *args, **kwargs):
-        self.full_clean()  # Valida os campos antes de salvar
-        return super().save(*args, **kwargs)
-
-class Teacher(models.Model):
-    """
-    Perfil de professor vinculado ao usuário.
-    """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
-    description = models.TextField(null=True)
-    hourly_price = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    profile_image = models.ImageField(upload_to="profile_images", null=True, blank=True)
-    subjects = models.ManyToManyField(Subject, related_name="teachers", blank=True)
-
-    def __str__(self):
-        return self.user.name  # Retorna o nome do usuário diretamente
-
-    def save(self, *args, **kwargs):
-        self.full_clean()  # Valida os campos antes de salvar
-        return super().save(*args, **kwargs)
+        return self.name
 
 class Student(models.Model):
-    """
-    Perfil de estudante vinculado ao usuário.
-    """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
-    age = models.PositiveIntegerField(null=True)
+    subjects = models.ManyToManyField(Subject)
+    create_at = models.DateTimeField(default=now)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.name  # Retorna o nome do usuário diretamente
-
-    def save(self, *args, **kwargs):
-        self.full_clean()  # Valida os campos antes de salvar
-        return super().save(*args, **kwargs)
+        return f'Student: {self.user.name}'

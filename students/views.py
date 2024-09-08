@@ -9,9 +9,10 @@ from django.shortcuts import get_object_or_404
 class StudentList(APIView):
     def post(self, request):
         serializer = StudentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # class StudentCreateClassRoom(APIView):
 #     permission_classes = (IsAuthenticated,)

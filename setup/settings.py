@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.
-    "EXCEPTION_HANDLER": "core.handlers.custom_exception_handler",
+    # "EXCEPTION_HANDLER": "core.handlers.custom_exception_handler",
 }
 
 SIMPLE_JWT = {

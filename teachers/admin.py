@@ -17,8 +17,8 @@ class TeacherAdmin(admin.ModelAdmin):
     user_name.short_description = 'Name'
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'code']
-    search_fields = ['name', 'code']
+    list_display = ['id', 'name']
+    search_fields = ['name']
 
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Subject, SubjectAdmin)
