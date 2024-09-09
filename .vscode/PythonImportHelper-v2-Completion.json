@@ -104,6 +104,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1042,6 +1058,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0006_alter_subject_name",
+        "description": "accounts.migrations.0006_alter_subject_name",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0005_user_groups_user_is_superuser_user_user_permissions\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"subject\",\n            name=\"name\",\n            field=models.CharField(max_length=255, unique=True),\n        ),",
+        "detail": "accounts.migrations.0006_alter_subject_name",
+        "documentation": {}
+    },
+    {
         "label": "AccountsConfig",
         "kind": 6,
         "importPath": "accounts.apps",
@@ -1082,7 +1107,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    subjects = models.ManyToManyField(Subject)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    subjects = models.ManyToManyField(Subject)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1118,7 +1143,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs[\"refresh\"] = attrs.pop(\"refresh_token\")\n        return super().validate(attrs)\nclass UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField()\n    is_student = serializers.BooleanField()",
+        "peekOfCode": "class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs[\"refresh\"] = attrs.pop(\"refresh_token\")\n        return super().validate(attrs)\nclass UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1127,7 +1152,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField()\n    is_student = serializers.BooleanField()\n    class Meta:\n        model = User\n        fields = ['id', 'email', 'password', 'password_confirmation', 'is_teacher', 'is_student']\n    def validate(self, data):\n        if data['password'] != data['password_confirmation']:\n            raise serializers.ValidationError(\"As senhas não coincidem.\")",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)\n    class Meta:\n        model = User\n        fields = ['id', 'email', 'password', 'password_confirmation', 'is_teacher', 'is_student']\n    def validate(self, data):\n        if data['password'] != data['password_confirmation']:\n            raise serializers.ValidationError(\"As senhas não coincidem.\")",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1703,7 +1728,7 @@
         "kind": 6,
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
-        "peekOfCode": "class SubjectSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Subject\n        fields = (\"id\", \"name\")\n    def validate(self, attrs):\n        name = attrs.get('name')\n        if not name or name.isdigit():\n            raise serializers.ValidationError({\"name\": \"O nome deve ser um texto válido e não pode ser apenas números.\"})\n        return super().validate(attrs)\nclass TeacherSerializer(serializers.ModelSerializer):",
+        "peekOfCode": "class SubjectSerializer(serializers.ModelSerializer):\n    nome = serializers.CharField(required=True, max_length=255, source='name')\n    class Meta:\n        model = Subject\n        fields = (\"id\", \"nome\")\n    def validate(self, attrs):\n        name = attrs.get('name')\n        if not name or name.isdigit():\n            raise serializers.ValidationError({\"nome\": \"O nome deve ser um texto válido e não pode ser apenas números.\"})\n        if Subject.objects.filter(name=name).exists():",
         "detail": "teachers.serializers",
         "documentation": {}
     },

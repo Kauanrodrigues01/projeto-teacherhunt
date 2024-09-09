@@ -4,15 +4,19 @@ from accounts.serializers import UserSerializer
 from collections import defaultdict
 
 class SubjectSerializer(serializers.ModelSerializer):
+    nome = serializers.CharField(required=True, max_length=255, source='name')
     class Meta:
         model = Subject
-        fields = ("id", "name")
+        fields = ("id", "nome")
         
     def validate(self, attrs):
         name = attrs.get('name')
         
         if not name or name.isdigit():
-            raise serializers.ValidationError({"name": "O nome deve ser um texto válido e não pode ser apenas números."})
+            raise serializers.ValidationError({"nome": "O nome deve ser um texto válido e não pode ser apenas números."})
+        
+        if Subject.objects.filter(name=name).exists():
+            raise serializers.ValidationError({"nome": "Já existe esta matéria"})
 
         return super().validate(attrs)
         
@@ -40,7 +44,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         hourly_price = data.get('hourly_price')
         age = data.get('age')
         name = data.get('name')
-        materias = data.get('subjects')
+        subjects = data.get('subjects')
         errors = defaultdict(list)
 
         # Verificar senhas
@@ -70,6 +74,10 @@ class TeacherSerializer(serializers.ModelSerializer):
             errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
         elif len(name) > 255:
             errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
+            
+        for subject in subjects:
+            if subject not in Subject.objects.values_list('id', flat=True):
+                errors["materia"].append(f"A materia com id {subject} não existe")
 
         if errors:
             raise serializers.ValidationError(errors)

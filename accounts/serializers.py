@@ -36,8 +36,8 @@ class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password_confirmation = serializers.CharField(write_only=True)
-    is_teacher = serializers.BooleanField()
-    is_student = serializers.BooleanField()
+    is_teacher = serializers.BooleanField(required=False)
+    is_student = serializers.BooleanField(required=False)
 
     class Meta:
         model = User
