@@ -36,10 +36,12 @@ class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password_confirmation = serializers.CharField(write_only=True)
+    is_teacher = serializers.BooleanField()
+    is_student = serializers.BooleanField()
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'password', 'password_confirmation']
+        fields = ['id', 'email', 'password', 'password_confirmation', 'is_teacher', 'is_student']
 
     def validate(self, data):
         if data['password'] != data['password_confirmation']:
