@@ -91,6 +91,38 @@ class TeacherSerializer(serializers.ModelSerializer):
             teacher.subjects.set(subjects_data)
         return teacher
     
+    
+    def update(self, instance, validated_data):
+        # Remover e atualizar campos não relacionados ao modelo Teacher
+        name = validated_data.pop('name', instance.user.name)
+        email = validated_data.pop('email', instance.user.email)
+        password = validated_data.pop('password', None)
+        description = validated_data.pop('description', instance.description)
+        hourly_price = validated_data.pop('hourly_price', instance.hourly_price)
+        age = validated_data.pop('age', instance.age)
+        profile_image = validated_data.pop('profile_image', instance.profile_image)
+        subjects_data = validated_data.pop('subjects', None)
+
+        # Atualizar os dados do usuário associado
+        instance.user.name = name
+        instance.user.email = email
+        if password:
+            instance.user.set_password(password)
+        instance.user.save()
+
+        # Atualizar os dados do professor
+        instance.description = description
+        instance.hourly_price = hourly_price
+        instance.age = age
+        instance.profile_image = profile_image
+
+        if subjects_data is not None:
+            # Atualizar os assuntos do professor
+            instance.subjects.set(subjects_data)
+
+        instance.save()
+        return instance
+    
     def to_representation(self, instance):
         """Personalizar a saída de dados."""
         # Transformar o objeto 'instance' em um dicionário
@@ -98,9 +130,21 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         # Supondo que 'user' seja uma relação no modelo 'instance'
         user = instance.user
-        data["name"] = user.name
+        age = data.pop("age")
+        description = data.pop("description")
+        hourly_price = data.pop("hourly_price")
+        profile_image = data.pop("profile_image")
+        subjects = data.pop("subjects", [])
+        subjects_obejcts = data.pop("subjects_obejcts", [])
+        
         data["email"] = user.email
-
+        data["name"] = user.name
+        data["age"] = age
+        data["description"] = description
+        data["hourly_price"] = hourly_price
+        data["profile_image"] = profile_image
+        data["subjects"] = subjects
+        data["subjects_obejcts"] = subjects_obejcts
         return data
 
 class TeacherProfileImageSerializer(serializers.ModelSerializer):
