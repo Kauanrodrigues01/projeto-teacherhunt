@@ -5,7 +5,7 @@ from .views import TeacherDetail, TeacherList, MeView, TeacherProfileImageView, 
 app_name = "teachers"
 
 router = SimpleRouter(trailing_slash=False)
-router.register(r'subjects', SubjectsList, basename='subjects')
+router.register(r'materias', SubjectsList, basename='subjects')
 
 urlpatterns = [
     path("professores", TeacherList.as_view(), name="list"),
