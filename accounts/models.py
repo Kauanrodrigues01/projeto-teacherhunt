@@ -4,7 +4,7 @@ from .managers import UserManager
 from django.utils.timezone import now
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=False, blank=False)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -43,7 +43,6 @@ class Subject(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     name = models.CharField(max_length=255, blank=False, null=False)
-    subjects = models.ManyToManyField(Subject)
     create_at = models.DateTimeField(default=now)
     update_at = models.DateTimeField(auto_now=True)
 

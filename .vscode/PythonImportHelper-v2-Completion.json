@@ -120,6 +120,14 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -428,22 +436,6 @@
     },
     {
         "label": "PermissionsMixin",
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.models",
-        "documentation": {}
-    },
-    {
-        "label": "BaseUserManager",
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
         "importPath": "django.contrib.auth.models",
         "description": "django.contrib.auth.models",
         "isExtraImport": true,
@@ -852,14 +844,6 @@
         "documentation": {}
     },
     {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
         "label": "Teacher",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -921,6 +905,47 @@
         "description": "accounts.serializers",
         "isExtraImport": true,
         "detail": "accounts.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_email_valido",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_email_valido",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
         "documentation": {}
     },
     {
@@ -964,38 +989,6 @@
         "documentation": {}
     },
     {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "BaseUserManager",
-        "importPath": "django.contrib.auth.base_user",
-        "description": "django.contrib.auth.base_user",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.base_user",
-        "documentation": {}
-    },
-    {
-        "label": "gettext_lazy",
-        "importPath": "django.utils.translation",
-        "description": "django.utils.translation",
-        "isExtraImport": true,
-        "detail": "django.utils.translation",
-        "documentation": {}
-    },
-    {
-        "label": "defaultdict",
-        "importPath": "collections",
-        "description": "collections",
-        "isExtraImport": true,
-        "detail": "collections",
-        "documentation": {}
-    },
-    {
         "label": "SimpleRouter",
         "importPath": "rest_framework.routers",
         "description": "rest_framework.routers",
@@ -1010,6 +1003,22 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "validate_email",
+        "importPath": "django.core.validators",
+        "description": "django.core.validators",
+        "isExtraImport": true,
+        "detail": "django.core.validators",
         "documentation": {}
     },
     {
@@ -1067,6 +1076,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0007_remove_student_subjects",
+        "description": "accounts.migrations.0007_remove_student_subjects",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0006_alter_subject_name\"),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name=\"student\",\n            name=\"subjects\",\n        ),\n    ]",
+        "detail": "accounts.migrations.0007_remove_student_subjects",
+        "documentation": {}
+    },
+    {
         "label": "AccountsConfig",
         "kind": 6,
         "importPath": "accounts.apps",
@@ -1089,7 +1107,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class User(AbstractBaseUser, PermissionsMixin):\n    email = models.EmailField(unique=True)\n    is_teacher = models.BooleanField(default=False)\n    is_student = models.BooleanField(default=False)\n    is_active = models.BooleanField(default=True)\n    is_staff = models.BooleanField(default=False)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = []  # Campos obrigatórios para o comando createsuperuser",
+        "peekOfCode": "class User(AbstractBaseUser, PermissionsMixin):\n    email = models.EmailField(unique=True, null=False, blank=False)\n    is_teacher = models.BooleanField(default=False)\n    is_student = models.BooleanField(default=False)\n    is_active = models.BooleanField(default=True)\n    is_staff = models.BooleanField(default=False)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = []  # Campos obrigatórios para o comando createsuperuser",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1107,7 +1125,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    subjects = models.ManyToManyField(Subject)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1116,7 +1134,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    subjects = models.ManyToManyField(Subject)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
+        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1553,20 +1571,11 @@
         "documentation": {}
     },
     {
-        "label": "StudentManager",
-        "kind": 6,
-        "importPath": "students.managers",
-        "description": "students.managers",
-        "peekOfCode": "class StudentManager(BaseUserManager):\n    def create_user(self, email, name, password=None, **extra_fields):\n        \"\"\"\n        Cria e retorna um usuário do tipo Student com um email e senha fornecidos.\n        \"\"\"\n        if not email:\n            raise ValueError('O email deve ser fornecido')\n        email = self.normalize_email(email)\n        user = self.model(email=email, name=name, **extra_fields)\n        user.set_password(password)",
-        "detail": "students.managers",
-        "documentation": {}
-    },
-    {
         "label": "StudentSerializer",
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    user = UserSerializer()\n    subjects = serializers.PrimaryKeyRelatedField(queryset=Subject.objects.all(), many=True, required=False)\n    class Meta:\n        model = Student\n        fields = ['user', 'subjects']\n    def create(self, validated_data):\n        user_data = validated_data.pop('user')\n        user_data['is_student'] = True\n        user = UserSerializer.create(UserSerializer(), validated_data=user_data)",
+        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email']\n    def validate(self, data):\n        email = data.get('user', {}).get('email', None)",
         "detail": "students.serializers",
         "documentation": {}
     },
@@ -1706,15 +1715,6 @@
         "documentation": {}
     },
     {
-        "label": "TeacherManager",
-        "kind": 6,
-        "importPath": "teachers.managers",
-        "description": "teachers.managers",
-        "peekOfCode": "class TeacherManager(BaseUserManager):\n    def create_user(self, email, password, **extra_fields):\n        if not email:\n            raise ValueError(_('The Email field must be set'))\n        email = self.normalize_email(email)\n        user = self.model(email=email, **extra_fields)\n        user.set_password(password)\n        user.save()\n        return user\n    def create_superuser(self, email, password, **extra_fields):",
-        "detail": "teachers.managers",
-        "documentation": {}
-    },
-    {
         "label": "TeacherListPermission",
         "kind": 6,
         "importPath": "teachers.permissions",
@@ -1838,6 +1838,15 @@
         "description": "manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"setup.settings\")\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
         "detail": "manage",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_email_valido",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def verificar_email_valido(email):\n    try:\n        validate_email(email)\n        return True\n    except ValidationError:\n        return False",
+        "detail": "utils",
         "documentation": {}
     }
 ]

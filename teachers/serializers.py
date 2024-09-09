@@ -2,6 +2,8 @@ from rest_framework import serializers
 from accounts.models import Teacher, Subject
 from accounts.serializers import UserSerializer
 from collections import defaultdict
+from utils import verificar_email_valido
+import re
 
 class SubjectSerializer(serializers.ModelSerializer):
     nome = serializers.CharField(required=True, max_length=255, source='name')
@@ -38,6 +40,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = ['id', 'nome', 'email', 'password', 'password_confirmation', 'descricao', 'idade', 'valor_hora', 'materias', 'materias_objetos', 'foto']
 
     def validate(self, data):
+        email = data.get('user', {}).get('email', None)
         password = data.get('password')
         password_confirmation = data.get('password_confirmation')
         description = data.get('description')
@@ -48,8 +51,24 @@ class TeacherSerializer(serializers.ModelSerializer):
         errors = defaultdict(list)
 
         # Verificar senhas
+        if password.strip() == '' or password is None:
+            errors["password"].append("O campo password é obrigatório")
+        if password_confirmation.strip() == '' or password_confirmation is None:
+            errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
         if password != password_confirmation:
             errors["password"].append("As senhas não coincidem.")
+        
+        # Validação de força da senha
+        if len(password) < 8:
+            errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
+        if not re.search(r'[A-Z]', password):
+            errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
+        if not re.search(r'[a-z]', password):
+            errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
+        if not re.search(r'[0-9]', password):
+            errors["password"].append("A senha deve conter pelo menos um número.")
+        if not re.search(r'[@#$%^&+=]', password):
+            errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
 
         # Validação de descrição
         if not description or description.isnumeric():
@@ -58,26 +77,31 @@ class TeacherSerializer(serializers.ModelSerializer):
         # Validação de preço por hora
         if hourly_price is None or hourly_price <= 0:
             errors["valor_hora"].append("O valor por hora deve ser maior que zero.")
-        elif hourly_price > 500:
+        if hourly_price > 500:
             errors["valor_hora"].append("O valor por hora deve ser menor ou igual a 500.")
 
         # Validação de idade
         if age is None or age <= 0:
             errors["idade"].append("A idade deve ser maior que zero.")
-        elif age > 120:
+        if age > 120:
             errors["idade"].append("A idade deve ser menor ou igual a 120.")
 
         # Validação de nome
         if not name or name.isnumeric():
             errors["nome"].append("O nome não pode ser vazio e não pode ser apenas números.")
-        elif len(name) < 3:
+        if len(name) < 3:
             errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
-        elif len(name) > 255:
+        if len(name) > 255:
             errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
-            
+        
+        if len(subjects) == 0:
+            errors["materias"].append(f"O campo materias é obrigatório")
         for subject in subjects:
             if subject not in Subject.objects.values_list('id', flat=True):
-                errors["materia"].append(f"A materia com id {subject} não existe")
+                errors["materias"].append(f"A materias com id {subject} não existe")
+                
+        if not verificar_email_valido(email):
+            errors["email"].append("Insira um email válido")
 
         if errors:
             raise serializers.ValidationError(errors)
