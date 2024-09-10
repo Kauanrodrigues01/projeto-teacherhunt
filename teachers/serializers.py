@@ -194,5 +194,5 @@ class TeacherProfileImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-        fields = ("foto",)
+        fields = ["foto"]
         

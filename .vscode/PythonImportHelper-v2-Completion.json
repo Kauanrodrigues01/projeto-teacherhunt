@@ -128,6 +128,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1125,6 +1141,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0008_student_profile_image",
+        "description": "accounts.migrations.0008_student_profile_image",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0007_remove_student_subjects\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"student\",\n            name=\"profile_image\",\n            field=models.ImageField(blank=True, null=True, upload_to=\"students_image/\"),\n        ),",
+        "detail": "accounts.migrations.0008_student_profile_image",
+        "documentation": {}
+    },
+    {
         "label": "AccountsConfig",
         "kind": 6,
         "importPath": "accounts.apps",
@@ -1165,7 +1190,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):",
+        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1174,7 +1199,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
+        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')\n    name = models.CharField(max_length=255, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1597,7 +1622,16 @@
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email']\n    def validate(self, data):\n        email = data.get('user', {}).get('email', None)",
+        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    foto = serializers.ImageField(required=False, source=\"profile_image\")\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']\n    def validate(self, data):",
+        "detail": "students.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "StudentProfileImageSerializer",
+        "kind": 6,
+        "importPath": "students.serializers",
+        "description": "students.serializers",
+        "peekOfCode": "class StudentProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)\n    class Meta:\n        model = Student\n        fields = [\"foto\"]\n# class ClassroomSerializer(serializers.ModelSerializer):\n#     student_name = serializers.CharField(source='student.name', read_only=True)\n#     teacher_name = serializers.CharField(source='teacher.name', read_only=True)\n#     class Meta:\n#         model = Classroom",
         "detail": "students.serializers",
         "documentation": {}
     },
@@ -1606,7 +1640,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
+        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image')\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -1615,7 +1649,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image')\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -1625,6 +1659,15 @@
         "importPath": "students.views",
         "description": "students.views",
         "peekOfCode": "class StudentList(APIView):\n    permission_classes = (StudentListPermission,)\n    def post(self, request):\n        serializer = StudentSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    def put(self, request):\n        user = request.user",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "StudentProfileImageView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Aluno não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
         "detail": "students.views",
         "documentation": {}
     },
@@ -1768,7 +1811,7 @@
         "kind": 6,
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
-        "peekOfCode": "class TeacherProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(\n        required=True, write_only=True, source=\"profile_image\"\n    )\n    class Meta:\n        model = Teacher\n        fields = (\"foto\",)",
+        "peekOfCode": "class TeacherProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(\n        required=True, write_only=True, source=\"profile_image\"\n    )\n    class Meta:\n        model = Teacher\n        fields = [\"foto\"]",
         "detail": "teachers.serializers",
         "documentation": {}
     },

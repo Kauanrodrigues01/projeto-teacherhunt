@@ -43,6 +43,7 @@ class Subject(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     name = models.CharField(max_length=255, blank=False, null=False)
+    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)
     create_at = models.DateTimeField(default=now)
     update_at = models.DateTimeField(auto_now=True)
 

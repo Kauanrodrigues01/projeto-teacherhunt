@@ -11,10 +11,11 @@ class StudentSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
     nome = serializers.CharField(required=True, source='name')
-
+    foto = serializers.ImageField(required=False, source="profile_image")
+    
     class Meta:
         model = Student
-        fields = ['id', 'nome', 'password', 'password_confirmation', 'email']
+        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']
         
     def validate(self, data):
         email = data.get('user', {}).get('email', None)
@@ -79,6 +80,7 @@ class StudentSerializer(serializers.ModelSerializer):
         print(email)
         password = validated_data.pop('password', None)
         name = validated_data.pop('name', instance.name)
+        profile_image = validated_data.pop('profile_image', instance.profile_image)
         
         instance.user.email = email
         if password:
@@ -86,9 +88,18 @@ class StudentSerializer(serializers.ModelSerializer):
         instance.user.save()
         
         instance.name = name
+        instance.profile_image = profile_image
         instance.save()
         
         return instance
+    
+    
+class StudentProfileImageSerializer(serializers.ModelSerializer):
+    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)
+    
+    class Meta:
+        model = Student
+        fields = ["foto"]
 
 # class ClassroomSerializer(serializers.ModelSerializer):
 #     student_name = serializers.CharField(source='student.name', read_only=True)

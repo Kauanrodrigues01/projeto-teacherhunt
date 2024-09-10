@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, StudentProfileImageSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
@@ -30,7 +30,19 @@ class StudentList(APIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
             
-            
+class StudentProfileImageView(APIView):
+    def post(self, request):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = StudentProfileImageSerializer(student, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Foto de perfil atualizada com sucesso"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # class StudentCreateClassRoom(APIView):
 #     permission_classes = (IsAuthenticated,)
