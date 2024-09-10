@@ -3,6 +3,7 @@ from accounts.models import Teacher, Subject
 from accounts.serializers import UserSerializer
 from collections import defaultdict
 from utils import verificar_email_valido
+from accounts.models import User
 import re
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -94,13 +95,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         if len(name) > 255:
             errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
         
-        if len(subjects) == 0:
+        if len(subjects) == 0 or subjects is None:
             errors["materias"].append(f"O campo materias é obrigatório")
         for subject in subjects:
             if subject not in Subject.objects.values_list('id', flat=True):
                 errors["materias"].append(f"A materias com id {subject} não existe")
-                
-        if not verificar_email_valido(email):
+        
+        if User.objects.filter(email=email).exists():
+            errors["email"].append("O email já está em uso")
+        if not verificar_email_valido(email) and email is not None:
             errors["email"].append("Insira um email válido")
 
         if errors:

@@ -57,11 +57,6 @@ LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
 ]
 
-# Swagger
-LANGUAGE_CODE = 'pt-br'
-USE_I18N = True
-USE_L10N = True
-
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [

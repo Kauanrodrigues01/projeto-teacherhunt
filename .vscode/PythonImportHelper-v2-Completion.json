@@ -651,15 +651,23 @@
         "documentation": {}
     },
     {
-        "label": "app_name",
-        "importPath": "core.urls",
-        "description": "core.urls",
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
         "isExtraImport": true,
-        "detail": "core.urls",
+        "detail": "rest_framework.permissions",
         "documentation": {}
     },
     {
-        "label": "IsAuthenticated",
+        "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
         "importPath": "rest_framework.permissions",
         "description": "rest_framework.permissions",
         "isExtraImport": true,
@@ -676,6 +684,14 @@
     },
     {
         "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
         "importPath": "rest_framework.permissions",
         "description": "rest_framework.permissions",
         "isExtraImport": true,
@@ -844,6 +860,22 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Teacher",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -869,6 +901,14 @@
     },
     {
         "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1305,34 +1345,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "LOCAL_APPS = [\n    \"core.apps.CoreConfig\",\n    \"teachers.apps.TeachersConfig\",\n    \"students.apps.StudentsConfig\",\n    \"accounts.apps.AccountsConfig\",\n]\n# Swagger\nLANGUAGE_CODE = 'pt-br'\nUSE_I18N = True\nUSE_L10N = True",
-        "detail": "setup.settings",
-        "documentation": {}
-    },
-    {
-        "label": "LANGUAGE_CODE",
-        "kind": 5,
-        "importPath": "setup.settings",
-        "description": "setup.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'pt-br'\nUSE_I18N = True\nUSE_L10N = True\nINSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",",
-        "detail": "setup.settings",
-        "documentation": {}
-    },
-    {
-        "label": "USE_I18N",
-        "kind": 5,
-        "importPath": "setup.settings",
-        "description": "setup.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_L10N = True\nINSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",",
-        "detail": "setup.settings",
-        "documentation": {}
-    },
-    {
-        "label": "USE_L10N",
-        "kind": 5,
-        "importPath": "setup.settings",
-        "description": "setup.settings",
-        "peekOfCode": "USE_L10N = True\nINSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",",
+        "peekOfCode": "LOCAL_APPS = [\n    \"core.apps.CoreConfig\",\n    \"teachers.apps.TeachersConfig\",\n    \"students.apps.StudentsConfig\",\n    \"accounts.apps.AccountsConfig\",\n]\nINSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1571,6 +1584,15 @@
         "documentation": {}
     },
     {
+        "label": "StudentListPermission",
+        "kind": 6,
+        "importPath": "students.permissions",
+        "description": "students.permissions",
+        "peekOfCode": "class StudentListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in [\"PUT\", \"DELETE\"]:\n            return request.user.is_authenticated and request.user.is_student\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)",
+        "detail": "students.permissions",
+        "documentation": {}
+    },
+    {
         "label": "StudentSerializer",
         "kind": 6,
         "importPath": "students.serializers",
@@ -1602,7 +1624,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentList(APIView):\n    def post(self, request):\n        serializer = StudentSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n# class StudentCreateClassRoom(APIView):\n#     permission_classes = (IsAuthenticated,)\n#     def post(self, request, teacher_pk):",
+        "peekOfCode": "class StudentList(APIView):\n    permission_classes = (StudentListPermission,)\n    def post(self, request):\n        serializer = StudentSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    def put(self, request):\n        user = request.user",
         "detail": "students.views",
         "documentation": {}
     },
@@ -1719,7 +1741,7 @@
         "kind": 6,
         "importPath": "teachers.permissions",
         "description": "teachers.permissions",
-        "peekOfCode": "class TeacherListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method not in ('PUT', 'PATCH', 'DELETE'):\n            return True\n        return request.user and request.user.is_authenticated",
+        "peekOfCode": "class TeacherListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in ('PUT', 'PATCH', 'DELETE'):\n            return request.user.is_authenticated and request.user.is_teacher\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)",
         "detail": "teachers.permissions",
         "documentation": {}
     },

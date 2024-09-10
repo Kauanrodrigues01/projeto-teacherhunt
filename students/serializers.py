@@ -3,6 +3,7 @@ from accounts.models import Student
 from accounts.serializers import UserSerializer
 from collections import defaultdict
 from utils import verificar_email_valido
+from accounts.models import User
 import re
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -48,8 +49,10 @@ class StudentSerializer(serializers.ModelSerializer):
             errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
         if len(name) > 255:
             errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
-            
-        if not verificar_email_valido(email):
+        
+        if User.objects.filter(email=email).exists():
+            errors["email"].append("O email já está em uso")
+        if not verificar_email_valido(email) and email is not None:
             errors["email"].append("Insira um email válido")
         
         if errors:
@@ -73,13 +76,16 @@ class StudentSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         email = validated_data.pop('user', {}).pop('email', instance.user.email)
+        print(email)
         password = validated_data.pop('password', None)
         name = validated_data.pop('name', instance.name)
         
         instance.user.email = email
-        instance.name = name
         if password:
             instance.user.set_password(password)
+        instance.user.save()
+        
+        instance.name = name
         instance.save()
         
         return instance

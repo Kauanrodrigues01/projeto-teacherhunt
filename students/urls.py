@@ -1,5 +1,4 @@
 from django.urls import path
-from core.urls import app_name
 from .views import StudentList
 
 app_name = 'students'
