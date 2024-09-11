@@ -1060,6 +1060,14 @@
         "documentation": {}
     },
     {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
         "label": "Image",
         "importPath": "PIL",
         "description": "PIL",
@@ -1073,6 +1081,30 @@
         "description": "PIL",
         "isExtraImport": true,
         "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleUploadedFile",
+        "importPath": "django.core.files.uploadedfile",
+        "description": "django.core.files.uploadedfile",
+        "isExtraImport": true,
+        "detail": "django.core.files.uploadedfile",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleUploadedFile",
+        "importPath": "django.core.files.uploadedfile",
+        "description": "django.core.files.uploadedfile",
+        "isExtraImport": true,
+        "detail": "django.core.files.uploadedfile",
         "documentation": {}
     },
     {
@@ -1717,11 +1749,11 @@
         "documentation": {}
     },
     {
-        "label": "TeacherListTests",
+        "label": "studentListTests",
         "kind": 6,
         "importPath": "students.tests.test_student_list_view",
         "description": "students.tests.test_student_list_view",
-        "peekOfCode": "class TeacherListTests(StudentTestBase):\n    def test_post_student(self): # 4.95s\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "peekOfCode": "class studentListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
         "detail": "students.tests.test_student_list_view",
         "documentation": {}
     },

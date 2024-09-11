@@ -47,7 +47,6 @@ class TeacherTestBase(TestCase):
         return response_token.data['refresh_token']
     
     def create_test_image(self):
-        # Criando uma imagem em branco (RGB) de 100x100 pixels
         image = Image.new('RGB', (100, 100))
         img_io = BytesIO()
         image.save(img_io, format='JPEG')

@@ -43,7 +43,7 @@ class TeacherListTests(TeacherTestBase):
         
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.put(self.url, data, format='json')
-        self.teacher.refresh_from_db() # self.teacher.refresh_from_db() é uma função que atualiza o objeto self.teacher com os dados mais recentes do banco de dados, neste caso, após a requisição PUT.
+        self.teacher.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(self.teacher.name, data['nome'])
         self.assertEqual(self.teacher.description, data['descricao'])
@@ -140,6 +140,9 @@ class TeacherListTests(TeacherTestBase):
         token = self.obtain_token()
         self.teacher.profile_image = self.image
         self.teacher.save()
+        self.assertIn('media/teachers_image/test_image', self.teacher.profile_image.url)
+        self.assertIn('jpg', self.teacher.profile_image.url)
+        
         data = {
             'foto': SimpleUploadedFile('test_image_update.png', self.create_test_image().read()),
         }
