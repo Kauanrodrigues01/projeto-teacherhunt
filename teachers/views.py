@@ -19,11 +19,11 @@ class TeacherList(APIView):
         else:
             teachers = Teacher.objects.all()    
         
-        serializer = TeacherSerializer(teachers, many=True)
+        serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
     
     def post(self, request):
-        serializer = TeacherSerializer(data=request.data)
+        serializer = TeacherSerializer(data=request.data, context={'request_method': request.method})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -36,7 +36,7 @@ class TeacherList(APIView):
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = TeacherSerializer(teacher, data=request.data, partial=True)        
+        serializer = TeacherSerializer(teacher, data=request.data, partial=True, context={'request_method': request.method})        
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

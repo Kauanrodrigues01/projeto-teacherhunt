@@ -21,11 +21,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile', blank=False, null=False)
     name = models.CharField(max_length=255, blank=False, null=False)
     age = models.PositiveIntegerField(blank=False, null=False)
-    description = models.TextField()
-    hourly_price = models.DecimalField(max_digits=6, decimal_places=2)
+    description = models.TextField(blank=False, null=False)
+    hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)
     profile_image = models.ImageField(upload_to='teacher_images/', blank=True, null=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -41,7 +41,7 @@ class Subject(models.Model):
         return self.name
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)
     name = models.CharField(max_length=255, blank=False, null=False)
     profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)
     create_at = models.DateTimeField(default=now)

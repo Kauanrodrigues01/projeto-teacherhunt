@@ -50,26 +50,47 @@ class TeacherSerializer(serializers.ModelSerializer):
         name = data.get('name')
         subjects = data.get('subjects')
         errors = defaultdict(list)
-
-        # Verificar senhas
-        if password.strip() == '' or password is None:
-            errors["password"].append("O campo password é obrigatório")
-        if password_confirmation.strip() == '' or password_confirmation is None:
-            errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
-        if password != password_confirmation:
-            errors["password"].append("As senhas não coincidem.")
+        request_method = self.context.get('request_method')
         
-        # Validação de força da senha
-        if len(password) < 8:
-            errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
-        if not re.search(r'[A-Z]', password):
-            errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
-        if not re.search(r'[a-z]', password):
-            errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
-        if not re.search(r'[0-9]', password):
-            errors["password"].append("A senha deve conter pelo menos um número.")
-        if not re.search(r'[@#$%^&+=]', password):
-            errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
+        if request_method == 'PUT':
+            if self.instance:
+                if email is None:
+                    email = None
+                if not password:
+                    password = None
+                if not password_confirmation:
+                    password_confirmation = None
+                if not description:
+                    description = self.instance.description
+                if not hourly_price:
+                    hourly_price = self.instance.hourly_price
+                if not age:
+                    age = self.instance.age
+                if not name:
+                    name = self.instance.name
+                if not subjects:
+                    subjects = list(self.instance.subjects.values_list('id', flat=True))            
+        
+        # Verificar senhas
+        if password is not None:
+            if password.strip() == '':
+                errors["password"].append("O campo password é obrigatório")
+            if password_confirmation.strip() == '':
+                errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
+            if password != password_confirmation:
+                errors["password"].append("As senhas não coincidem.")
+        
+            # Validação de força da senha
+            if len(password) < 8:
+                errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
+            if not re.search(r'[A-Z]', password):
+                errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
+            if not re.search(r'[a-z]', password):
+                errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
+            if not re.search(r'[0-9]', password):
+                errors["password"].append("A senha deve conter pelo menos um número.")
+            if not re.search(r'[@#$%^&+=]', password):
+                errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
 
         # Validação de descrição
         if not description or description.isnumeric():
@@ -100,11 +121,12 @@ class TeacherSerializer(serializers.ModelSerializer):
         for subject in subjects:
             if subject not in Subject.objects.values_list('id', flat=True):
                 errors["materias"].append(f"A materias com id {subject} não existe")
-        
-        if User.objects.filter(email=email).exists():
-            errors["email"].append("O email já está em uso")
-        if not verificar_email_valido(email) and email is not None:
-            errors["email"].append("Insira um email válido")
+                
+        if email is not None:
+            if User.objects.filter(email=email).exists():
+                errors["email"].append("O email já está em uso")
+            if not verificar_email_valido(email) and email is not None:
+                errors["email"].append("Insira um email válido")
 
         if errors:
             raise serializers.ValidationError(errors)

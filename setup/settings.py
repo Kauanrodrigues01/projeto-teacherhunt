@@ -55,6 +55,7 @@ LOCAL_APPS = [
     "teachers.apps.TeachersConfig",
     "students.apps.StudentsConfig",
     "accounts.apps.AccountsConfig",
+    "classroom.apps.ClassroomConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -99,7 +100,6 @@ DATABASES = {
         "DATABASE_URL", default="sqlite:///" + str(BASE_DIR / "db.sqlite3"), cast=dburl
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
