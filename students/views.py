@@ -12,7 +12,7 @@ class StudentList(APIView):
     permission_classes = (StudentListPermission,)
     
     def post(self, request):
-        serializer = StudentSerializer(data=request.data)
+        serializer = StudentSerializer(data=request.data, context={'request_method': request.method})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -25,10 +25,19 @@ class StudentList(APIView):
         except Student.DoesNotExist:
             return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = StudentSerializer(student, data=request.data, partial=True)
+        serializer = StudentSerializer(student, data=request.data, partial=True, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
             
 class StudentProfileImageView(APIView):
     def post(self, request):

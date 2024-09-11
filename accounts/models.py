@@ -26,7 +26,7 @@ class Teacher(models.Model):
     age = models.PositiveIntegerField(blank=False, null=False)
     description = models.TextField(blank=False, null=False)
     hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)
-    profile_image = models.ImageField(upload_to='teacher_images/', blank=True, null=True)
+    profile_image = models.ImageField(upload_to='teachers_image/', blank=True, null=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     subjects = models.ManyToManyField('Subject', related_name='teachers')

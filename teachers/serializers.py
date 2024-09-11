@@ -72,6 +72,9 @@ class TeacherSerializer(serializers.ModelSerializer):
                     subjects = list(self.instance.subjects.values_list('id', flat=True))            
         
         # Verificar senhas
+        if (password is None or password_confirmation is None) and request_method == 'POST':
+            errors["password"].append("O campo password é obrigatório")
+            errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
         if password is not None:
             if password.strip() == '':
                 errors["password"].append("O campo password é obrigatório")
@@ -93,35 +96,56 @@ class TeacherSerializer(serializers.ModelSerializer):
                 errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
 
         # Validação de descrição
-        if not description or description.isnumeric():
-            errors["descricao"].append("A descrição não pode ser vazia e não pode ser apenas números.")
-
-        # Validação de preço por hora
-        if hourly_price is None or hourly_price <= 0:
-            errors["valor_hora"].append("O valor por hora deve ser maior que zero.")
-        if hourly_price > 500:
-            errors["valor_hora"].append("O valor por hora deve ser menor ou igual a 500.")
+        if description is None and request_method == 'POST':
+            errors["descricao"].append("A descrição é obrigatória.")
+        
+        if request_method == 'POST':
+            if not description or description.isnumeric():
+                errors["descricao"].append("A descrição não pode ser vazia e não pode ser apenas números.")
+        
+        # validação de valor por hora
+        if hourly_price is None and request_method == 'POST':
+            errors["valor_hora"].append("O valor por hora é obrigatório.")
+        if hourly_price is not None:
+            if hourly_price <= 0:
+                errors["valor_hora"].append("O valor por hora deve ser maior que zero.")
+            if hourly_price > 500:
+                errors["valor_hora"].append("O valor por hora deve ser menor ou igual a 500.")
 
         # Validação de idade
-        if age is None or age <= 0:
-            errors["idade"].append("A idade deve ser maior que zero.")
-        if age > 120:
-            errors["idade"].append("A idade deve ser menor ou igual a 120.")
+        if age is None and request_method == 'POST':
+            errors["idade"].append("A idade é obrigatória.")
+        if age is not None:
+            if age <= 0:
+                errors["idade"].append("A idade deve ser maior que zero.")
+            if age > 120:
+                errors["idade"].append("A idade deve ser menor ou igual a 120.")
+        
 
         # Validação de nome
-        if not name or name.isnumeric():
-            errors["nome"].append("O nome não pode ser vazio e não pode ser apenas números.")
-        if len(name) < 3:
-            errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
-        if len(name) > 255:
-            errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
+        if name is None and request_method == 'POST':
+            errors["nome"].append("O nome é obrigatório.")
+        if name is not None:
+            if name.isnumeric():
+                errors["nome"].append("O nome não pode ser apenas números.")
+            if len(name) < 3:
+                errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
+            if len(name) > 255:
+                errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
         
-        if len(subjects) == 0 or subjects is None:
+        if subjects is None and request_method == 'POST':
             errors["materias"].append(f"O campo materias é obrigatório")
-        for subject in subjects:
-            if subject not in Subject.objects.values_list('id', flat=True):
-                errors["materias"].append(f"A materias com id {subject} não existe")
-                
+        if subjects is not None:
+            if not isinstance(subjects, list):
+                errors["materias"].append(f"O campo materias deve ser uma lista")
+            if len(subjects) == 0 or subjects is None:
+                errors["materias"].append(f"O campo materias é obrigatório")
+            for subject in subjects:
+                if subject not in Subject.objects.values_list('id', flat=True):
+                    errors["materias"].append(f"A materias com id {subject} não existe")
+        
+        if email is None and request_method == 'POST':
+            errors["email"].append("O email é obrigatório")
         if email is not None:
             if User.objects.filter(email=email).exists():
                 errors["email"].append("O email já está em uso")

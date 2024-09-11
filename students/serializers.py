@@ -23,26 +23,37 @@ class StudentSerializer(serializers.ModelSerializer):
         password = data.get('password')
         password_confirmation = data.get('password_confirmation')
         errors = defaultdict(list)
+        request_method = self.context.get('request_method')
         
-        # Verificar senhas
-        if password.strip() == '' or password is None:
+        if request_method == 'PUT':
+            if self.instance:
+                email = email or None
+                name = name or self.instance.name
+                password = password or None
+                password_confirmation = password_confirmation or None
+        
+        if password is None and password_confirmation is None and request_method == 'POST':
             errors["password"].append("O campo password é obrigatório")
-        if password_confirmation.strip() == '' or password_confirmation is None:
             errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
-        if password != password_confirmation:
-            errors["password"].append("As senhas não coincidem.")
+        if password is not None or password_confirmation is not None and request_method == 'POST':
+            if password.strip() == '' or password is None:
+                errors["password"].append("O campo password é obrigatório")
+            if password_confirmation.strip() == '' or password_confirmation is None:
+                errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
+            if password != password_confirmation:
+                errors["password"].append("As senhas não coincidem.")
             
-        # Validação de força da senha
-        if len(password) < 8:
-            errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
-        if not re.search(r'[A-Z]', password):
-            errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
-        if not re.search(r'[a-z]', password):
-            errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
-        if not re.search(r'[0-9]', password):
-            errors["password"].append("A senha deve conter pelo menos um número.")
-        if not re.search(r'[@#$%^&+=]', password):
-            errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
+            # Validação de força da senha
+            if len(password) < 8:
+                errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
+            if not re.search(r'[A-Z]', password):
+                errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
+            if not re.search(r'[a-z]', password):
+                errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
+            if not re.search(r'[0-9]', password):
+                errors["password"].append("A senha deve conter pelo menos um número.")
+            if not re.search(r'[@#$%^&+=]', password):
+                errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
         
         if not name or name.isnumeric():
             errors["nome"].append("O nome não pode ser vazio e não pode ser apenas números.")

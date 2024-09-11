@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
 from .base.test_base_student import StudentTestBase
 
-class TeacherProfileImageViewTest(StudentTestBase):
+class StudentProfileImageViewTest(StudentTestBase):
     def create_test_image(self):
         # Criando uma imagem em branco (RGB) de 100x100 pixels
         image = Image.new('RGB', (100, 100))
@@ -14,15 +14,15 @@ class TeacherProfileImageViewTest(StudentTestBase):
         img_io.seek(0)
         return img_io
 
-    def test_upload_image_related_to_user(self):
+    def test_upload_image_student_related_to_user(self):
         token = self.obtain_token()
         data = {
             'foto': SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
         }
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
-        response = self.client.post(reverse('teachers:profile-image'), data, format='multipart')
-        self.teacher.refresh_from_db()
+        response = self.client.post(reverse('students:profile-image'), data, format='multipart')
+        self.student.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIsNotNone(self.teacher.profile_image.url)
-        self.assertIn('media/teacher_images/test_image', self.teacher.profile_image.url)
-        self.assertIn('jpg', self.teacher.profile_image.url)
+        self.assertIsNotNone(self.student.profile_image.url)
+        self.assertIn('media/students_image/test_image', self.student.profile_image.url)
+        self.assertIn('jpg', self.student.profile_image.url)

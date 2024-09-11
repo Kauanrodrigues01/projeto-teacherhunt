@@ -32,6 +32,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1207,6 +1223,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0002_alter_teacher_profile_image",
+        "description": "accounts.migrations.0002_alter_teacher_profile_image",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"teacher\",\n            name=\"profile_image\",\n            field=models.ImageField(blank=True, null=True, upload_to=\"teachers_image/\"),\n        ),",
+        "detail": "accounts.migrations.0002_alter_teacher_profile_image",
+        "documentation": {}
+    },
+    {
         "label": "AccountsTest",
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
@@ -1247,7 +1272,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Teacher(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile', blank=False, null=False)\n    name = models.CharField(max_length=255, blank=False, null=False)\n    age = models.PositiveIntegerField(blank=False, null=False)\n    description = models.TextField(blank=False, null=False)\n    hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='teacher_images/', blank=True, null=True)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    subjects = models.ManyToManyField('Subject', related_name='teachers')",
+        "peekOfCode": "class Teacher(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile', blank=False, null=False)\n    name = models.CharField(max_length=255, blank=False, null=False)\n    age = models.PositiveIntegerField(blank=False, null=False)\n    description = models.TextField(blank=False, null=False)\n    hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='teachers_image/', blank=True, null=True)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    subjects = models.ManyToManyField('Subject', related_name='teachers')",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -1688,16 +1713,16 @@
         "kind": 6,
         "importPath": "students.tests.test_student_list_view",
         "description": "students.tests.test_student_list_view",
-        "peekOfCode": "class TeacherListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "peekOfCode": "class TeacherListTests(StudentTestBase):\n    def test_post_student(self): # 4.95s\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
         "detail": "students.tests.test_student_list_view",
         "documentation": {}
     },
     {
-        "label": "TeacherProfileImageViewTest",
+        "label": "StudentProfileImageViewTest",
         "kind": 6,
         "importPath": "students.tests.test_student_profile_image_view",
         "description": "students.tests.test_student_profile_image_view",
-        "peekOfCode": "class TeacherProfileImageViewTest(StudentTestBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_related_to_user(self):\n        token = self.obtain_token()",
+        "peekOfCode": "class StudentProfileImageViewTest(StudentTestBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_student_related_to_user(self):\n        token = self.obtain_token()",
         "detail": "students.tests.test_student_profile_image_view",
         "documentation": {}
     },
@@ -1760,7 +1785,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentList(APIView):\n    permission_classes = (StudentListPermission,)\n    def post(self, request):\n        serializer = StudentSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    def put(self, request):\n        user = request.user",
+        "peekOfCode": "class StudentList(APIView):\n    permission_classes = (StudentListPermission,)\n    def post(self, request):\n        serializer = StudentSerializer(data=request.data, context={'request_method': request.method})\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    def put(self, request):\n        user = request.user",
         "detail": "students.views",
         "documentation": {}
     },
@@ -1814,7 +1839,7 @@
         "kind": 6,
         "importPath": "teachers.tests.test_teacherprofileimageview_view",
         "description": "teachers.tests.test_teacherprofileimageview_view",
-        "peekOfCode": "class TeacherProfileImageViewTest(TeacherListBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_related_to_user(self):\n        token = self.obtain_token()",
+        "peekOfCode": "class TeacherProfileImageViewTest(TeacherListBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_teacher_related_to_user(self):\n        token = self.obtain_token()",
         "detail": "teachers.tests.test_teacherprofileimageview_view",
         "documentation": {}
     },

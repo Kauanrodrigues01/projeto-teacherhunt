@@ -3,7 +3,7 @@ from accounts.models import Student
 from .base.test_base_student import StudentTestBase
 
 class TeacherListTests(StudentTestBase):
-    def test_post_student(self):
+    def test_post_student(self): # 4.95s
         data = {
             "nome": "Jane Doe",
             "email": "jane@example.com",
@@ -14,7 +14,7 @@ class TeacherListTests(StudentTestBase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Student.objects.filter(name=data["nome"]).exists())
 
-    def test_put_student(self):
+    def test_put_student(self): # 5.00s
         token = self.obtain_token()
         data = {
             "nome": "John Smith",
@@ -39,11 +39,13 @@ class TeacherListTests(StudentTestBase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.put(self.url, data, format='json')
         self.student.refresh_from_db()
+        self.student.user.refresh_from_db()
         self.assertEqual(self.student.name, data['nome'])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
     
     def test_delete_student(self):
+        # 4.76s
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.delete(self.url)

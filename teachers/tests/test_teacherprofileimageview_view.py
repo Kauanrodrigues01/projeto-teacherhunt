@@ -14,7 +14,7 @@ class TeacherProfileImageViewTest(TeacherListBase):
         img_io.seek(0)
         return img_io
 
-    def test_upload_image_related_to_user(self):
+    def test_upload_image_teacher_related_to_user(self):
         token = self.obtain_token()
         data = {
             'foto': SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
@@ -24,5 +24,5 @@ class TeacherProfileImageViewTest(TeacherListBase):
         self.teacher.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsNotNone(self.teacher.profile_image.url)
-        self.assertIn('media/teacher_images/test_image', self.teacher.profile_image.url)
+        self.assertIn('media/teachers_image/test_image', self.teacher.profile_image.url)
         self.assertIn('jpg', self.teacher.profile_image.url)
