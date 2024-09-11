@@ -3,7 +3,7 @@ from PIL import Image
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
-from .base.test_base_student import StudentTestBase
+from .base.test_base_student_view import StudentTestBase
 
 class StudentProfileImageViewTest(StudentTestBase):
     def create_test_image(self):

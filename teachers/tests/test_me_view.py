@@ -1,8 +1,8 @@
 from rest_framework import status
 from teachers.serializers import TeacherSerializer
-from .base.test_base_teacher_view import TeacherListBase
+from .base.test_base_teacher_view import TeacherTestBase
 
-class MeViewTest(TeacherListBase):
+class MeViewTest(TeacherTestBase):
     def test_logged_teacher(self):
         token = self.obtain_token()
         

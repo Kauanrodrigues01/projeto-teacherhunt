@@ -4,8 +4,11 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from accounts.models import User, Teacher, Subject
 from rest_framework.exceptions import ErrorDetail
+from io import BytesIO
+from PIL import Image
+from django.core.files.uploadedfile import SimpleUploadedFile
 
-class TeacherListBase(TestCase):
+class TeacherTestBase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.url = reverse('teachers:list')
@@ -20,6 +23,7 @@ class TeacherListBase(TestCase):
             age=30
         )
         self.subject = Subject.objects.create(name='Math')
+        self.image = SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
         
     def obtain_token(self, email='teacher@example.com', password='@Password1234'):
         login_url = reverse('accounts:login')
@@ -42,4 +46,10 @@ class TeacherListBase(TestCase):
         })
         return response_token.data['refresh_token']
     
-    
+    def create_test_image(self):
+        # Criando uma imagem em branco (RGB) de 100x100 pixels
+        image = Image.new('RGB', (100, 100))
+        img_io = BytesIO()
+        image.save(img_io, format='JPEG')
+        img_io.seek(0)
+        return img_io    

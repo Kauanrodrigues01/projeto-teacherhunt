@@ -138,7 +138,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         if subjects is not None:
             if not isinstance(subjects, list):
                 errors["materias"].append(f"O campo materias deve ser uma lista")
-            if len(subjects) == 0 or subjects is None:
+            if (len(subjects) == 0 or subjects is None) and request_method == 'POST':
                 errors["materias"].append(f"O campo materias é obrigatório")
             for subject in subjects:
                 if subject not in Subject.objects.values_list('id', flat=True):

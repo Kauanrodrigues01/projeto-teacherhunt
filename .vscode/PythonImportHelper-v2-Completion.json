@@ -1092,6 +1092,14 @@
         "documentation": {}
     },
     {
+        "label": "SimpleUploadedFile",
+        "importPath": "django.core.files.uploadedfile",
+        "description": "django.core.files.uploadedfile",
+        "isExtraImport": true,
+        "detail": "django.core.files.uploadedfile",
+        "documentation": {}
+    },
+    {
         "label": "UserSerializer",
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
@@ -1702,10 +1710,10 @@
     {
         "label": "StudentTestBase",
         "kind": 6,
-        "importPath": "students.tests.base.test_base_student",
-        "description": "students.tests.base.test_base_student",
+        "importPath": "students.tests.base.test_base_student_view",
+        "description": "students.tests.base.test_base_student_view",
         "peekOfCode": "class StudentTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('students:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_student=True)\n        self.student = Student.objects.create(\n            user=self.user,\n            name='John Doe',\n        )",
-        "detail": "students.tests.base.test_base_student",
+        "detail": "students.tests.base.test_base_student_view",
         "documentation": {}
     },
     {
@@ -1799,11 +1807,11 @@
         "documentation": {}
     },
     {
-        "label": "TeacherListBase",
+        "label": "TeacherTestBase",
         "kind": 6,
         "importPath": "teachers.tests.base.test_base_teacher_view",
         "description": "teachers.tests.base.test_base_teacher_view",
-        "peekOfCode": "class TeacherListBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
+        "peekOfCode": "class TeacherTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
         "detail": "teachers.tests.base.test_base_teacher_view",
         "documentation": {}
     },
@@ -1812,35 +1820,35 @@
         "kind": 6,
         "importPath": "teachers.tests.test_me_view",
         "description": "teachers.tests.test_me_view",
-        "peekOfCode": "class MeViewTest(TeacherListBase):\n    def test_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
+        "peekOfCode": "class MeViewTest(TeacherTestBase):\n    def test_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
         "detail": "teachers.tests.test_me_view",
         "documentation": {}
     },
     {
         "label": "TeacherDetailTests",
         "kind": 6,
-        "importPath": "teachers.tests.test_teacherdetail_view",
-        "description": "teachers.tests.test_teacherdetail_view",
-        "peekOfCode": "class TeacherDetailTests(TeacherListBase):\n    def test_get_teacher_search_for_id(self):\n        response = self.client.get(reverse('teachers:detail', args=[self.teacher.id]))\n        serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(response.data, serializer.data)",
-        "detail": "teachers.tests.test_teacherdetail_view",
+        "importPath": "teachers.tests.test_teacher_detail_view",
+        "description": "teachers.tests.test_teacher_detail_view",
+        "peekOfCode": "class TeacherDetailTests(TeacherTestBase):\n    def test_get_teacher_search_for_id(self):\n        response = self.client.get(reverse('teachers:detail', args=[self.teacher.id]))\n        serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(response.data, serializer.data)",
+        "detail": "teachers.tests.test_teacher_detail_view",
         "documentation": {}
     },
     {
         "label": "TeacherListTests",
         "kind": 6,
-        "importPath": "teachers.tests.test_teacherlist_view",
-        "description": "teachers.tests.test_teacherlist_view",
-        "peekOfCode": "class TeacherListTests(TeacherListBase):\n    def test_get_teachers(self):\n        response = self.client.get(self.url)\n        teachers = Teacher.objects.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(response.data, serializer.data)\n    def test_post_teacher(self):\n        data = {\n            \"nome\": \"Jane Doe\",",
-        "detail": "teachers.tests.test_teacherlist_view",
+        "importPath": "teachers.tests.test_teacher_list_view",
+        "description": "teachers.tests.test_teacher_list_view",
+        "peekOfCode": "class TeacherListTests(TeacherTestBase):\n    def test_get_teachers(self):\n        response = self.client.get(self.url)\n        teachers = Teacher.objects.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(response.data, serializer.data)\n    def test_post_teacher(self):\n        data = {\n            'nome': 'Jane Doe',",
+        "detail": "teachers.tests.test_teacher_list_view",
         "documentation": {}
     },
     {
         "label": "TeacherProfileImageViewTest",
         "kind": 6,
-        "importPath": "teachers.tests.test_teacherprofileimageview_view",
-        "description": "teachers.tests.test_teacherprofileimageview_view",
-        "peekOfCode": "class TeacherProfileImageViewTest(TeacherListBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_teacher_related_to_user(self):\n        token = self.obtain_token()",
-        "detail": "teachers.tests.test_teacherprofileimageview_view",
+        "importPath": "teachers.tests.test_teacher_profile_image_view",
+        "description": "teachers.tests.test_teacher_profile_image_view",
+        "peekOfCode": "class TeacherProfileImageViewTest(TeacherTestBase):\n    def test_upload_image_teacher_related_to_user(self):\n        token = self.obtain_token()\n        data = {\n            'foto': self.image\n        }\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.post(reverse('teachers:profile-image'), data, format='multipart')\n        self.teacher.refresh_from_db()\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
+        "detail": "teachers.tests.test_teacher_profile_image_view",
         "documentation": {}
     },
     {

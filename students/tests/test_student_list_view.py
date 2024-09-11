@@ -1,6 +1,6 @@
 from rest_framework import status
 from accounts.models import Student
-from .base.test_base_student import StudentTestBase
+from .base.test_base_student_view import StudentTestBase
 
 class TeacherListTests(StudentTestBase):
     def test_post_student(self): # 4.95s
