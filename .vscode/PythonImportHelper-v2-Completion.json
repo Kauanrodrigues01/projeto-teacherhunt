@@ -299,6 +299,14 @@
         "documentation": {}
     },
     {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "serializers",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -412,6 +420,14 @@
     },
     {
         "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
@@ -644,6 +660,30 @@
     },
     {
         "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1026,6 +1066,14 @@
         "description": "rest_framework.test",
         "isExtraImport": true,
         "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherSerializer",
+        "importPath": "teachers.serializers",
+        "description": "teachers.serializers",
+        "isExtraImport": true,
+        "detail": "teachers.serializers",
         "documentation": {}
     },
     {
@@ -1612,10 +1660,19 @@
     {
         "label": "TeacherListBase",
         "kind": 6,
-        "importPath": "teachers.tests.base.test_base_teacherlist_view",
-        "description": "teachers.tests.base.test_base_teacherlist_view",
+        "importPath": "teachers.tests.base.test_base_teacher_view",
+        "description": "teachers.tests.base.test_base_teacher_view",
         "peekOfCode": "class TeacherListBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
-        "detail": "teachers.tests.base.test_base_teacherlist_view",
+        "detail": "teachers.tests.base.test_base_teacher_view",
+        "documentation": {}
+    },
+    {
+        "label": "MeViewTest",
+        "kind": 6,
+        "importPath": "teachers.tests.test_me_view",
+        "description": "teachers.tests.test_me_view",
+        "peekOfCode": "class MeViewTest(TeacherListBase):\n    def test_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
+        "detail": "teachers.tests.test_me_view",
         "documentation": {}
     },
     {

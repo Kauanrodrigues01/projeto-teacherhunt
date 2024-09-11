@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from accounts.models import User, Teacher, Subject
 from teachers.serializers import TeacherSerializer
-from .base.test_base_teacherlist_view import TeacherListBase
+from .base.test_base_teacher_view import TeacherListBase
 
 class TeacherDetailTests(TeacherListBase):
     def test_get_teacher_search_for_id(self):
