@@ -196,16 +196,20 @@ class TeacherSerializer(serializers.ModelSerializer):
         profile_image = instance.profile_image.url if instance.profile_image else None
         subjects = list(instance.subjects.values_list('id', flat=True))
         subjects_obejcts = SubjectSerializer(instance.subjects.all(), many=True).data
+        create_at = instance.create_at
+        update_at = instance.update_at
         
         data["id"] = id
-        data["email"] = user.email
         data["nome"] = name
+        data["email"] = user.email
         data["idade"] = age
         data["descricao"] = description
         data["valor_hora"] = hourly_price
         data["foto"] = profile_image
         data["materias"] = subjects
         data["materias_objetos"] = subjects_obejcts
+        data["create_at"] = create_at
+        data["update_at"] = update_at
         return data
 
 

@@ -1,8 +1,5 @@
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
 from django.urls import reverse
-from accounts.models import User, Teacher, Subject
 from teachers.serializers import TeacherSerializer
 from .base.test_base_teacher_view import TeacherListBase
 

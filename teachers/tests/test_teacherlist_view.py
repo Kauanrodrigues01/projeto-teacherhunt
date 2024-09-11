@@ -1,8 +1,5 @@
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
-from django.urls import reverse
-from accounts.models import User, Teacher, Subject
+from accounts.models import Teacher, Subject
 from teachers.serializers import TeacherSerializer
 from .base.test_base_teacher_view import TeacherListBase
 
@@ -27,7 +24,7 @@ class TeacherListTests(TeacherListBase):
         }
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Teacher.objects.filter(name="Jane Doe").exists())
+        self.assertTrue(Teacher.objects.filter(name=data["nome"]).exists())
 
     def test_put_teacher(self):
         token = self.obtain_token()

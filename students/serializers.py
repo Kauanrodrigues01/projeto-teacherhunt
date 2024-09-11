@@ -77,7 +77,6 @@ class StudentSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         email = validated_data.pop('user', {}).pop('email', instance.user.email)
-        print(email)
         password = validated_data.pop('password', None)
         name = validated_data.pop('name', instance.name)
         profile_image = validated_data.pop('profile_image', instance.profile_image)

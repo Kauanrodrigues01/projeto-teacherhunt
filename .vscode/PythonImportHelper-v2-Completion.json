@@ -90,6 +90,518 @@
         "documentation": {}
     },
     {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "permissions",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "viewsets",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "APIClient",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
+        "label": "APIClient",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
+        "label": "APIClient",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "PermissionDenied",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "admin",
         "importPath": "django.contrib",
         "description": "django.contrib",
@@ -224,262 +736,6 @@
         "description": "rest_framework_simplejwt.serializers",
         "isExtraImport": true,
         "detail": "rest_framework_simplejwt.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "serializers",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "serializers",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "permissions",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "serializers",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "serializers",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "viewsets",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "TestCase",
-        "importPath": "django.test",
-        "description": "django.test",
-        "isExtraImport": true,
-        "detail": "django.test",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "include",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "include",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -635,198 +891,6 @@
         "documentation": {}
     },
     {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Student",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Student",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Student",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Teacher",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "Subject",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
         "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
@@ -964,6 +1028,54 @@
         "documentation": {}
     },
     {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleUploadedFile",
+        "importPath": "django.core.files.uploadedfile",
+        "description": "django.core.files.uploadedfile",
+        "isExtraImport": true,
+        "detail": "django.core.files.uploadedfile",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleUploadedFile",
+        "importPath": "django.core.files.uploadedfile",
+        "description": "django.core.files.uploadedfile",
+        "isExtraImport": true,
+        "detail": "django.core.files.uploadedfile",
+        "documentation": {}
+    },
+    {
         "label": "UserSerializer",
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
@@ -1037,46 +1149,6 @@
         "documentation": {}
     },
     {
-        "label": "PermissionDenied",
-        "importPath": "rest_framework.exceptions",
-        "description": "rest_framework.exceptions",
-        "isExtraImport": true,
-        "detail": "rest_framework.exceptions",
-        "documentation": {}
-    },
-    {
-        "label": "ErrorDetail",
-        "importPath": "rest_framework.exceptions",
-        "description": "rest_framework.exceptions",
-        "isExtraImport": true,
-        "detail": "rest_framework.exceptions",
-        "documentation": {}
-    },
-    {
-        "label": "APIClient",
-        "importPath": "rest_framework.test",
-        "description": "rest_framework.test",
-        "isExtraImport": true,
-        "detail": "rest_framework.test",
-        "documentation": {}
-    },
-    {
-        "label": "APIClient",
-        "importPath": "rest_framework.test",
-        "description": "rest_framework.test",
-        "isExtraImport": true,
-        "detail": "rest_framework.test",
-        "documentation": {}
-    },
-    {
-        "label": "APIClient",
-        "importPath": "rest_framework.test",
-        "description": "rest_framework.test",
-        "isExtraImport": true,
-        "detail": "rest_framework.test",
-        "documentation": {}
-    },
-    {
         "label": "TeacherSerializer",
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
@@ -1098,30 +1170,6 @@
         "description": "teachers.serializers",
         "isExtraImport": true,
         "detail": "teachers.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "BytesIO",
-        "importPath": "io",
-        "description": "io",
-        "isExtraImport": true,
-        "detail": "io",
-        "documentation": {}
-    },
-    {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
-        "isExtraImport": true,
-        "detail": "PIL",
-        "documentation": {}
-    },
-    {
-        "label": "SimpleUploadedFile",
-        "importPath": "django.core.files.uploadedfile",
-        "description": "django.core.files.uploadedfile",
-        "isExtraImport": true,
-        "detail": "django.core.files.uploadedfile",
         "documentation": {}
     },
     {
@@ -1156,6 +1204,15 @@
         "description": "accounts.migrations.0001_initial",
         "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        (\"auth\", \"0012_alter_user_first_name_max_length\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"User\",\n            fields=[\n                (",
         "detail": "accounts.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "AccountsTest",
+        "kind": 6,
+        "importPath": "accounts.tests.test_login_refresh_logout",
+        "description": "accounts.tests.test_login_refresh_logout",
+        "peekOfCode": "class AccountsTest(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
+        "detail": "accounts.tests.test_login_refresh_logout",
         "documentation": {}
     },
     {
@@ -1615,6 +1672,33 @@
         "description": "setup.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
         "detail": "setup.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "StudentTestBase",
+        "kind": 6,
+        "importPath": "students.tests.base.test_base_student",
+        "description": "students.tests.base.test_base_student",
+        "peekOfCode": "class StudentTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('students:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_student=True)\n        self.student = Student.objects.create(\n            user=self.user,\n            name='John Doe',\n        )",
+        "detail": "students.tests.base.test_base_student",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherListTests",
+        "kind": 6,
+        "importPath": "students.tests.test_student_list_view",
+        "description": "students.tests.test_student_list_view",
+        "peekOfCode": "class TeacherListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "detail": "students.tests.test_student_list_view",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherProfileImageViewTest",
+        "kind": 6,
+        "importPath": "students.tests.test_student_profile_image_view",
+        "description": "students.tests.test_student_profile_image_view",
+        "peekOfCode": "class TeacherProfileImageViewTest(StudentTestBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_related_to_user(self):\n        token = self.obtain_token()",
+        "detail": "students.tests.test_student_profile_image_view",
         "documentation": {}
     },
     {

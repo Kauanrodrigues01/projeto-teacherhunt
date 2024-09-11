@@ -1,6 +1,4 @@
 from rest_framework import status
-from django.urls import reverse
-from accounts.models import User, Teacher, Subject
 from teachers.serializers import TeacherSerializer
 from .base.test_base_teacher_view import TeacherListBase
 
