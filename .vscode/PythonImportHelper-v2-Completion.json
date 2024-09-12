@@ -104,6 +104,14 @@
         "documentation": {}
     },
     {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "django.db.models.deletion",
         "kind": 6,
         "isExtraImport": true,
@@ -187,6 +195,22 @@
     },
     {
         "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "generics",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
         "isExtraImport": true,
@@ -354,6 +378,14 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "include",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -483,6 +515,38 @@
     },
     {
         "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -891,6 +955,22 @@
         "documentation": {}
     },
     {
+        "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
         "label": "IsAuthenticated",
         "importPath": "rest_framework.permissions",
         "description": "rest_framework.permissions",
@@ -912,6 +992,14 @@
         "description": "rest_framework.permissions",
         "isExtraImport": true,
         "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
         "documentation": {}
     },
     {
@@ -1003,6 +1091,22 @@
         "documentation": {}
     },
     {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
         "label": "timezone",
         "importPath": "django.utils",
         "description": "django.utils",
@@ -1051,19 +1155,12 @@
         "documentation": {}
     },
     {
-        "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
+        "label": "re",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "django.shortcuts",
-        "documentation": {}
-    },
-    {
-        "label": "get_object_or_404",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
         "documentation": {}
     },
     {
@@ -1292,15 +1389,6 @@
         "documentation": {}
     },
     {
-        "label": "re",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
-        "documentation": {}
-    },
-    {
         "label": "APIView",
         "importPath": "rest_framework.views",
         "description": "rest_framework.views",
@@ -1346,6 +1434,14 @@
         "description": "rest_framework.routers",
         "isExtraImport": true,
         "detail": "rest_framework.routers",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
         "documentation": {}
     },
     {
@@ -1564,12 +1660,48 @@
         "documentation": {}
     },
     {
+        "label": "IsStudentAuthenticated",
+        "kind": 6,
+        "importPath": "classroom.permissions",
+        "description": "classroom.permissions",
+        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student",
+        "detail": "classroom.permissions",
+        "documentation": {}
+    },
+    {
         "label": "ClassroomSerializer",
         "kind": 6,
         "importPath": "classroom.serializers",
         "description": "classroom.serializers",
-        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    student_name = serializers.CharField(source='student.name', read_only=True)\n    teacher_name = serializers.CharField(source='teacher.name', read_only=True)\n    class Meta:\n        model = Classroom\n        fields = ['id', 'student', 'teacher', 'student_name', 'teacher_name', 'created_at', 'updated_at']\n        extra_kwargs = {\n            'created_at': {'read_only': True},\n            'updated_at': {'read_only': True}\n        }",
+        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())\n    teacher = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), required=True)\n    nome_estudante = serializers.CharField(source='student.name', read_only=True)\n    nome_professor = serializers.CharField(source='teacher.name', read_only=True)\n    dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y', required=True)\n    horario_de_inicio = serializers.TimeField(source='start_time', required=True)\n    horario_de_termino = serializers.TimeField(source='end_time', read_only=True)\n    numero_de_horas = serializers.IntegerField(source='number_of_hours', required=True)\n    preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)",
         "detail": "classroom.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "classroom.urls",
+        "description": "classroom.urls",
+        "peekOfCode": "app_name = 'classroom'\nurlpatterns = [\n    path('classrooms', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
+        "detail": "classroom.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "classroom.urls",
+        "description": "classroom.urls",
+        "peekOfCode": "urlpatterns = [\n    path('classrooms', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
+        "detail": "classroom.urls",
+        "documentation": {}
+    },
+    {
+        "label": "ClassroomCreateView",
+        "kind": 6,
+        "importPath": "classroom.views",
+        "description": "classroom.views",
+        "peekOfCode": "class ClassroomCreateView(generics.CreateAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def create(self, request, *args, **kwargs):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)\n        request.data['student'] = student.id",
+        "detail": "classroom.views",
         "documentation": {}
     },
     {
@@ -1874,7 +2006,7 @@
         "kind": 5,
         "importPath": "setup.urls",
         "description": "setup.urls",
-        "peekOfCode": "urlpatterns = [\n    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),\n    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"core.urls\", namespace=\"core\")),\n    path(\"api/\", include(\"teachers.urls\", namespace='teachers')),\n    path(\"api/\", include(\"students.urls\", namespace='students')),\n    path(\"api/auth/\", include(\"accounts.urls\", namespace='accounts')),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),\n    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"core.urls\", namespace=\"core\")),\n    path(\"api/\", include(\"teachers.urls\", namespace='teachers')),\n    path(\"api/\", include(\"students.urls\", namespace='students')),\n    path(\"api/\", include(\"classroom.urls\", namespace='classroom')),\n    path(\"api/auth/\", include(\"accounts.urls\", namespace='accounts')),",
         "detail": "setup.urls",
         "documentation": {}
     },
