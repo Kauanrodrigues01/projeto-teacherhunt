@@ -72,6 +72,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -419,6 +435,30 @@
     },
     {
         "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -891,23 +931,55 @@
         "documentation": {}
     },
     {
-        "label": "ValidationError",
-        "importPath": "django.core.exceptions",
-        "description": "django.core.exceptions",
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
         "isExtraImport": true,
-        "detail": "django.core.exceptions",
+        "detail": "classroom.models",
         "documentation": {}
     },
     {
-        "label": "ValidationError",
-        "importPath": "django.core.exceptions",
-        "description": "django.core.exceptions",
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
         "isExtraImport": true,
-        "detail": "django.core.exceptions",
+        "detail": "datetime",
         "documentation": {}
     },
     {
         "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -928,6 +1000,46 @@
         "description": "django.utils",
         "isExtraImport": true,
         "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
         "documentation": {}
     },
     {
@@ -1407,6 +1519,33 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "classroom.migrations.0002_alter_classroom_unique_together_and_more",
+        "description": "classroom.migrations.0002_alter_classroom_unique_together_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0002_alter_teacher_profile_image\"),\n        (\"classroom\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.AlterUniqueTogether(\n            name=\"classroom\",\n            unique_together={(\"teacher\", \"student\", \"start_time\")},\n        ),",
+        "detail": "classroom.migrations.0002_alter_classroom_unique_together_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "TestBaseModelClassroom",
+        "kind": 6,
+        "importPath": "classroom.tests.base.test_base_model",
+        "description": "classroom.tests.base.test_base_model",
+        "peekOfCode": "class TestBaseModelClassroom(TestCase):\n    def setUp(self) -> None:\n        self.tomorrow = self.create_tomorrow_date()\n        self.yesterday = self.create_yesterday_date()\n        self.today = self.create_today_date()\n        return super().setUp()\n    def create_classroom(self, student, teacher, day_of_class, start_time, number_of_hours):\n        classroom = Classroom.objects.create(\n            student=student,\n            teacher=teacher,",
+        "detail": "classroom.tests.base.test_base_model",
+        "documentation": {}
+    },
+    {
+        "label": "TestClassroomModel",
+        "kind": 6,
+        "importPath": "classroom.tests.test_models_validate",
+        "description": "classroom.tests.test_models_validate",
+        "peekOfCode": "class TestClassroomModel(TestBaseModelClassroom):\n    def test_returns_an_error_if_an_attempt_is_made_to_create_a_class_overlapping_the_period_of_another_class(self):\n        '''Testa se retorna um erro se tentar criar uma aula que se sobrepõe ao período de outra aula'''\n        data = self.create_users_patterns()\n        teacher, student = data['teacher'], data['student']\n        self.create_classroom(student=student, teacher=teacher,day_of_class=self.tomorrow, start_time='12:00', number_of_hours=3)\n        with self.assertRaises(ValidationError):\n            self.create_classroom(student=student, teacher=teacher, day_of_class=self.tomorrow, start_time='12:30', number_of_hours=1)\n    def test_if_price_fiel_is_correctly_defined(self):\n        '''Testa se o campo price é definido corretamente'''",
+        "detail": "classroom.tests.test_models_validate",
+        "documentation": {}
+    },
+    {
         "label": "ClassroomConfig",
         "kind": 6,
         "importPath": "classroom.apps",
@@ -1420,7 +1559,7 @@
         "kind": 6,
         "importPath": "classroom.models",
         "description": "classroom.models",
-        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('scheduled', 'Scheduled'),  # nova_aula\n        ('in_progress', 'In Progress'),  # aula_em_andamento\n        ('completed', 'Completed'),  # aula_concluida\n        ('cancelled', 'Cancelled'),  # cancelada\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()",
+        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('scheduled', 'Scheduled'),\n        ('in_progress', 'In Progress'),\n        ('completed', 'Completed'),\n        ('cancelled', 'Cancelled'),\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()",
         "detail": "classroom.models",
         "documentation": {}
     },
@@ -1609,7 +1748,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "LANGUAGE_CODE = \"pt-br\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "LANGUAGE_CODE = \"pt-br\"\nTIME_ZONE = \"America/Fortaleza\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1618,7 +1757,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"",
+        "peekOfCode": "TIME_ZONE = \"America/Fortaleza\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"",
         "detail": "setup.settings",
         "documentation": {}
     },
