@@ -15,9 +15,9 @@ class TeacherList(APIView):
     def get(self, request):
         q = request.query_params.get("q", "")
         if q != '':
-            teachers = Teacher.objects.filter(description__icontains=q)
+            teachers = Teacher.objects.filter(description__icontains=q).select_related('user').prefetch_related('subjects')
         else:
-            teachers = Teacher.objects.all()    
+            teachers = Teacher.objects.all().select_related('user').prefetch_related('subjects')
         
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
@@ -32,7 +32,7 @@ class TeacherList(APIView):
     def put(self, request):
         user = request.user
         try:
-            teacher = Teacher.objects.get(user=user)
+            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         
@@ -44,7 +44,7 @@ class TeacherList(APIView):
     def delete(self, request):
         user = request.user
         try:
-            teacher = Teacher.objects.get(user=user)
+            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         teacher.delete()
@@ -56,7 +56,7 @@ class TeacherProfileImageView(APIView):
     def post(self, request):
         user = request.user
         try:
-            teacher = Teacher.objects.get(user=user)
+            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         serializer = TeacherProfileImageSerializer(teacher, data=request.data)
@@ -66,7 +66,7 @@ class TeacherProfileImageView(APIView):
 
 class TeacherDetail(APIView):
     def get(self, request, pk):
-        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)
+        teacher = get_object_or_404(Teacher.objects.all().select_related('user').prefetch_related('subjects'), pk=pk)
         serializer = TeacherSerializer(teacher)
         return Response(serializer.data)
     
@@ -76,7 +76,7 @@ class MeView(APIView):
     def get(self, request):
         user = request.user
         try:
-            teacher = Teacher.objects.get(user=user)
+            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         serializer = TeacherSerializer(teacher)
@@ -84,26 +84,22 @@ class MeView(APIView):
     
 class TeacherListForSubjects(APIView):
     def get(self, request, pk):
-        subject = get_object_or_404(Subject.objects.all(), pk=pk)
+        subject = get_object_or_404(Subject.objects.all().prefetch_related('teachers'), pk=pk)
         teachers = subject.teachers.all()
         serializer = TeacherSerializer(teachers, many=True)
         return Response(serializer.data)
     
 class SubjectsList(viewsets.ModelViewSet):
-    queryset = Subject.objects.all()
+    queryset = Subject.objects.all().prefetch_related('teachers')
     serializer_class = SubjectSerializer
     http_method_names = ["get", "post", "put", "delete"]
 
     def get_queryset(self):
-        code = self.request.query_params.get("code", None)
         name = self.request.query_params.get("name", None)
-        if code is not None:
-            print(f"Filtrando por código: {code}")
-            return Subject.objects.filter(code=code)
+        queryset = self.queryset
         if name is not None:
-            print(f"Filtrando por nome: {name}")
-            return Subject.objects.filter(name__icontains=name)
-        return Subject.objects.all()
+            return queryset.filter(name__icontains=name)
+        return queryset
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
