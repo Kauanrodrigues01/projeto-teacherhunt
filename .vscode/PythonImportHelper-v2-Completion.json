@@ -16,6 +16,14 @@
         "documentation": {}
     },
     {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
         "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
@@ -347,6 +355,22 @@
     },
     {
         "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
@@ -1643,7 +1667,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    'rest_framework_simplejwt',\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",\n    \"teachers.apps.TeachersConfig\",",
+        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    'rest_framework_simplejwt',\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n    \"debug_toolbar\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1670,7 +1694,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n]",
+        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n    \"debug_toolbar.middleware.DebugToolbarMiddleware\",",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1805,7 +1829,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1814,7 +1838,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1823,7 +1847,16 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "CORS_ALLOW_ALL_ORIGINS = True",
+        "peekOfCode": "CORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
+        "detail": "setup.settings",
+        "documentation": {}
+    },
+    {
+        "label": "INTERNAL_IPS",
+        "kind": 5,
+        "importPath": "setup.settings",
+        "description": "setup.settings",
+        "peekOfCode": "INTERNAL_IPS = [\n    '127.0.0.1',\n]",
         "detail": "setup.settings",
         "documentation": {}
     },
