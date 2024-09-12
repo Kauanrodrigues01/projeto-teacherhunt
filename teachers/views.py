@@ -5,9 +5,13 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from .serializers import TeacherSerializer, TeacherProfileImageSerializer, SubjectSerializer
-from .permissions import TeacherListPermission
+from .permissions import TeacherListPermission, IsTeacherAuthenticated
 from rest_framework import viewsets
 from accounts.models import Teacher, Subject
+from rest_framework.generics import ListAPIView
+from rest_framework import status
+from classroom.serializers import ClassroomSerializer
+from rest_framework.exceptions import NotFound
 
 class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)
@@ -127,3 +131,28 @@ class SubjectsList(viewsets.ModelViewSet):
         elif self.request.method in ["POST", "PUT", "DELETE"]:
             return [IsAdminUser()]
         return super().get_permissions()
+    
+class TeacherClassroomView(ListAPIView):
+    permission_classes = [IsTeacherAuthenticated]
+    serializer_class = ClassroomSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            teacher = Teacher.objects.select_related('user').get(user=user)
+        except Teacher.DoesNotExist:
+            raise NotFound(detail="Aluno não encontrado")
+
+        queryset = teacher.classrooms.all()
+
+        status = self.request.query_params.get('status')
+        if status in ['agendado', 'em progresso', 'concluida', 'cancelada']:
+            status_mapping = {
+                'agendado': 'scheduled',
+                'em progresso': 'in_progress',
+                'concluida': 'completed',
+                'cancelada': 'cancelled'
+            }
+            queryset = queryset.filter(status=status_mapping[status])
+        
+        return queryset

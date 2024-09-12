@@ -1,7 +1,7 @@
 import re
 from rest_framework import generics
 from .serializers import ClassroomSerializer
-from .permissions import IsStudentAuthenticated
+from students.permissions import IsStudentAuthenticated
 from accounts.models import Student
 from rest_framework.response import Response
 from rest_framework import status

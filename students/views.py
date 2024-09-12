@@ -1,9 +1,13 @@
 from rest_framework.response import Response
-from rest_framework import status
+import rest_framework
 from rest_framework.views import APIView
 from .serializers import StudentSerializer, StudentProfileImageSerializer
 from accounts.models import Student
-from .permissions import StudentListPermission
+from .permissions import IsStudentAuthenticated, StudentListPermission
+from rest_framework.generics import ListAPIView
+from rest_framework import status
+from classroom.serializers import ClassroomSerializer
+from rest_framework.exceptions import NotFound
 
 class StudentList(APIView):
     permission_classes = (StudentListPermission,)
@@ -49,3 +53,28 @@ class StudentProfileImageView(APIView):
             serializer.save()
             return Response({"message": "Foto de perfil atualizada com sucesso"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class StudentClassroomView(ListAPIView):
+    permission_classes = [IsStudentAuthenticated]
+    serializer_class = ClassroomSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            student = Student.objects.select_related('user').get(user=user)
+        except Student.DoesNotExist:
+            raise NotFound(detail="Aluno não encontrado")
+
+        queryset = student.classrooms.all()
+
+        status = self.request.query_params.get('status')
+        if status in ['agendado', 'em progresso', 'concluida', 'cancelada']:
+            status_mapping = {
+                'agendado': 'scheduled',
+                'em progresso': 'in_progress',
+                'concluida': 'completed',
+                'cancelada': 'cancelled'
+            }
+            queryset = queryset.filter(status=status_mapping[status])
+        
+        return queryset

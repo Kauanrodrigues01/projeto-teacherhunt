@@ -170,6 +170,15 @@
         "documentation": {}
     },
     {
+        "label": "rest_framework",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -322,6 +331,14 @@
         "documentation": {}
     },
     {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "APIClient",
         "importPath": "rest_framework.test",
         "description": "rest_framework.test",
@@ -730,7 +747,23 @@
         "documentation": {}
     },
     {
+        "label": "NotFound",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
         "importPath": "rest_framework.exceptions",
         "description": "rest_framework.exceptions",
         "isExtraImport": true,
@@ -1164,6 +1197,14 @@
         "documentation": {}
     },
     {
+        "label": "IsStudentAuthenticated",
+        "importPath": "students.permissions",
+        "description": "students.permissions",
+        "isExtraImport": true,
+        "detail": "students.permissions",
+        "documentation": {}
+    },
+    {
         "label": "TemplateView",
         "importPath": "django.views.generic",
         "description": "django.views.generic",
@@ -1402,6 +1443,38 @@
         "description": "rest_framework.views",
         "isExtraImport": true,
         "detail": "rest_framework.views",
+        "documentation": {}
+    },
+    {
+        "label": "ListAPIView",
+        "importPath": "rest_framework.generics",
+        "description": "rest_framework.generics",
+        "isExtraImport": true,
+        "detail": "rest_framework.generics",
+        "documentation": {}
+    },
+    {
+        "label": "ListAPIView",
+        "importPath": "rest_framework.generics",
+        "description": "rest_framework.generics",
+        "isExtraImport": true,
+        "detail": "rest_framework.generics",
+        "documentation": {}
+    },
+    {
+        "label": "ClassroomSerializer",
+        "importPath": "classroom.serializers",
+        "description": "classroom.serializers",
+        "isExtraImport": true,
+        "detail": "classroom.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "ClassroomSerializer",
+        "importPath": "classroom.serializers",
+        "description": "classroom.serializers",
+        "isExtraImport": true,
+        "detail": "classroom.serializers",
         "documentation": {}
     },
     {
@@ -1660,15 +1733,6 @@
         "documentation": {}
     },
     {
-        "label": "IsStudentAuthenticated",
-        "kind": 6,
-        "importPath": "classroom.permissions",
-        "description": "classroom.permissions",
-        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student",
-        "detail": "classroom.permissions",
-        "documentation": {}
-    },
-    {
         "label": "ClassroomSerializer",
         "kind": 6,
         "importPath": "classroom.serializers",
@@ -1682,7 +1746,7 @@
         "kind": 5,
         "importPath": "classroom.urls",
         "description": "classroom.urls",
-        "peekOfCode": "app_name = 'classroom'\nurlpatterns = [\n    path('classrooms', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
+        "peekOfCode": "app_name = 'classroom'\nurlpatterns = [\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
         "detail": "classroom.urls",
         "documentation": {}
     },
@@ -1691,7 +1755,7 @@
         "kind": 5,
         "importPath": "classroom.urls",
         "description": "classroom.urls",
-        "peekOfCode": "urlpatterns = [\n    path('classrooms', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='classroom-list-create'), \n]",
         "detail": "classroom.urls",
         "documentation": {}
     },
@@ -2060,7 +2124,16 @@
         "kind": 6,
         "importPath": "students.permissions",
         "description": "students.permissions",
-        "peekOfCode": "class StudentListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in [\"PUT\", \"DELETE\"]:\n            return request.user.is_authenticated and request.user.is_student\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)",
+        "peekOfCode": "class StudentListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in [\"PUT\", \"DELETE\"]:\n            return request.user.is_authenticated and request.user.is_student\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)\nclass IsStudentAuthenticated(BasePermission):",
+        "detail": "students.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsStudentAuthenticated",
+        "kind": 6,
+        "importPath": "students.permissions",
+        "description": "students.permissions",
+        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student",
         "detail": "students.permissions",
         "documentation": {}
     },
@@ -2087,7 +2160,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image')\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
+        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms')\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -2096,7 +2169,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image')\n    # path(\"alunos/agendar-aula/<int:teacher_pk>\", StudentCreateClassRoom.as_view(), name=\"create-classroom\"),\n    # path(\"professores/alunos\", TeacherStudentList.as_view(), name=\"teacher-students\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms')\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -2115,6 +2188,15 @@
         "importPath": "students.views",
         "description": "students.views",
         "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.select_related('user').get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Aluno não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "StudentClassroomView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.select_related('user').get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all()",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2195,7 +2277,16 @@
         "kind": 6,
         "importPath": "teachers.permissions",
         "description": "teachers.permissions",
-        "peekOfCode": "class TeacherListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in ('PUT', 'PATCH', 'DELETE'):\n            return request.user.is_authenticated and request.user.is_teacher\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)",
+        "peekOfCode": "class TeacherListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in ('PUT', 'PATCH', 'DELETE'):\n            return request.user.is_authenticated and request.user.is_teacher\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)\nclass IsTeacherAuthenticated(BasePermission):",
+        "detail": "teachers.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsTeacherAuthenticated",
+        "kind": 6,
+        "importPath": "teachers.permissions",
+        "description": "teachers.permissions",
+        "peekOfCode": "class IsTeacherAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_teacher",
         "detail": "teachers.permissions",
         "documentation": {}
     },
@@ -2231,7 +2322,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "app_name = \"teachers\"\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path('', include(router.urls))",
+        "peekOfCode": "app_name = \"teachers\"\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2240,7 +2331,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path('', include(router.urls))\n]",
+        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2249,7 +2340,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path('', include(router.urls))\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-professores\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))\n]",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2304,6 +2395,15 @@
         "importPath": "teachers.views",
         "description": "teachers.views",
         "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().prefetch_related('teachers')\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]\n    def get_queryset(self):\n        name = self.request.query_params.get(\"name\", None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
+        "detail": "teachers.views",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherClassroomView",
+        "kind": 6,
+        "importPath": "teachers.views",
+        "description": "teachers.views",
+        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.select_related('user').get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all()",
         "detail": "teachers.views",
         "documentation": {}
     },

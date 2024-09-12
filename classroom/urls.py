@@ -4,5 +4,5 @@ from .views import ClassroomCreateView
 app_name = 'classroom'
 
 urlpatterns = [
-    path('classrooms', ClassroomCreateView.as_view(), name='classroom-list-create'), 
+    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='classroom-list-create'), 
 ]

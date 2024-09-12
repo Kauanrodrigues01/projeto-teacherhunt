@@ -9,3 +9,8 @@ class TeacherListPermission(BasePermission):
         if request.method == 'POST':
             return not request.user.is_authenticated
         return super().has_permission(request, view)
+
+
+class IsTeacherAuthenticated(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_teacher
