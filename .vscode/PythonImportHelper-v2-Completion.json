@@ -1863,7 +1863,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    'rest_framework_simplejwt',\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n    \"debug_toolbar\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",",
+        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    'rest_framework_simplejwt',\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",\n    \"teachers.apps.TeachersConfig\",",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -1890,7 +1890,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n    \"debug_toolbar.middleware.DebugToolbarMiddleware\",",
+        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"corsheaders.middleware.CorsMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2025,7 +2025,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\n# INTERNAL_IPS = [\n#     '127.0.0.1',\n# ]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2034,7 +2034,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# Configurações de CORS\nCORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\n# INTERNAL_IPS = [\n#     '127.0.0.1',\n# ]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2043,16 +2043,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "CORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\nINTERNAL_IPS = [\n    '127.0.0.1',\n]",
-        "detail": "setup.settings",
-        "documentation": {}
-    },
-    {
-        "label": "INTERNAL_IPS",
-        "kind": 5,
-        "importPath": "setup.settings",
-        "description": "setup.settings",
-        "peekOfCode": "INTERNAL_IPS = [\n    '127.0.0.1',\n]",
+        "peekOfCode": "CORS_ALLOW_ALL_ORIGINS = True\n# Debug Toolbar\n# INTERNAL_IPS = [\n#     '127.0.0.1',\n# ]",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2187,7 +2178,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.select_related('user').get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Aluno não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
+        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Aluno não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2196,7 +2187,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.select_related('user').get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all()",
+        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all()",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2349,7 +2340,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get(\"q\", \"\")\n        if q != '':\n            teachers = Teacher.objects.filter(description__icontains=q).select_related('user').prefetch_related('subjects')\n        else:\n            teachers = Teacher.objects.all().select_related('user').prefetch_related('subjects')\n        serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})\n        return Response(serializer.data)",
+        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get(\"q\", \"\")\n        if q != '':\n            teachers = Teacher.objects.filter(description__icontains=q)\n        else:\n            teachers = Teacher.objects.all()\n        serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})\n        return Response(serializer.data)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2358,7 +2349,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
+        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2367,7 +2358,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all().select_related('user').prefetch_related('subjects'), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
+        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2376,7 +2367,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.select_related('user').prefetch_related('subjects').get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
+        "peekOfCode": "class MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2385,7 +2376,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all().prefetch_related('teachers'), pk=pk)\n        teachers = subject.teachers.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().prefetch_related('teachers')\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
+        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2394,7 +2385,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().prefetch_related('teachers')\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]\n    def get_queryset(self):\n        name = self.request.query_params.get(\"name\", None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
+        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]\n    def get_queryset(self):\n        name = self.request.query_params.get(\"name\", None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2403,7 +2394,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.select_related('user').get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all()",
+        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all()",
         "detail": "teachers.views",
         "documentation": {}
     },

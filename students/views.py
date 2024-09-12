@@ -22,7 +22,7 @@ class StudentList(APIView):
     def put(self, request):
         user = request.user
         try:
-            student = Student.objects.select_related('user').get(user=user)
+            student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         
@@ -34,7 +34,7 @@ class StudentList(APIView):
     def delete(self, request):
         user = request.user
         try:
-            student = Student.objects.select_related('user').get(user=user)
+            student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         student.delete()
@@ -44,7 +44,7 @@ class StudentProfileImageView(APIView):
     def post(self, request):
         user = request.user
         try:
-            student = Student.objects.select_related('user').get(user=user)
+            student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -61,7 +61,7 @@ class StudentClassroomView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
         try:
-            student = Student.objects.select_related('user').get(user=user)
+            student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             raise NotFound(detail="Aluno não encontrado")
 
