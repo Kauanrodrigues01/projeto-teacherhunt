@@ -52,6 +52,7 @@ class TeacherList(APIView):
         except Teacher.DoesNotExist:
             return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         teacher.delete()
+        teacher.user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class TeacherProfileImageView(APIView):

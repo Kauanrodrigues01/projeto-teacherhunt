@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from accounts.models import User
 
 class StudentListPermission(BasePermission):
     def has_permission(self, request, view):
@@ -13,3 +14,7 @@ class StudentListPermission(BasePermission):
 class IsStudentAuthenticated(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.is_student
+    
+    def has_object_permission(self, request, view, obj):
+        # obj é a classroom
+        return request.user == obj.student.User

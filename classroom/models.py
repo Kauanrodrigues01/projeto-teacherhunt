@@ -26,15 +26,10 @@ class Classroom(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('teacher', 'student', 'start_time')
+        unique_together = ('teacher', 'student', 'start_time', 'day_of_class')
         ordering = ['start_time']
 
     def clean(self):
-        """
-        Validação personalizada para garantir que o horário de término é posterior ao horário de início,
-        que o professor e o aluno não estejam em duas aulas ao mesmo tempo,
-        e que a aula não seja marcada para uma data/hora passada.
-        """
         now = timezone.now()
 
         # Verifica se a data da aula é no passado

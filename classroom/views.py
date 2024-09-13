@@ -1,25 +1,42 @@
-import re
 from rest_framework import generics
 from .serializers import ClassroomSerializer
 from students.permissions import IsStudentAuthenticated
 from accounts.models import Student
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
+from .models import Classroom
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
-class ClassroomCreateView(generics.CreateAPIView):
+class ClassroomView(APIView):
     permission_classes = [IsStudentAuthenticated]
-    serializer_class = ClassroomSerializer
     
-    def create(self, request, *args, **kwargs):
+    def post(self, request):
         user = request.user
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)
         request.data['student'] = student.id
-        serializer = self.get_serializer(data=request.data)
+        serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def put(self, request, pk):
+        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
+        if request.user != classroom.student.user:
+            return Response({'detail': 'Você não tem permissão para alterar esta aula.'}, status=status.HTTP_403_FORBIDDEN)
+        if request.data.get('student', None) is not None:
+            return Response({'detail': 'Não é possível alterar o estudante de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
+        if request.data.get('teacher', None) is not None:
+            return Response({'detail': 'Não é possível alterar o professor de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
+        request.data['student'] = classroom.student.id
+        request.data['teacher'] = classroom.teacher.id
+        serializer =  ClassroomSerializer(instance=classroom, data=request.data, context={'request_method': request.method})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    

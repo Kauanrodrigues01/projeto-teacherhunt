@@ -12,7 +12,7 @@ urlpatterns = [
     path("professores/<int:pk>", TeacherDetail.as_view(), name="detail"),
     path('me', MeView.as_view(), name='me'),
     path("professores/foto", TeacherProfileImageView.as_view(), name="profile-image"),
-    path("professores/<int:pk>/materias", TeacherListForSubjects.as_view(), name="list-for-professores"),
+    path("professores/<int:pk>/materias", TeacherListForSubjects.as_view(), name="list-for-subject"),
     path("professores/aulas", TeacherClassroomView.as_view(), name='teacher-classrooms'),
     path("", include(router.urls))
 ]
