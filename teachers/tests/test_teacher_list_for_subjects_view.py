@@ -1,10 +1,11 @@
 from django.urls import reverse
+import rest_framework
 from .base.test_base_teacher_view import TeacherTestBase
 from accounts.models import User, Teacher, Subject
 from ..serializers import TeacherSerializer
 
 class TestTeacherListForSubjectsView(TeacherTestBase):
-    def test_filter_teachers_by_students(self):
+    def test_filter_teachers_by_subjects(self):
         user2 = User.objects.create_user(email='teacher2@example.com', password='@Password1234', is_teacher=True)
         subject2 = Subject.objects.create(name='Portuguese')
         teacher2 = Teacher.objects.create(
@@ -26,3 +27,4 @@ class TestTeacherListForSubjectsView(TeacherTestBase):
         if isinstance(response_data, dict):
             response_data = [response_data]
         self.assertNotIn(teacher2_serializer_data, response_data)
+        self.assertEqual(len(response_data), 1)

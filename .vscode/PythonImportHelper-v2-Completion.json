@@ -2338,7 +2338,7 @@
         "kind": 6,
         "importPath": "teachers.tests.test_teacher_list_for_subjects_view",
         "description": "teachers.tests.test_teacher_list_for_subjects_view",
-        "peekOfCode": "class TestTeacherListForSubjectsView(TeacherTestBase):\n    def test_filter_teachers_by_students(self):\n        user2 = User.objects.create_user(email='teacher2@example.com', password='@Password1234', is_teacher=True)\n        subject2 = Subject.objects.create(name='Portuguese')\n        teacher2 = Teacher.objects.create(\n            user=user2,\n            name='John Vick',\n            description='A nice teacher',\n            hourly_price=20.00,\n            age=45,",
+        "peekOfCode": "class TestTeacherListForSubjectsView(TeacherTestBase):\n    def test_filter_teachers_by_subjects(self):\n        user2 = User.objects.create_user(email='teacher2@example.com', password='@Password1234', is_teacher=True)\n        subject2 = Subject.objects.create(name='Portuguese')\n        teacher2 = Teacher.objects.create(\n            user=user2,\n            name='John Vick',\n            description='A nice teacher',\n            hourly_price=20.00,\n            age=45,",
         "detail": "teachers.tests.test_teacher_list_for_subjects_view",
         "documentation": {}
     },
@@ -2437,7 +2437,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "app_name = \"teachers\"\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),",
+        "peekOfCode": "app_name = \"teachers\"\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2446,7 +2446,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))",
+        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2455,7 +2455,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('me', MeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))\n]",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2482,16 +2482,16 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
+        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
         "detail": "teachers.views",
         "documentation": {}
     },
     {
-        "label": "MeView",
+        "label": "TeacherMeView",
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class MeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
+        "peekOfCode": "class TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2500,7 +2500,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
+        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
         "detail": "teachers.views",
         "documentation": {}
     },

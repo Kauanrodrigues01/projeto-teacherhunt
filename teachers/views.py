@@ -75,7 +75,7 @@ class TeacherDetail(APIView):
         serializer = TeacherSerializer(teacher)
         return Response(serializer.data)
     
-class MeView(APIView):
+class TeacherMeView(APIView):
     permission_classes = (IsAuthenticated,)
     
     def get(self, request):
@@ -92,7 +92,7 @@ class TeacherListForSubjects(APIView):
         subject = get_object_or_404(Subject.objects.all(), pk=pk)
         teachers = subject.teachers.all()
         serializer = TeacherSerializer(teachers, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 class SubjectsList(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
