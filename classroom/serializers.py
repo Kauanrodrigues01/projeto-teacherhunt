@@ -5,11 +5,11 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Classroom
 from accounts.models import User, Student, Teacher
-from datetime import datetime
+from datetime import datetime, date
 
 class ClassroomSerializer(serializers.ModelSerializer):
-    student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
-    teacher = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all())
+    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')
+    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')
     nome_estudante = serializers.CharField(source='student.name', read_only=True)
     nome_professor = serializers.CharField(source='teacher.name', read_only=True)
     dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)
@@ -22,7 +22,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Classroom
-        fields = ['id', 'student', 'teacher', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_aula']
+        fields = ['id', 'aluno', 'professor', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_aula']
         
     def validate(self, data):
         now = timezone.now()
@@ -32,7 +32,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
         number_of_hours = data.get('number_of_hours', None)
         teacher = data.get('teacher', None)
         student = data.get('student')
-        day_of_class_date_obj = datetime.strptime(day_of_class, '%Y-%m-%d').date()
+        day_of_class_date_obj = day_of_class_date_obj = day_of_class if isinstance(day_of_class, date) else datetime.strptime(day_of_class, '%Y-%m-%d').date()
 
         if self.context.get('request_method') == 'PUT':
             if self.instance.day_of_class - now.date() < timedelta(days=2) and day_of_class_date_obj - now.date() < timedelta(days=2):

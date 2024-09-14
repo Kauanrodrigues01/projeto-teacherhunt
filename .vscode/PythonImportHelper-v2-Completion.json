@@ -1196,6 +1196,14 @@
         "documentation": {}
     },
     {
+        "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
@@ -1834,7 +1842,7 @@
         "kind": 6,
         "importPath": "classroom.serializers",
         "description": "classroom.serializers",
-        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())\n    teacher = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all())\n    nome_estudante = serializers.CharField(source='student.name', read_only=True)\n    nome_professor = serializers.CharField(source='teacher.name', read_only=True)\n    dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)\n    horario_de_inicio = serializers.TimeField(source='start_time', required=False)\n    horario_de_termino = serializers.TimeField(source='end_time', read_only=True)\n    numero_de_horas = serializers.IntegerField(source='number_of_hours',  required=False)\n    preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)",
+        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    nome_estudante = serializers.CharField(source='student.name', read_only=True)\n    nome_professor = serializers.CharField(source='teacher.name', read_only=True)\n    dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)\n    horario_de_inicio = serializers.TimeField(source='start_time', required=False)\n    horario_de_termino = serializers.TimeField(source='end_time', read_only=True)\n    numero_de_horas = serializers.IntegerField(source='number_of_hours',  required=False)\n    preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)",
         "detail": "classroom.serializers",
         "documentation": {}
     },
@@ -1861,7 +1869,7 @@
         "kind": 6,
         "importPath": "classroom.views",
         "description": "classroom.views",
-        "peekOfCode": "class ClassroomView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)\n        request.data['student'] = student.id\n        serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})",
+        "peekOfCode": "class ClassroomView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)\n        request.data['aluno'] = student.id\n        serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})",
         "detail": "classroom.views",
         "documentation": {}
     },
@@ -2293,7 +2301,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all()",
+        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2518,7 +2526,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all()",
+        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
         "detail": "teachers.views",
         "documentation": {}
     },

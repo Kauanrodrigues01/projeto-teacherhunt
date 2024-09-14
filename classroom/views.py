@@ -18,7 +18,7 @@ class ClassroomView(APIView):
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
             return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)
-        request.data['student'] = student.id
+        request.data['aluno'] = student.id
         serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
         serializer.save()

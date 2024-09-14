@@ -144,7 +144,7 @@ class TeacherClassroomView(ListAPIView):
         except Teacher.DoesNotExist:
             raise NotFound(detail="Aluno não encontrado")
 
-        queryset = teacher.classrooms.all()
+        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')
 
         status = self.request.query_params.get('status')
         if status in ['agendado', 'em progresso', 'concluida', 'cancelada']:
