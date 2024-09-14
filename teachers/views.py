@@ -22,7 +22,7 @@ class TeacherList(APIView):
             teachers = Teacher.objects.filter(description__icontains=q)
         else:
             teachers = Teacher.objects.all()
-        
+        teachers = teachers.order_by('-id')
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
     
@@ -90,7 +90,7 @@ class TeacherMeView(APIView):
 class TeacherListForSubjects(APIView):
     def get(self, request, pk):
         subject = get_object_or_404(Subject.objects.all(), pk=pk)
-        teachers = subject.teachers.all()
+        teachers = subject.teachers.all().order_by('-id')
         serializer = TeacherSerializer(teachers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     

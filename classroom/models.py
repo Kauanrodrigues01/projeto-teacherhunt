@@ -7,10 +7,9 @@ from datetime import datetime
 
 class Classroom(models.Model):
     STATUS_CHOICES = [
-        ('scheduled', 'Scheduled'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ('P', 'Pending'),
+        ('A', 'Completed'),
+        ('C', 'Cancelled'),
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')
@@ -20,7 +19,7 @@ class Classroom(models.Model):
     end_time = models.TimeField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     number_of_hours = models.PositiveIntegerField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='P')
     description_about_class = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -92,7 +91,6 @@ class Classroom(models.Model):
             self.price = self.teacher.hourly_price * self.number_of_hours
 
         self.full_clean()
-        self.set_status_automatically()
 
         super().save(*args, **kwargs)
 
@@ -115,18 +113,3 @@ class Classroom(models.Model):
         datetime_start = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.start_time))
         datetime_end = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.end_time))
         return datetime_start <= now <= datetime_end
-
-    def set_status_automatically(self):
-        """
-        Define o status da aula automaticamente com base no tempo atual.
-        """
-        now = timezone.now()
-        datetime_start = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.start_time))
-        datetime_end = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.end_time))
-
-        if datetime_start <= now <= datetime_end:
-            self.status = 'in_progress'
-        elif now > datetime_end:
-            self.status = 'completed'
-        else:
-            self.status = 'scheduled'

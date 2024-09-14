@@ -104,6 +104,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1277,6 +1309,30 @@
         "documentation": {}
     },
     {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
         "label": "IsStudentAuthenticated",
         "importPath": "students.permissions",
         "description": "students.permissions",
@@ -1515,22 +1571,6 @@
         "description": "accounts.serializers",
         "isExtraImport": true,
         "detail": "accounts.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "defaultdict",
-        "importPath": "collections",
-        "description": "collections",
-        "isExtraImport": true,
-        "detail": "collections",
-        "documentation": {}
-    },
-    {
-        "label": "defaultdict",
-        "importPath": "collections",
-        "description": "collections",
-        "isExtraImport": true,
-        "detail": "collections",
         "documentation": {}
     },
     {
@@ -1802,6 +1842,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "classroom.migrations.0004_alter_classroom_status",
+        "description": "classroom.migrations.0004_alter_classroom_status",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"classroom\", \"0003_alter_classroom_unique_together\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"classroom\",\n            name=\"status\",\n            field=models.CharField(\n                choices=[",
+        "detail": "classroom.migrations.0004_alter_classroom_status",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "classroom.migrations.0005_alter_classroom_status",
+        "description": "classroom.migrations.0005_alter_classroom_status",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"classroom\", \"0004_alter_classroom_status\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"classroom\",\n            name=\"status\",\n            field=models.CharField(\n                choices=[(\"P\", \"Pending\"), (\"A\", \"Completed\"), (\"C\", \"Cancelled\")],",
+        "detail": "classroom.migrations.0005_alter_classroom_status",
+        "documentation": {}
+    },
+    {
         "label": "TestBaseModelClassroom",
         "kind": 6,
         "importPath": "classroom.tests.base.test_base_model",
@@ -1833,7 +1891,7 @@
         "kind": 6,
         "importPath": "classroom.models",
         "description": "classroom.models",
-        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('scheduled', 'Scheduled'),\n        ('in_progress', 'In Progress'),\n        ('completed', 'Completed'),\n        ('cancelled', 'Cancelled'),\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()",
+        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('P', 'Pending'),\n        ('A', 'Completed'),\n        ('C', 'Cancelled'),\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()\n    start_time = models.TimeField()",
         "detail": "classroom.models",
         "documentation": {}
     },
@@ -1869,7 +1927,7 @@
         "kind": 6,
         "importPath": "classroom.views",
         "description": "classroom.views",
-        "peekOfCode": "class ClassroomView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)\n        request.data['aluno'] = student.id\n        serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})",
+        "peekOfCode": "class ClassroomView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)\n        request.data['aluno'] = student.id\n        request.data['status'] = 'P'",
         "detail": "classroom.views",
         "documentation": {}
     },
@@ -2472,7 +2530,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get(\"q\", \"\")\n        if q != '':\n            teachers = Teacher.objects.filter(description__icontains=q)\n        else:\n            teachers = Teacher.objects.all()\n        serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})\n        return Response(serializer.data)",
+        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get(\"q\", \"\")\n        if q != '':\n            teachers = Teacher.objects.filter(description__icontains=q)\n        else:\n            teachers = Teacher.objects.all()\n        teachers = teachers.order_by('-id')\n        serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2508,7 +2566,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all()\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
+        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all().order_by('-id')\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
         "detail": "teachers.views",
         "documentation": {}
     },

@@ -19,6 +19,7 @@ class ClassroomView(APIView):
         except Student.DoesNotExist:
             return Response({'detail': 'Você não é um estudante.'}, status=status.HTTP_403_FORBIDDEN)
         request.data['aluno'] = student.id
+        request.data['status'] = 'P'
         serializer =  ClassroomSerializer(data=request.data, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
         serializer.save()
