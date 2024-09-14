@@ -1164,6 +1164,14 @@
         "documentation": {}
     },
     {
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
+        "isExtraImport": true,
+        "detail": "classroom.models",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -1891,7 +1899,7 @@
         "kind": 6,
         "importPath": "classroom.models",
         "description": "classroom.models",
-        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('P', 'Pending'),\n        ('A', 'Completed'),\n        ('C', 'Cancelled'),\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()\n    start_time = models.TimeField()",
+        "peekOfCode": "class Classroom(models.Model):\n    STATUS_CHOICES = [\n        ('P', 'Pending'),\n        ('A', 'Accepted'),\n        ('C', 'Cancelled'),\n    ]\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='classrooms')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='classrooms')\n    day_of_class = models.DateField()\n    start_time = models.TimeField()",
         "detail": "classroom.models",
         "documentation": {}
     },
@@ -2467,7 +2475,7 @@
         "kind": 6,
         "importPath": "teachers.permissions",
         "description": "teachers.permissions",
-        "peekOfCode": "class IsTeacherAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_teacher",
+        "peekOfCode": "class IsTeacherAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_teacher\n    def has_object_permission(self, request, view, obj):\n        return obj.teacher.user == request.user",
         "detail": "teachers.permissions",
         "documentation": {}
     },
@@ -2512,7 +2520,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))",
+        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"professores/aulas/aceitar/<int:pk>\", TeacherAcceptedClassroomView.as_view(), name='teacher-accepted-classroom'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2521,7 +2529,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"\", include(router.urls))\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"professores/aulas/aceitar/<int:pk>\", TeacherAcceptedClassroomView.as_view(), name='teacher-accepted-classroom'),\n    path(\"professores/aulas/cancelar/<int:pk>\", TeacherCancelledClassroomView.as_view(), name='teacher-cancelled-classroom'),\n    path(\"\", include(router.urls))",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2585,6 +2593,24 @@
         "importPath": "teachers.views",
         "description": "teachers.views",
         "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
+        "detail": "teachers.views",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherAcceptedClassroomView",
+        "kind": 6,
+        "importPath": "teachers.views",
+        "description": "teachers.views",
+        "peekOfCode": "class TeacherAcceptedClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        classroom.status = 'A'\n        classroom.save()\n        return Response({\"message\": \"Aula aceita com sucesso.\"}, status=status.HTTP_200_OK)\nclass TeacherCancelledClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):",
+        "detail": "teachers.views",
+        "documentation": {}
+    },
+    {
+        "label": "TeacherCancelledClassroomView",
+        "kind": 6,
+        "importPath": "teachers.views",
+        "description": "teachers.views",
+        "peekOfCode": "class TeacherCancelledClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        user = request.user\n        teacher = Teacher.objects.get(user=user)\n        if user != teacher.user:\n            return Response({\"error\": \"Você não tem permissão para cancelar essa aula.\"}, status=status.HTTP_403_FORBIDDEN)\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        classroom.status = 'C'\n        classroom.save()",
         "detail": "teachers.views",
         "documentation": {}
     },

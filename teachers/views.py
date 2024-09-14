@@ -12,6 +12,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework import status
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
+from classroom.models import Classroom
 
 class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)
@@ -157,3 +158,25 @@ class TeacherClassroomView(ListAPIView):
             queryset = queryset.filter(status=status_mapping[status])
         
         return queryset
+    
+class TeacherAcceptedClassroomView(APIView):
+    permission_classes = [IsTeacherAuthenticated]
+    
+    def post(self, request, pk):
+        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
+        classroom.status = 'A'
+        classroom.save()
+        return Response({"message": "Aula aceita com sucesso."}, status=status.HTTP_200_OK)
+    
+class TeacherCancelledClassroomView(APIView):
+    permission_classes = [IsTeacherAuthenticated]
+    
+    def post(self, request, pk):
+        user = request.user
+        teacher = Teacher.objects.get(user=user)
+        if user != teacher.user:
+            return Response({"error": "Você não tem permissão para cancelar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
+        classroom.status = 'C'
+        classroom.save()
+        return Response({"message": "Aula recusada com sucesso."}, status=status.HTTP_200_OK)

@@ -8,7 +8,7 @@ from datetime import datetime
 class Classroom(models.Model):
     STATUS_CHOICES = [
         ('P', 'Pending'),
-        ('A', 'Completed'),
+        ('A', 'Accepted'),
         ('C', 'Cancelled'),
     ]
 
