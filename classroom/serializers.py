@@ -1,4 +1,3 @@
-import re
 from rest_framework import serializers
 from django.db import models
 from django.utils import timezone
@@ -26,7 +25,12 @@ class ClassroomSerializer(serializers.ModelSerializer):
         fields = ['id', 'aluno', 'professor', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_aula']
 
     def get_status(self, obj):
-        return obj.get_status_display()
+        if obj.get_status_display() == 'Pending':
+            return 'Pendente'
+        elif obj.get_status_display() == 'Accepted':
+            return 'Aceita'
+        elif obj.get_status_display() == 'Cancelled':
+            return 'Cancelada'
 
     def validate(self, data):
         now = timezone.now()
@@ -104,7 +108,8 @@ class ClassroomSerializer(serializers.ModelSerializer):
             day_of_class=validated_data['day_of_class'],
             start_time=validated_data['start_time'],
             number_of_hours=validated_data['number_of_hours'],
-            description_about_class=validated_data.get('description_about_class', None)
+            description_about_class=validated_data.get('description_about_class', None),
+            status='P'
         )
         classroom.save()
         return classroom
@@ -122,5 +127,6 @@ class ClassroomSerializer(serializers.ModelSerializer):
         instance.start_time = start_time
         instance.number_of_hours = number_of_hours
         instance.description_about_class = description_about_class
+        instance.status = 'P'
         instance.save()
         return super().update(instance, validated_data)

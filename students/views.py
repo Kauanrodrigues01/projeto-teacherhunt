@@ -1,10 +1,10 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-import rest_framework
 from rest_framework.views import APIView
 from .serializers import StudentSerializer, StudentProfileImageSerializer
 from accounts.models import Student
 from .permissions import IsStudentAuthenticated, StudentListPermission
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework import status
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
@@ -68,13 +68,36 @@ class StudentClassroomView(ListAPIView):
         queryset = student.classrooms.all().order_by('day_of_class', 'start_time')
 
         status = self.request.query_params.get('status')
-        if status in ['agendado', 'em progresso', 'concluida', 'cancelada']:
+        if status in ['pendente', 'aceita', 'cancelada']:
             status_mapping = {
-                'agendado': 'scheduled',
-                'em progresso': 'in_progress',
-                'concluida': 'completed',
-                'cancelada': 'cancelled'
+                'pendente': 'P',
+                'aceita': 'A',
+                'cancelada': 'C'
             }
             queryset = queryset.filter(status=status_mapping[status])
         
         return queryset
+
+class StudentClassroomDetailView(RetrieveAPIView):
+    permission_classes = [IsStudentAuthenticated]
+    serializer_class = ClassroomSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            raise NotFound(detail="Professor não encontrado")
+
+        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')
+        return queryset
+    
+    def get_object(self):
+        try:
+            classroom = get_object_or_404(self.get_queryset(), pk=self.kwargs['pk'])
+        except:
+            raise NotFound(detail="Aula não encontrada")
+        if self.get_queryset().count() == 0:
+            raise NotFound(detail="Aula não encontrada")
+        self.check_object_permissions(self.request, classroom)
+        return classroom

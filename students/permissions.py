@@ -16,5 +16,4 @@ class IsStudentAuthenticated(BasePermission):
         return request.user.is_authenticated and request.user.is_student
     
     def has_object_permission(self, request, view, obj):
-        # obj é a classroom
-        return request.user == obj.student.User
+        return request.user == obj.student.user

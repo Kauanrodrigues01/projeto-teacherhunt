@@ -1,3 +1,4 @@
+import re
 from rest_framework import generics
 from .serializers import ClassroomSerializer
 from students.permissions import IsStudentAuthenticated
@@ -8,7 +9,6 @@ from rest_framework.views import APIView
 from .models import Classroom
 from django.shortcuts import get_object_or_404
 
-# Create your views here.
 class ClassroomView(APIView):
     permission_classes = [IsStudentAuthenticated]
     
@@ -29,14 +29,15 @@ class ClassroomView(APIView):
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
         if request.user != classroom.student.user:
             return Response({'detail': 'Você não tem permissão para alterar esta aula.'}, status=status.HTTP_403_FORBIDDEN)
-        if request.data.get('student', None) is not None:
+        if request.data.get('aluno', None) is not None:
             return Response({'detail': 'Não é possível alterar o estudante de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
-        if request.data.get('teacher', None) is not None:
+        if request.data.get('professor', None) is not None:
             return Response({'detail': 'Não é possível alterar o professor de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
-        request.data['student'] = classroom.student.id
-        request.data['teacher'] = classroom.teacher.id
+        request.data['aluno'] = classroom.student.id
+        request.data['professor'] = classroom.teacher.id
         serializer =  ClassroomSerializer(instance=classroom, data=request.data, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
+        serializer.status = 'P'
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     

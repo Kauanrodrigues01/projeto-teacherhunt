@@ -1,5 +1,3 @@
-import django.contrib.auth.models
-from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -8,21 +6,35 @@ from .serializers import TeacherSerializer, TeacherProfileImageSerializer, Subje
 from .permissions import TeacherListPermission, IsTeacherAuthenticated
 from rest_framework import viewsets
 from accounts.models import Teacher, Subject
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework import status
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
 from classroom.models import Classroom
+from django.utils import timezone
+from django.db.models import Q
 
 class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)
     
     def get(self, request):
         q = request.query_params.get("q", "")
-        if q != '':
-            teachers = Teacher.objects.filter(description__icontains=q)
+        if q:
+            search_terms = q.split()
+            query = Q()
+
+            for term in search_terms:
+                term = term.strip()
+                if len(term) > 3: 
+                    query |= Q(description__icontains=term)
+                    query |= Q(subjects__name__icontains=term)
+            if query:
+                teachers = Teacher.objects.filter(query)
+            else:
+                teachers = Teacher.objects.all()
         else:
             teachers = Teacher.objects.all()
+        
         teachers = teachers.order_by('-id')
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
@@ -148,22 +160,55 @@ class TeacherClassroomView(ListAPIView):
         queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')
 
         status = self.request.query_params.get('status')
-        if status in ['agendado', 'em progresso', 'concluida', 'cancelada']:
+        if status in ['pendente', 'aceita', 'cancelada']:
             status_mapping = {
-                'agendado': 'scheduled',
-                'em progresso': 'in_progress',
-                'concluida': 'completed',
-                'cancelada': 'cancelled'
+                'pendente': 'P',
+                'aceita': 'A',
+                'cancelada': 'C'
             }
             queryset = queryset.filter(status=status_mapping[status])
         
         return queryset
+
+class TeacherClassroomDetailView(RetrieveAPIView):
+    permission_classes = [IsTeacherAuthenticated]
+    serializer_class = ClassroomSerializer
     
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            teacher = Teacher.objects.get(user=user)
+        except Teacher.DoesNotExist:
+            raise NotFound(detail="Professor não encontrado")
+
+        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')
+        return queryset
+    
+    def get_object(self, **kwargs):
+        try:
+            classroom = get_object_or_404(self.get_queryset(), pk=self.kwargs['pk'])
+        except:
+            raise NotFound(detail="Aula não encontrada")
+        if self.get_queryset().count() == 0:
+            raise NotFound(detail="Aula não encontrada")
+        self.check_object_permissions(self.request, classroom)
+        return classroom
+
 class TeacherAcceptedClassroomView(APIView):
     permission_classes = [IsTeacherAuthenticated]
     
     def post(self, request, pk):
+        user = request.user
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
+        if user != classroom.teacher.user:
+            return Response({"error": "Você não tem permissão para aceitar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+        if classroom.status != 'P':
+            return Response({"error": "A aula já foi aceita ou cancelada, não é possível alterar."}, status=status.HTTP_400_BAD_REQUEST)
+        if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():
+            classroom.status = 'C'
+            classroom.save()
+            return Response({"error": "Já passou o horário da aula, não é possível cancelar."}, status=status.HTTP_400_BAD_REQUEST)
+        
         classroom.status = 'A'
         classroom.save()
         return Response({"message": "Aula aceita com sucesso."}, status=status.HTTP_200_OK)
@@ -173,10 +218,18 @@ class TeacherCancelledClassroomView(APIView):
     
     def post(self, request, pk):
         user = request.user
-        teacher = Teacher.objects.get(user=user)
-        if user != teacher.user:
-            return Response({"error": "Você não tem permissão para cancelar essa aula."}, status=status.HTTP_403_FORBIDDEN)
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
+        if user != classroom.teacher.user:
+            return Response({"error": "Você não tem permissão para aceitar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+        if classroom.status != 'P':
+            return Response({"error": "Aula já foi aceita ou cancelada, não é possivel mudar."}, status=status.HTTP_400_BAD_REQUEST)
+        if classroom.status == 'C':
+            return Response({"error": "Aula já foi cancelada."}, status=status.HTTP_400_BAD_REQUEST)
+        if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():
+            classroom.status = 'C'
+            classroom.save()
+            return Response({"error": "Já passou o horário da aula, não é possivel cancelar."}, status=status.HTTP_400_BAD_REQUEST)
+
         classroom.status = 'C'
         classroom.save()
         return Response({"message": "Aula recusada com sucesso."}, status=status.HTTP_200_OK)
