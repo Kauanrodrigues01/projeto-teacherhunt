@@ -5,9 +5,10 @@ from .serializers import StudentSerializer, StudentProfileImageSerializer
 from accounts.models import Student
 from .permissions import IsStudentAuthenticated, StudentListPermission
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework import status
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
 class StudentList(APIView):
     permission_classes = (StudentListPermission,)
@@ -39,7 +40,19 @@ class StudentList(APIView):
             return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-            
+
+class StudentMeView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = StudentSerializer(student)
+        return Response(serializer.data)
+
 class StudentProfileImageView(APIView):
     def post(self, request):
         user = request.user
