@@ -69,10 +69,10 @@ class Classroom(models.Model):
             raise ValidationError('O aluno já tem uma aula nesse período.')
 
     def save(self, *args, **kwargs):
-        """
+        '''
         Sobrescreve o método save para calcular automaticamente o horário de término e o preço
         antes de salvar a instância e atualiza o status da aula.
-        """
+        '''
         # Converte a string da data em um objeto datetime.date, se necessário
         if isinstance(self.day_of_class, str):
             self.day_of_class = datetime.strptime(self.day_of_class, '%Y-%m-%d').date()
@@ -98,17 +98,17 @@ class Classroom(models.Model):
         return f'Aula entre {self.student.name} e {self.teacher.name} - {self.get_status_display()}'
 
     def get_duration(self):
-        """
+        '''
         Retorna a duração da aula em minutos.
-        """
+        '''
         datetime_start = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.start_time))
         datetime_end = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.end_time))
         return (datetime_end - datetime_start).total_seconds() / 60
 
     def is_active(self):
-        """
+        '''
         Verifica se a aula está em andamento no momento atual.
-        """
+        '''
         now = timezone.now()
         datetime_start = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.start_time))
         datetime_end = timezone.make_aware(timezone.datetime.combine(self.day_of_class, self.end_time))

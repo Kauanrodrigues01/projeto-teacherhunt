@@ -10,7 +10,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Remove o "refresh" e cria um novo campo dentro de data e salva o "refresh"
         '''
         data = super().validate(attrs)
-        data['token'] = data.pop("access")
+        data['token'] = data.pop('access')
         data['refresh_token'] = data.pop('refresh')
         return data
 
@@ -19,10 +19,10 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
     refresh = None
 
     def validate(self, attrs):
-        attrs["refresh"] = attrs.pop("refresh_token")
+        attrs['refresh'] = attrs.pop('refresh_token')
         data = super().validate(attrs)
-        data["token"] = data.pop("access")
-        data["refresh_token"] = data.pop("refresh")
+        data['token'] = data.pop('access')
+        data['refresh_token'] = data.pop('refresh')
         return data
 
 class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):
@@ -30,7 +30,7 @@ class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):
     refresh = None
 
     def validate(self, attrs):
-        attrs["refresh"] = attrs.pop("refresh_token")
+        attrs['refresh'] = attrs.pop('refresh_token')
         return super().validate(attrs)
     
 
@@ -45,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password'] != data['password_confirmation']:
-            raise serializers.ValidationError("As senhas não coincidem.")
+            raise serializers.ValidationError('As senhas não coincidem.')
         return data
 
     def create(self, validated_data):

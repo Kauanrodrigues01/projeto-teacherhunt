@@ -9,6 +9,7 @@ from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from classroom.views import ClassroomView
 
 class StudentList(APIView):
     permission_classes = (StudentListPermission,)
@@ -25,7 +26,7 @@ class StudentList(APIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         
         serializer = StudentSerializer(student, data=request.data, partial=True, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
@@ -37,7 +38,7 @@ class StudentList(APIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -49,7 +50,7 @@ class StudentMeView(APIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         serializer = StudentSerializer(student)
         return Response(serializer.data)
 
@@ -59,12 +60,12 @@ class StudentProfileImageView(APIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            return Response({"error": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = StudentProfileImageSerializer(student, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Foto de perfil atualizada com sucesso"}, status=status.HTTP_200_OK)
+            return Response({'message': 'Foto de perfil atualizada com sucesso'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class StudentClassroomView(ListAPIView):
@@ -76,7 +77,7 @@ class StudentClassroomView(ListAPIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            raise NotFound(detail="Aluno não encontrado")
+            raise NotFound(detail='Aluno não encontrado')
 
         queryset = student.classrooms.all().order_by('day_of_class', 'start_time')
 
@@ -100,7 +101,7 @@ class StudentClassroomDetailView(RetrieveAPIView):
         try:
             student = Student.objects.get(user=user)
         except Student.DoesNotExist:
-            raise NotFound(detail="Professor não encontrado")
+            raise NotFound(detail='Professor não encontrado')
 
         queryset = student.classrooms.all().order_by('day_of_class', 'start_time')
         return queryset
@@ -109,8 +110,14 @@ class StudentClassroomDetailView(RetrieveAPIView):
         try:
             classroom = get_object_or_404(self.get_queryset(), pk=self.kwargs['pk'])
         except:
-            raise NotFound(detail="Aula não encontrada")
+            raise NotFound(detail='Aula não encontrada')
         if self.get_queryset().count() == 0:
-            raise NotFound(detail="Aula não encontrada")
+            raise NotFound(detail='Aula não encontrada')
         self.check_object_permissions(self.request, classroom)
         return classroom
+    
+class ClassroomCreateView(ClassroomView):
+    http_method_names = ['post']
+
+class ClassroomUpdateView(ClassroomView):
+    http_method_names = ['put']

@@ -5,7 +5,7 @@ class StudentListPermission(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
-        if request.method in ["PUT", "DELETE"]:
+        if request.method in ['PUT', 'DELETE']:
             return request.user.is_authenticated and request.user.is_student
         if request.method == 'POST':
             return not request.user.is_authenticated

@@ -11,7 +11,7 @@ class StudentSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
     nome = serializers.CharField(required=True, source='name')
-    foto = serializers.ImageField(required=False, source="profile_image")
+    foto = serializers.ImageField(required=False, source='profile_image')
     
     class Meta:
         model = Student
@@ -33,39 +33,39 @@ class StudentSerializer(serializers.ModelSerializer):
                 password_confirmation = password_confirmation or None
         
         if password is None and password_confirmation is None and request_method == 'POST':
-            errors["password"].append("O campo password é obrigatório")
-            errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
+            errors['password'].append('O campo password é obrigatório')
+            errors['password_confirmation'].append('O campo password_confirmation é obrigatório')
         if password is not None or password_confirmation is not None and request_method == 'POST':
             if password.strip() == '' or password is None:
-                errors["password"].append("O campo password é obrigatório")
+                errors['password'].append('O campo password é obrigatório')
             if password_confirmation.strip() == '' or password_confirmation is None:
-                errors["password_confirmation"].append("O campo password_confirmation é obrigatório")
+                errors['password_confirmation'].append('O campo password_confirmation é obrigatório')
             if password != password_confirmation:
-                errors["password"].append("As senhas não coincidem.")
+                errors['password'].append('As senhas não coincidem.')
             
             # Validação de força da senha
             if len(password) < 8:
-                errors["password"].append("A senha deve ter no mínimo 8 caracteres.")
+                errors['password'].append('A senha deve ter no mínimo 8 caracteres.')
             if not re.search(r'[A-Z]', password):
-                errors["password"].append("A senha deve conter pelo menos uma letra maiúscula.")
+                errors['password'].append('A senha deve conter pelo menos uma letra maiúscula.')
             if not re.search(r'[a-z]', password):
-                errors["password"].append("A senha deve conter pelo menos uma letra minúscula.")
+                errors['password'].append('A senha deve conter pelo menos uma letra minúscula.')
             if not re.search(r'[0-9]', password):
-                errors["password"].append("A senha deve conter pelo menos um número.")
+                errors['password'].append('A senha deve conter pelo menos um número.')
             if not re.search(r'[@#$%^&+=]', password):
-                errors["password"].append("A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).")
+                errors['password'].append('A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).')
         
         if not name or name.isnumeric():
-            errors["nome"].append("O nome não pode ser vazio e não pode ser apenas números.")
+            errors['nome'].append('O nome não pode ser vazio e não pode ser apenas números.')
         if len(name) < 3:
-            errors["nome"].append("O nome deve ter no mínimo 3 caracteres.")
+            errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
         if len(name) > 255:
-            errors["nome"].append("O nome deve ter no máximo 255 caracteres.")
+            errors['nome'].append('O nome deve ter no máximo 255 caracteres.')
         
         if User.objects.filter(email=email).exists():
-            errors["email"].append("O email já está em uso")
+            errors['email'].append('O email já está em uso')
         if not verificar_email_valido(email) and email is not None:
-            errors["email"].append("Insira um email válido")
+            errors['email'].append('Insira um email válido')
         
         if errors:
             raise serializers.ValidationError(errors)
@@ -77,7 +77,7 @@ class StudentSerializer(serializers.ModelSerializer):
         password =  validated_data.pop('password')
         password_confirmation = validated_data.pop('password_confirmation')
         
-        user_data = {"email": email, "password": password, "password_confirmation": password_confirmation, "is_student": True}
+        user_data = {'email': email, 'password': password, 'password_confirmation': password_confirmation, 'is_student': True}
         user_serializer = UserSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user =user_serializer.save()
@@ -109,4 +109,4 @@ class StudentProfileImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Student
-        fields = ["foto"]
+        fields = ['foto']

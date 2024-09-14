@@ -9,5 +9,5 @@ app_name = 'accounts'
 urlpatterns = [
     path('login', TokenObtainPairView.as_view(), name='login'),
     path('refresh', TokenRefreshView.as_view(), name='refresh'),
-    path("logout", CustomTokenBlacklistView.as_view(), name="logout"),
+    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),
 ]

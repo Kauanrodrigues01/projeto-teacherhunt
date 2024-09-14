@@ -18,7 +18,7 @@ class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)
     
     def get(self, request):
-        q = request.query_params.get("q", "")
+        q = request.query_params.get('q', '')
         if q:
             search_terms = q.split()
             query = Q()
@@ -51,7 +51,7 @@ class TeacherList(APIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         
         serializer = TeacherSerializer(teacher, data=request.data, partial=True, context={'request_method': request.method})        
         serializer.is_valid(raise_exception=True)
@@ -63,7 +63,7 @@ class TeacherList(APIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         teacher.delete()
         teacher.user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -76,11 +76,11 @@ class TeacherProfileImageView(APIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         serializer = TeacherProfileImageSerializer(teacher, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"message": "Foto de perfil atualizada com sucesso"})
+        return Response({'message': 'Foto de perfil atualizada com sucesso'})
 
 class TeacherDetail(APIView):
     def get(self, request, pk):
@@ -96,7 +96,7 @@ class TeacherMeView(APIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            return Response({"error": "Professor não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         serializer = TeacherSerializer(teacher)
         return Response(serializer.data)
     
@@ -108,12 +108,12 @@ class TeacherListForSubjects(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class SubjectsList(viewsets.ModelViewSet):
-    queryset = Subject.objects.all()
+    queryset = Subject.objects.all().order_by('id')
     serializer_class = SubjectSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_queryset(self):
-        name = self.request.query_params.get("name", None)
+        name = self.request.query_params.get('name', None)
         queryset = self.queryset
         if name is not None:
             return queryset.filter(name__icontains=name)
@@ -140,9 +140,9 @@ class SubjectsList(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_permissions(self):
-        if self.request.method in ["GET", "HEAD", "OPTIONS"]:
+        if self.request.method in ['GET', 'HEAD', 'OPTIONS']:
             return [AllowAny()]
-        elif self.request.method in ["POST", "PUT", "DELETE"]:
+        elif self.request.method in ['POST', 'PUT', 'DELETE']:
             return [IsAdminUser()]
         return super().get_permissions()
     
@@ -155,7 +155,7 @@ class TeacherClassroomView(ListAPIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            raise NotFound(detail="Aluno não encontrado")
+            raise NotFound(detail='Aluno não encontrado')
 
         queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')
 
@@ -179,7 +179,7 @@ class TeacherClassroomDetailView(RetrieveAPIView):
         try:
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
-            raise NotFound(detail="Professor não encontrado")
+            raise NotFound(detail='Professor não encontrado')
 
         queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')
         return queryset
@@ -188,9 +188,9 @@ class TeacherClassroomDetailView(RetrieveAPIView):
         try:
             classroom = get_object_or_404(self.get_queryset(), pk=self.kwargs['pk'])
         except:
-            raise NotFound(detail="Aula não encontrada")
+            raise NotFound(detail='Aula não encontrada')
         if self.get_queryset().count() == 0:
-            raise NotFound(detail="Aula não encontrada")
+            raise NotFound(detail='Aula não encontrada')
         self.check_object_permissions(self.request, classroom)
         return classroom
 
@@ -201,17 +201,17 @@ class TeacherAcceptedClassroomView(APIView):
         user = request.user
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
         if user != classroom.teacher.user:
-            return Response({"error": "Você não tem permissão para aceitar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'Você não tem permissão para aceitar essa aula.'}, status=status.HTTP_403_FORBIDDEN)
         if classroom.status != 'P':
-            return Response({"error": "A aula já foi aceita ou cancelada, não é possível alterar."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'A aula já foi aceita ou cancelada, não é possível alterar.'}, status=status.HTTP_400_BAD_REQUEST)
         if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():
             classroom.status = 'C'
             classroom.save()
-            return Response({"error": "Já passou o horário da aula, não é possível aceitar."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Já passou o horário da aula, não é possível aceitar.'}, status=status.HTTP_400_BAD_REQUEST)
         
         classroom.status = 'A'
         classroom.save()
-        return Response({"message": "Aula aceita com sucesso."}, status=status.HTTP_200_OK)
+        return Response({'message': 'Aula aceita com sucesso.'}, status=status.HTTP_200_OK)
     
 class TeacherCancelledClassroomView(APIView):
     permission_classes = [IsTeacherAuthenticated]
@@ -220,16 +220,16 @@ class TeacherCancelledClassroomView(APIView):
         user = request.user
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
         if user != classroom.teacher.user:
-            return Response({"error": "Você não tem permissão para cancelar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'Você não tem permissão para cancelar essa aula.'}, status=status.HTTP_403_FORBIDDEN)
         if classroom.status != 'P':
-            return Response({"error": "Aula já foi aceita ou cancelada, não é possivel mudar."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Aula já foi aceita ou cancelada, não é possivel mudar.'}, status=status.HTTP_400_BAD_REQUEST)
         if classroom.status == 'C':
-            return Response({"error": "Aula já foi cancelada."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Aula já foi cancelada.'}, status=status.HTTP_400_BAD_REQUEST)
         if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():
             classroom.status = 'C'
             classroom.save()
-            return Response({"error": "Já passou o horário da aula, não é possivel cancelar."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Já passou o horário da aula, não é possivel cancelar.'}, status=status.HTTP_400_BAD_REQUEST)
 
         classroom.status = 'C'
         classroom.save()
-        return Response({"message": "Aula recusada com sucesso."}, status=status.HTTP_200_OK)
+        return Response({'message': 'Aula recusada com sucesso.'}, status=status.HTTP_200_OK)

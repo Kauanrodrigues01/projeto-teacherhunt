@@ -70,6 +70,6 @@ class AccountsTest(TestCase):
         response_attempt_refresh = self.refresh(refresh_token)
         self.assertEqual(response_logout.status_code, status.HTTP_205_RESET_CONTENT)
         self.assertEqual(response_attempt_refresh.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(response_attempt_refresh.data, {"detail": "Token está na blacklist", "code": "token_not_valid"})
+        self.assertEqual(response_attempt_refresh.data, {'detail': 'Token está na blacklist', 'code': 'token_not_valid'})
         
         

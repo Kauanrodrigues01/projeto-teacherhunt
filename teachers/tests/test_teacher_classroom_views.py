@@ -47,7 +47,7 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
 
         response = self.client.get(reverse('teachers:teacher-classroom-detail', kwargs={'pk': self.classroom.id}))
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, {"detail": "Aula não encontrada"})
+        self.assertEqual(response.data, {'detail': 'Aula não encontrada'})
 
     def test_if_to_accept_a_class_correctly(self):
         token = self.obtain_token()
@@ -75,7 +75,7 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
         self.classroom.refresh_from_db()
         self.assertEqual(self.classroom.status, 'P')
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(response.data, {"error": "Você não tem permissão para aceitar essa aula."})
+        self.assertEqual(response.data, {'error': 'Você não tem permissão para aceitar essa aula.'})
 
     def test_if_a_teacher_cannot_cencel_a_class_that_is_not_related_to_him(self):
         token = self.obtain_token(email='teacher2alternative@gmail.com', password='@Passwordteacher222')
@@ -85,5 +85,5 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
         self.classroom.refresh_from_db()
         self.assertEqual(self.classroom.status, 'P')
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(response.data, {"error": "Você não tem permissão para cancelar essa aula."})
+        self.assertEqual(response.data, {'error': 'Você não tem permissão para cancelar essa aula.'})
 

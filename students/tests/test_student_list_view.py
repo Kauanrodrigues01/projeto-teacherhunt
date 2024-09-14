@@ -6,22 +6,22 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 class studentListTests(StudentTestBase):
     def test_post_student(self):
         data = {
-            "nome": "Jane Doe",
-            "email": "jane@example.com",
-            "password": "@Password1234",
-            "password_confirmation": "@Password1234"
+            'nome': 'Jane Doe',
+            'email': 'jane@example.com',
+            'password': '@Password1234',
+            'password_confirmation': '@Password1234'
         }
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Student.objects.filter(name=data["nome"]).exists())
+        self.assertTrue(Student.objects.filter(name=data['nome']).exists())
 
     def test_put_all_fields_student(self):
         token = self.obtain_token()
         data = {
-            "nome": "John Smith",
-            "email": "putemail@gmail.com",
-            "password": "@Putpassword1234",
-            "password_confirmation": "@Putpassword1234"
+            'nome': 'John Smith',
+            'email': 'putemail@gmail.com',
+            'password': '@Putpassword1234',
+            'password_confirmation': '@Putpassword1234'
         }
         
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')

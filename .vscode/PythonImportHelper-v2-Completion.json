@@ -451,14 +451,6 @@
         "documentation": {}
     },
     {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
         "label": "include",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -1757,6 +1749,14 @@
         "documentation": {}
     },
     {
+        "label": "ClassroomView",
+        "importPath": "classroom.views",
+        "description": "classroom.views",
+        "isExtraImport": true,
+        "detail": "classroom.views",
+        "documentation": {}
+    },
+    {
         "label": "TeacherSerializer",
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
@@ -1899,7 +1899,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):\n    def validate(self, attrs):\n        '''\n        # Remove o \"access\" e cria um novo campo dentro de data e salva o \"access\"\n        # Remove o \"refresh\" e cria um novo campo dentro de data e salva o \"refresh\"\n        '''\n        data = super().validate(attrs)\n        data['token'] = data.pop(\"access\")\n        data['refresh_token'] = data.pop('refresh')\n        return data",
+        "peekOfCode": "class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):\n    def validate(self, attrs):\n        '''\n        # Remove o \"access\" e cria um novo campo dentro de data e salva o \"access\"\n        # Remove o \"refresh\" e cria um novo campo dentro de data e salva o \"refresh\"\n        '''\n        data = super().validate(attrs)\n        data['token'] = data.pop('access')\n        data['refresh_token'] = data.pop('refresh')\n        return data",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1908,7 +1908,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class CustomTokenRefreshSerializer(TokenRefreshSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs[\"refresh\"] = attrs.pop(\"refresh_token\")\n        data = super().validate(attrs)\n        data[\"token\"] = data.pop(\"access\")\n        data[\"refresh_token\"] = data.pop(\"refresh\")\n        return data\nclass CustomTokenBlacklistSerializer(TokenBlacklistSerializer):",
+        "peekOfCode": "class CustomTokenRefreshSerializer(TokenRefreshSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs['refresh'] = attrs.pop('refresh_token')\n        data = super().validate(attrs)\n        data['token'] = data.pop('access')\n        data['refresh_token'] = data.pop('refresh')\n        return data\nclass CustomTokenBlacklistSerializer(TokenBlacklistSerializer):",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1917,7 +1917,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs[\"refresh\"] = attrs.pop(\"refresh_token\")\n        return super().validate(attrs)\nclass UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)",
+        "peekOfCode": "class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):\n    refresh_token = serializers.CharField(required=True)\n    refresh = None\n    def validate(self, attrs):\n        attrs['refresh'] = attrs.pop('refresh_token')\n        return super().validate(attrs)\nclass UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1926,7 +1926,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)\n    class Meta:\n        model = User\n        fields = ['id', 'email', 'password', 'password_confirmation', 'is_teacher', 'is_student']\n    def validate(self, data):\n        if data['password'] != data['password_confirmation']:\n            raise serializers.ValidationError(\"As senhas não coincidem.\")",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    password_confirmation = serializers.CharField(write_only=True)\n    is_teacher = serializers.BooleanField(required=False)\n    is_student = serializers.BooleanField(required=False)\n    class Meta:\n        model = User\n        fields = ['id', 'email', 'password', 'password_confirmation', 'is_teacher', 'is_student']\n    def validate(self, data):\n        if data['password'] != data['password_confirmation']:\n            raise serializers.ValidationError('As senhas não coincidem.')",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -1935,7 +1935,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path(\"logout\", CustomTokenBlacklistView.as_view(), name=\"logout\"),\n]",
+        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n]",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -1944,7 +1944,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "urlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path(\"logout\", CustomTokenBlacklistView.as_view(), name=\"logout\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n]",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -2048,24 +2048,6 @@
         "documentation": {}
     },
     {
-        "label": "app_name",
-        "kind": 5,
-        "importPath": "classroom.urls",
-        "description": "classroom.urls",
-        "peekOfCode": "app_name = 'classroom'\nurlpatterns = [\n    path('alunos/agendar-aulas', ClassroomView.as_view(), name='classroom-list-create'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomView.as_view(), name='teacher-classroom')\n]",
-        "detail": "classroom.urls",
-        "documentation": {}
-    },
-    {
-        "label": "urlpatterns",
-        "kind": 5,
-        "importPath": "classroom.urls",
-        "description": "classroom.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos/agendar-aulas', ClassroomView.as_view(), name='classroom-list-create'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomView.as_view(), name='teacher-classroom')\n]",
-        "detail": "classroom.urls",
-        "documentation": {}
-    },
-    {
         "label": "ClassroomView",
         "kind": 6,
         "importPath": "classroom.views",
@@ -2088,7 +2070,7 @@
         "kind": 5,
         "importPath": "core.urls",
         "description": "core.urls",
-        "peekOfCode": "app_name = \"core\"\nurlpatterns = [\n    path(\"docs\", DocsView.as_view(), name=\"docs\"),\n]",
+        "peekOfCode": "app_name = 'core'\nurlpatterns = [\n    path('docs', DocsView.as_view(), name='docs'),\n]",
         "detail": "core.urls",
         "documentation": {}
     },
@@ -2097,7 +2079,7 @@
         "kind": 5,
         "importPath": "core.urls",
         "description": "core.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"docs\", DocsView.as_view(), name=\"docs\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('docs', DocsView.as_view(), name='docs'),\n]",
         "detail": "core.urls",
         "documentation": {}
     },
@@ -2106,7 +2088,7 @@
         "kind": 6,
         "importPath": "core.views",
         "description": "core.views",
-        "peekOfCode": "class DocsView(TemplateView):\n    template_name = \"redoc.html\"",
+        "peekOfCode": "class DocsView(TemplateView):\n    template_name = 'redoc.html'",
         "detail": "core.views",
         "documentation": {}
     },
@@ -2169,7 +2151,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    'rest_framework_simplejwt',\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n    \"debug_toolbar\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",",
+        "peekOfCode": "THIRD_PARTY_APPS = [\n    \"rest_framework\",\n    \"rest_framework_simplejwt\",\n    \"rest_framework_simplejwt.token_blacklist\",\n    \"corsheaders\",\n    \"drf_yasg\",\n    \"debug_toolbar\",\n]\nLOCAL_APPS = [\n    \"core.apps.CoreConfig\",",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2367,7 +2349,7 @@
         "kind": 5,
         "importPath": "setup.urls",
         "description": "setup.urls",
-        "peekOfCode": "schema_view = get_schema_view(\n    openapi.Info(\n        title=\"TeacherHunt API\",\n        default_version='v1',\n        description=\"Documentação da API do Projeto TeacherHunt\",\n        terms_of_service=\"https://www.google.com/policies/terms/\",\n        contact=openapi.Contact(email=\"kauanrl09@gmail.com\"),\n        license=openapi.License(name=\"BSD License\"),\n    ),\n    public=True,",
+        "peekOfCode": "schema_view = get_schema_view(\n    openapi.Info(\n        title='TeacherHunt API',\n        default_version='v1',\n        description='Documentação da API do Projeto TeacherHunt',\n        terms_of_service='https://www.google.com/policies/terms/',\n        contact=openapi.Contact(email='kauanrl09@gmail.com'),\n        license=openapi.License(name='BSD License'),\n    ),\n    public=True,",
         "detail": "setup.urls",
         "documentation": {}
     },
@@ -2376,7 +2358,7 @@
         "kind": 5,
         "importPath": "setup.urls",
         "description": "setup.urls",
-        "peekOfCode": "urlpatterns = [\n    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),\n    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"core.urls\", namespace=\"core\")),\n    path(\"api/\", include(\"teachers.urls\", namespace='teachers')),\n    path(\"api/\", include(\"students.urls\", namespace='students')),\n    path(\"api/\", include(\"classroom.urls\", namespace='classroom')),\n    path(\"api/auth/\", include(\"accounts.urls\", namespace='accounts')),",
+        "peekOfCode": "urlpatterns = [\n    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),\n    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n    path('admin/', admin.site.urls),\n    path('', include('core.urls', namespace='core')),\n    path('api/', include('teachers.urls', namespace='teachers')),\n    path('api/', include('students.urls', namespace='students')),\n    path('api/auth/', include('accounts.urls', namespace='accounts')),\n]",
         "detail": "setup.urls",
         "documentation": {}
     },
@@ -2403,7 +2385,7 @@
         "kind": 6,
         "importPath": "students.tests.test_student_list_view",
         "description": "students.tests.test_student_list_view",
-        "peekOfCode": "class studentListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            \"nome\": \"Jane Doe\",\n            \"email\": \"jane@example.com\",\n            \"password\": \"@Password1234\",\n            \"password_confirmation\": \"@Password1234\"\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "peekOfCode": "class studentListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            'nome': 'Jane Doe',\n            'email': 'jane@example.com',\n            'password': '@Password1234',\n            'password_confirmation': '@Password1234'\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
         "detail": "students.tests.test_student_list_view",
         "documentation": {}
     },
@@ -2430,7 +2412,7 @@
         "kind": 6,
         "importPath": "students.permissions",
         "description": "students.permissions",
-        "peekOfCode": "class StudentListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in [\"PUT\", \"DELETE\"]:\n            return request.user.is_authenticated and request.user.is_student\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)\nclass IsStudentAuthenticated(BasePermission):",
+        "peekOfCode": "class StudentListPermission(BasePermission):\n    def has_permission(self, request, view):\n        if request.method in SAFE_METHODS:\n            return True\n        if request.method in ['PUT', 'DELETE']:\n            return request.user.is_authenticated and request.user.is_student\n        if request.method == 'POST':\n            return not request.user.is_authenticated\n        return super().has_permission(request, view)\nclass IsStudentAuthenticated(BasePermission):",
         "detail": "students.permissions",
         "documentation": {}
     },
@@ -2448,7 +2430,7 @@
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    foto = serializers.ImageField(required=False, source=\"profile_image\")\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']\n    def validate(self, data):",
+        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    foto = serializers.ImageField(required=False, source='profile_image')\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']\n    def validate(self, data):",
         "detail": "students.serializers",
         "documentation": {}
     },
@@ -2457,7 +2439,7 @@
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)\n    class Meta:\n        model = Student\n        fields = [\"foto\"]",
+        "peekOfCode": "class StudentProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)\n    class Meta:\n        model = Student\n        fields = ['foto']",
         "detail": "students.serializers",
         "documentation": {}
     },
@@ -2466,7 +2448,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail')\n]",
+        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -2475,7 +2457,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail')\n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -2493,7 +2475,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentSerializer(student)\n        return Response(serializer.data)",
+        "peekOfCode": "class StudentMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentSerializer(student)\n        return Response(serializer.data)",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2502,7 +2484,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({\"error\": \"Aluno não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
+        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2511,7 +2493,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')",
+        "peekOfCode": "class StudentClassroomView(ListAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail='Aluno não encontrado')\n        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2520,7 +2502,25 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentClassroomDetailView(RetrieveAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail=\"Professor não encontrado\")\n        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')",
+        "peekOfCode": "class StudentClassroomDetailView(RetrieveAPIView):\n    permission_classes = [IsStudentAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            raise NotFound(detail='Professor não encontrado')\n        queryset = student.classrooms.all().order_by('day_of_class', 'start_time')",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "ClassroomCreateView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class ClassroomCreateView(ClassroomView):\n    http_method_names = ['post']\nclass ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "ClassroomUpdateView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2655,7 +2655,7 @@
         "kind": 6,
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
-        "peekOfCode": "class SubjectSerializer(serializers.ModelSerializer):\n    nome = serializers.CharField(required=True, max_length=255, source='name')\n    class Meta:\n        model = Subject\n        fields = (\"id\", \"nome\")\n    def validate(self, attrs):\n        name = attrs.get('name')\n        if not name or name.isdigit():\n            raise serializers.ValidationError({\"nome\": \"O nome deve ser um texto válido e não pode ser apenas números.\"})\n        if Subject.objects.filter(name=name).exists():",
+        "peekOfCode": "class SubjectSerializer(serializers.ModelSerializer):\n    nome = serializers.CharField(required=True, max_length=255, source='name')\n    class Meta:\n        model = Subject\n        fields = ('id', 'nome')\n    def validate(self, attrs):\n        name = attrs.get('name')\n        if not name or name.isdigit():\n            raise serializers.ValidationError({'nome': 'O nome deve ser um texto válido e não pode ser apenas números.'})\n        if Subject.objects.filter(name=name).exists():",
         "detail": "teachers.serializers",
         "documentation": {}
     },
@@ -2664,7 +2664,7 @@
         "kind": 6,
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
-        "peekOfCode": "class TeacherSerializer(serializers.ModelSerializer):\n    nome = serializers.CharField(required=True, source=\"name\")\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    descricao = serializers.CharField(required=True, source=\"description\")\n    idade = serializers.IntegerField(required=True, source=\"age\")\n    valor_hora = serializers.DecimalField(required=True, source=\"hourly_price\", max_digits=6, decimal_places=2)\n    materias = serializers.ListField(child=serializers.IntegerField(), required=True, source=\"subjects\")\n    materias_objetos = SubjectSerializer(many=True, source=\"subjects\", read_only=True)",
+        "peekOfCode": "class TeacherSerializer(serializers.ModelSerializer):\n    nome = serializers.CharField(required=True, source='name')\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    descricao = serializers.CharField(required=True, source='description')\n    idade = serializers.IntegerField(required=True, source='age')\n    valor_hora = serializers.DecimalField(required=True, source='hourly_price', max_digits=6, decimal_places=2)\n    materias = serializers.ListField(child=serializers.IntegerField(), required=True, source='subjects')\n    materias_objetos = SubjectSerializer(many=True, source='subjects', read_only=True)",
         "detail": "teachers.serializers",
         "documentation": {}
     },
@@ -2673,7 +2673,7 @@
         "kind": 6,
         "importPath": "teachers.serializers",
         "description": "teachers.serializers",
-        "peekOfCode": "class TeacherProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(\n        required=True, write_only=True, source=\"profile_image\"\n    )\n    class Meta:\n        model = Teacher\n        fields = [\"foto\"]",
+        "peekOfCode": "class TeacherProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(\n        required=True, write_only=True, source='profile_image'\n    )\n    class Meta:\n        model = Teacher\n        fields = ['foto']",
         "detail": "teachers.serializers",
         "documentation": {}
     },
@@ -2682,7 +2682,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "app_name = \"teachers\"\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),",
+        "peekOfCode": "app_name = 'teachers'\nrouter = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path('professores', TeacherList.as_view(), name='list'),\n    path('professores/<int:pk>', TeacherDetail.as_view(), name='detail'),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path('professores/foto', TeacherProfileImageView.as_view(), name='profile-image'),\n    path('professores/<int:pk>/materias', TeacherListForSubjects.as_view(), name='list-for-subject'),\n    path('professores/aulas', TeacherClassroomView.as_view(), name='teacher-classrooms'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2691,7 +2691,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"professores/aulas/<int:pk>\", TeacherClassroomDetailView.as_view(), name='teacher-classroom-detail'),",
+        "peekOfCode": "router = SimpleRouter(trailing_slash=False)\nrouter.register(r'materias', SubjectsList, basename='subjects')\nurlpatterns = [\n    path('professores', TeacherList.as_view(), name='list'),\n    path('professores/<int:pk>', TeacherDetail.as_view(), name='detail'),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path('professores/foto', TeacherProfileImageView.as_view(), name='profile-image'),\n    path('professores/<int:pk>/materias', TeacherListForSubjects.as_view(), name='list-for-subject'),\n    path('professores/aulas', TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path('professores/aulas/<int:pk>', TeacherClassroomDetailView.as_view(), name='teacher-classroom-detail'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2700,7 +2700,7 @@
         "kind": 5,
         "importPath": "teachers.urls",
         "description": "teachers.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"professores\", TeacherList.as_view(), name=\"list\"),\n    path(\"professores/<int:pk>\", TeacherDetail.as_view(), name=\"detail\"),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path(\"professores/foto\", TeacherProfileImageView.as_view(), name=\"profile-image\"),\n    path(\"professores/<int:pk>/materias\", TeacherListForSubjects.as_view(), name=\"list-for-subject\"),\n    path(\"professores/aulas\", TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path(\"professores/aulas/<int:pk>\", TeacherClassroomDetailView.as_view(), name='teacher-classroom-detail'),\n    path(\"professores/aulas/aceitar/<int:pk>\", TeacherAcceptedClassroomView.as_view(), name='teacher-accepted-classroom'),\n    path(\"professores/aulas/cancelar/<int:pk>\", TeacherCancelledClassroomView.as_view(), name='teacher-cancelled-classroom'),",
+        "peekOfCode": "urlpatterns = [\n    path('professores', TeacherList.as_view(), name='list'),\n    path('professores/<int:pk>', TeacherDetail.as_view(), name='detail'),\n    path('professores/me', TeacherMeView.as_view(), name='me'),\n    path('professores/foto', TeacherProfileImageView.as_view(), name='profile-image'),\n    path('professores/<int:pk>/materias', TeacherListForSubjects.as_view(), name='list-for-subject'),\n    path('professores/aulas', TeacherClassroomView.as_view(), name='teacher-classrooms'),\n    path('professores/aulas/<int:pk>', TeacherClassroomDetailView.as_view(), name='teacher-classroom-detail'),\n    path('professores/aulas/aceitar/<int:pk>', TeacherAcceptedClassroomView.as_view(), name='teacher-accepted-classroom'),\n    path('professores/aulas/cancelar/<int:pk>', TeacherCancelledClassroomView.as_view(), name='teacher-cancelled-classroom'),",
         "detail": "teachers.urls",
         "documentation": {}
     },
@@ -2709,7 +2709,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get(\"q\", \"\")\n        if q:\n            search_terms = q.split()\n            query = Q()\n            for term in search_terms:\n                term = term.strip()\n                if len(term) > 3: ",
+        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get('q', '')\n        if q:\n            search_terms = q.split()\n            query = Q()\n            for term in search_terms:\n                term = term.strip()\n                if len(term) > 3: ",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2718,7 +2718,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
+        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2736,7 +2736,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({\"error\": \"Professor não encontrado.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
+        "peekOfCode": "class TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2745,7 +2745,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all().order_by('-id')\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]",
+        "peekOfCode": "class TeacherListForSubjects(APIView):\n    def get(self, request, pk):\n        subject = get_object_or_404(Subject.objects.all(), pk=pk)\n        teachers = subject.teachers.all().order_by('-id')\n        serializer = TeacherSerializer(teachers, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\nclass SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().order_by('id')\n    serializer_class = SubjectSerializer\n    http_method_names = ['get', 'post', 'put', 'delete']",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2754,7 +2754,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all()\n    serializer_class = SubjectSerializer\n    http_method_names = [\"get\", \"post\", \"put\", \"delete\"]\n    def get_queryset(self):\n        name = self.request.query_params.get(\"name\", None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
+        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().order_by('id')\n    serializer_class = SubjectSerializer\n    http_method_names = ['get', 'post', 'put', 'delete']\n    def get_queryset(self):\n        name = self.request.query_params.get('name', None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2763,7 +2763,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Aluno não encontrado\")\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
+        "peekOfCode": "class TeacherClassroomView(ListAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail='Aluno não encontrado')\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2772,7 +2772,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherClassroomDetailView(RetrieveAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail=\"Professor não encontrado\")\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
+        "peekOfCode": "class TeacherClassroomDetailView(RetrieveAPIView):\n    permission_classes = [IsTeacherAuthenticated]\n    serializer_class = ClassroomSerializer\n    def get_queryset(self):\n        user = self.request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            raise NotFound(detail='Professor não encontrado')\n        queryset = teacher.classrooms.all().order_by('day_of_class', 'start_time')",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2781,7 +2781,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherAcceptedClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        user = request.user\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        if user != classroom.teacher.user:\n            return Response({\"error\": \"Você não tem permissão para aceitar essa aula.\"}, status=status.HTTP_403_FORBIDDEN)\n        if classroom.status != 'P':\n            return Response({\"error\": \"A aula já foi aceita ou cancelada, não é possível alterar.\"}, status=status.HTTP_400_BAD_REQUEST)\n        if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():",
+        "peekOfCode": "class TeacherAcceptedClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        user = request.user\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        if user != classroom.teacher.user:\n            return Response({'error': 'Você não tem permissão para aceitar essa aula.'}, status=status.HTTP_403_FORBIDDEN)\n        if classroom.status != 'P':\n            return Response({'error': 'A aula já foi aceita ou cancelada, não é possível alterar.'}, status=status.HTTP_400_BAD_REQUEST)\n        if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -2790,7 +2790,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherCancelledClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        user = request.user\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        if user != classroom.teacher.user:\n            return Response({\"error\": \"Você não tem permissão para cancelar essa aula.\"}, status=status.HTTP_403_FORBIDDEN)\n        if classroom.status != 'P':\n            return Response({\"error\": \"Aula já foi aceita ou cancelada, não é possivel mudar.\"}, status=status.HTTP_400_BAD_REQUEST)\n        if classroom.status == 'C':",
+        "peekOfCode": "class TeacherCancelledClassroomView(APIView):\n    permission_classes = [IsTeacherAuthenticated]\n    def post(self, request, pk):\n        user = request.user\n        classroom = get_object_or_404(Classroom.objects.all(), pk=pk)\n        if user != classroom.teacher.user:\n            return Response({'error': 'Você não tem permissão para cancelar essa aula.'}, status=status.HTTP_403_FORBIDDEN)\n        if classroom.status != 'P':\n            return Response({'error': 'Aula já foi aceita ou cancelada, não é possivel mudar.'}, status=status.HTTP_400_BAD_REQUEST)\n        if classroom.status == 'C':",
         "detail": "teachers.views",
         "documentation": {}
     },
