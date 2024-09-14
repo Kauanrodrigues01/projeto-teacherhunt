@@ -207,7 +207,7 @@ class TeacherAcceptedClassroomView(APIView):
         if classroom.start_time < timezone.now().time() and classroom.day_of_class == timezone.now().date():
             classroom.status = 'C'
             classroom.save()
-            return Response({"error": "Já passou o horário da aula, não é possível cancelar."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Já passou o horário da aula, não é possível aceitar."}, status=status.HTTP_400_BAD_REQUEST)
         
         classroom.status = 'A'
         classroom.save()
@@ -220,7 +220,7 @@ class TeacherCancelledClassroomView(APIView):
         user = request.user
         classroom = get_object_or_404(Classroom.objects.all(), pk=pk)
         if user != classroom.teacher.user:
-            return Response({"error": "Você não tem permissão para aceitar essa aula."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({"error": "Você não tem permissão para cancelar essa aula."}, status=status.HTTP_403_FORBIDDEN)
         if classroom.status != 'P':
             return Response({"error": "Aula já foi aceita ou cancelada, não é possivel mudar."}, status=status.HTTP_400_BAD_REQUEST)
         if classroom.status == 'C':

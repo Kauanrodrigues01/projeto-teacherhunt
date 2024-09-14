@@ -13,14 +13,14 @@ class StudentTestBase(TestCase):
         self.url = reverse('students:list')
 
         # Criar um usuário
-        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_student=True)
+        self.user = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True)
         self.student = Student.objects.create(
             user=self.user,
             name='John Doe',
         )
         self.image = SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
         
-    def obtain_token(self, email='teacher@example.com', password='@Password1234'):
+    def obtain_token(self, email='user@example.com', password='@Password1234'):
         login_url = reverse('accounts:login')
         response_token = self.client.post(login_url, {
             'email': email,
@@ -36,7 +36,7 @@ class StudentTestBase(TestCase):
     def obtain_refresh_token(self):
         login_url = reverse('accounts:login')
         response_token = self.client.post(login_url, {
-            'email': 'teacher@example.com',
+            'email': 'user@example.com',
             'password': '@Password1234'
         })
         return response_token.data['refresh_token']
