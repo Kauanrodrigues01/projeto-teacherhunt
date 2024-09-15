@@ -331,6 +331,14 @@
         "documentation": {}
     },
     {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "serializers",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -579,6 +587,14 @@
         "documentation": {}
     },
     {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -795,6 +811,54 @@
         "documentation": {}
     },
     {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -1000,6 +1064,14 @@
         "description": "accounts.models",
         "isExtraImport": true,
         "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
         "documentation": {}
     },
     {
@@ -1379,6 +1451,14 @@
         "documentation": {}
     },
     {
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
+        "isExtraImport": true,
+        "detail": "classroom.models",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -1488,6 +1568,30 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
         "documentation": {}
     },
     {
@@ -2549,12 +2653,30 @@
         "documentation": {}
     },
     {
+        "label": "TestBaseCreateClassroomView",
+        "kind": 6,
+        "importPath": "students.tests.base.test_base_student_create_classroom",
+        "description": "students.tests.base.test_base_student_create_classroom",
+        "peekOfCode": "class TestBaseCreateClassroomView(TestCase):\n    def setUp(self):\n        self.tomorrow = self.create_tomorrow_date()\n        self.yesterday = self.create_yesterday_date()\n        self.today = self.create_today_date()\n        self.client = APIClient()\n        self.url = reverse('students:student-create-classroom')\n        self.user_student = User.objects.create_user(\n            email='user@example.com',\n            password='@Password1234',",
+        "detail": "students.tests.base.test_base_student_create_classroom",
+        "documentation": {}
+    },
+    {
         "label": "StudentTestBase",
         "kind": 6,
         "importPath": "students.tests.base.test_base_student_view",
         "description": "students.tests.base.test_base_student_view",
         "peekOfCode": "class StudentTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('students:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True)\n        self.student = Student.objects.create(\n            user=self.user,\n            name='John Doe',\n        )",
         "detail": "students.tests.base.test_base_student_view",
+        "documentation": {}
+    },
+    {
+        "label": "StudentCreateClassroomView",
+        "kind": 6,
+        "importPath": "students.tests.test_student_create_classrooms_views",
+        "description": "students.tests.test_student_create_classrooms_views",
+        "peekOfCode": "class StudentCreateClassroomView(TestBaseCreateClassroomView):\n    def test_create_classroom(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f\"Bearer {token}\")\n        response = self.client.post(self.url, self.data, format='json')\n        data_objeto = datetime.strptime(self.data['dia_da_aula'], '%Y-%m-%d')\n        data_formatada = data_objeto.strftime('%d/%m/%Y')\n        horario_objeto = datetime.strptime(self.data['horario_de_inicio'], '%H:%M').time()\n        horario_formatado = horario_objeto.strftime('%H:%M:%S')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "detail": "students.tests.test_student_create_classrooms_views",
         "documentation": {}
     },
     {

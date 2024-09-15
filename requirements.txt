@@ -1,11 +1,14 @@
 asgiref==3.8.1
+astroid==3.2.4
 black==24.8.0
 click==8.1.7
 colorama==0.4.6
+dill==0.3.8
 dj-database-url==2.0.0
 Django==5.1.1
 django-cors-headers==4.4.0
 django-debug-toolbar==4.4.6
+django-stubs-ext==5.0.4
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 docopt==0.6.2
@@ -13,6 +16,7 @@ drf-yasg==1.21.7
 inflection==0.5.1
 iniconfig==2.0.0
 isort==5.13.2
+mccabe==0.7.0
 mypy-extensions==1.0.0
 mysql-connector-python==9.0.0
 mysqlclient==2.2.4
@@ -21,7 +25,10 @@ pathspec==0.12.1
 pillow==10.4.0
 platformdirs==4.2.2
 pluggy==1.5.0
+pycodestyle==2.12.1
+pyflakes==3.2.0
 PyJWT==2.9.0
+pylint-plugin-utils==0.8.2
 pytest==8.3.3
 pytest-django==4.9.0
 pytest-watch==4.2.0
@@ -30,6 +37,8 @@ pytz==2024.1
 PyYAML==6.0.2
 setuptools==74.1.2
 sqlparse==0.5.1
+tomlkit==0.13.2
+types-PyYAML==6.0.12.20240808
 typing_extensions==4.12.2
 tzdata==2024.1
 uritemplate==4.1.1

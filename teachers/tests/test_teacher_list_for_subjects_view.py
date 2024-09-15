@@ -26,5 +26,6 @@ class TestTeacherListForSubjectsView(TeacherTestBase):
         teacher2_serializer_data = teacher2_serializer.data
         if isinstance(response_data, dict):
             response_data = [response_data]
+        self.assertEqual(response.status_code, rest_framework.status.HTTP_200_OK)
         self.assertNotIn(teacher2_serializer_data, response_data)
         self.assertEqual(len(response_data), 1)

@@ -64,26 +64,30 @@ class ClassroomSerializer(serializers.ModelSerializer):
         if (str(start_time)[:-3]) not in horarios_validos:
             errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 20:00 com um intervalo de uma hora.')
 
-        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student).exclude(pk=classroom_id).exists():
-            errors['error'].append('Você já tem uma aula marcada para esse dia e horário.')
-
-        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student, teacher=teacher).exclude(pk=classroom_id).exists():
-            errors['error'].append('Você já tem uma aula marcada com este professor para esse dia e horário.') 
-
         if day_of_class == now.date():
            errors['dia_da_aula'].append('Não é possível marcar aulas no mesmo dia. A aula deve ser marcada com antecedência.')
 
         if day_of_class < now.date():
             errors['dia_da_aula'].append('A data da aula não pode ser no passado.')
 
-        if number_of_hours < 1:
-            errors['numero_de_horas'].append('O número de horas deve ser maior que 0.')
+        if number_of_hours is None:
+            errors['numero_de_horas'].append('Este campo é obrigatório.')
 
-        if start_time and number_of_hours:
+        if number_of_hours is not None:
+            if number_of_hours < 1:
+                errors['numero_de_horas'].append('O número de horas deve ser maior que 0.')
+
+        if start_time and number_of_hours and start_time is not None and number_of_hours is not None:
             datetime_start = timezone.make_aware(timezone.datetime.combine(day_of_class, start_time))
             datetime_end = datetime_start + timedelta(hours=number_of_hours)
         else:
             datetime_end = timezone.make_aware(timezone.datetime.combine(day_of_class, start_time))
+
+        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student).exclude(pk=classroom_id).exists():
+            errors['error'].append('O estudante já tem uma aula marcada nesse horário.')
+
+        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student, teacher=teacher).exclude(pk=classroom_id).exists():
+            errors['error'].append('Você já tem uma aula marcada com este professor para esse dia e horário.') 
 
         overlapping_classes_teacher = Classroom.objects.filter(
             teacher=teacher,
@@ -100,10 +104,10 @@ class ClassroomSerializer(serializers.ModelSerializer):
         )
 
         if overlapping_classes_teacher.exists():
-            errors['professor'].append('O professor já tem uma aula marcada nesse horário.')
+            errors['error'].append('O professor já tem uma aula marcada nesse horário.')
 
         if overlapping_classes_student.exists():
-            errors['aluno'].append('O estudante já tem uma aula marcada nesse horário.')
+            errors['error'].append('O estudante já tem uma aula marcada nesse horário.')
 
         if errors:
             raise serializers.ValidationError(errors)
