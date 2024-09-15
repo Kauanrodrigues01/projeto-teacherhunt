@@ -218,6 +218,14 @@
         "documentation": {}
     },
     {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
         "label": "rest_framework",
         "kind": 6,
         "isExtraImport": true,
@@ -276,6 +284,14 @@
     },
     {
         "label": "permissions",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
         "isExtraImport": true,
@@ -419,6 +435,14 @@
         "documentation": {}
     },
     {
+        "label": "APIClient",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
         "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -491,6 +515,38 @@
         "documentation": {}
     },
     {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -675,6 +731,38 @@
         "documentation": {}
     },
     {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -880,6 +968,14 @@
         "description": "accounts.models",
         "isExtraImport": true,
         "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
         "documentation": {}
     },
     {
@@ -1243,6 +1339,14 @@
         "documentation": {}
     },
     {
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
+        "isExtraImport": true,
+        "detail": "classroom.models",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -1328,6 +1432,38 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
         "documentation": {}
     },
     {
@@ -2372,6 +2508,15 @@
         "documentation": {}
     },
     {
+        "label": "StudentClassroomTestBase",
+        "kind": 6,
+        "importPath": "students.tests.base.test_base_student_classroom",
+        "description": "students.tests.base.test_base_student_classroom",
+        "peekOfCode": "class StudentClassroomTestBase(TestCase):\n    def setUp(self):\n        self.tomorrow = self.create_tomorrow_date()\n        self.yesterday = self.create_yesterday_date()\n        self.today = self.create_today_date()\n        self.client = APIClient()\n        self.student = self.create_student(\n            email='user@example.com', \n            password='@Password1234',\n            name='John Doe Student',",
+        "detail": "students.tests.base.test_base_student_classroom",
+        "documentation": {}
+    },
+    {
         "label": "StudentTestBase",
         "kind": 6,
         "importPath": "students.tests.base.test_base_student_view",
@@ -2390,12 +2535,39 @@
         "documentation": {}
     },
     {
+        "label": "StudentTestMeView",
+        "kind": 6,
+        "importPath": "students.tests.test_student_me_view",
+        "description": "students.tests.test_student_me_view",
+        "peekOfCode": "class StudentTestMeView(StudentTestBase):\n    def test_if_the_data_of_the_logged_in_student_is_returned(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(reverse('students:me'))\n        self.assertEqual(response.status_code, 200)\n        self.assertEqual(response.data['id'], self.student.id)\n        self.assertEqual(response.data['nome'], self.student.name)\n        self.assertEqual(response.data['email'], self.student.user.email)",
+        "detail": "students.tests.test_student_me_view",
+        "documentation": {}
+    },
+    {
         "label": "StudentProfileImageViewTest",
         "kind": 6,
         "importPath": "students.tests.test_student_profile_image_view",
         "description": "students.tests.test_student_profile_image_view",
         "peekOfCode": "class StudentProfileImageViewTest(StudentTestBase):\n    def create_test_image(self):\n        # Criando uma imagem em branco (RGB) de 100x100 pixels\n        image = Image.new('RGB', (100, 100))\n        img_io = BytesIO()\n        image.save(img_io, format='JPEG')\n        img_io.seek(0)\n        return img_io\n    def test_upload_image_student_related_to_user(self):\n        token = self.obtain_token()",
         "detail": "students.tests.test_student_profile_image_view",
+        "documentation": {}
+    },
+    {
+        "label": "TestTeacherClassroomsViews",
+        "kind": 6,
+        "importPath": "students.tests.test_student_read_classrooms_views",
+        "description": "students.tests.test_student_read_classrooms_views",
+        "peekOfCode": "class TestTeacherClassroomsViews(StudentClassroomTestBase):\n    def test_if_a_student_can_only_view_classes_related_to_them(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(reverse('students:student-classrooms'))\n        self.assertEqual(response.status_code, 200)\n        self.assertEqual(len(response.data), self.student.classrooms.count()) # Aplicar nos testes de teachers\n        self.assertEqual(len(response.data), 3) \n        self.assertEqual(response.data[0]['id'], self.classroom.id)\n        self.assertEqual(response.data[1]['id'], self.classroom_accepted.id)",
+        "detail": "students.tests.test_student_read_classrooms_views",
+        "documentation": {}
+    },
+    {
+        "label": "TestTeacherClassroomsViews",
+        "kind": 6,
+        "importPath": "students.tests.test_student_update_classrooms_views",
+        "description": "students.tests.test_student_update_classrooms_views",
+        "peekOfCode": "class TestTeacherClassroomsViews(StudentClassroomTestBase):\n    def test_update_all_fields_in_the_class(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        data={ \n            'dia_da_aula': self.tomorrow + timedelta(days=1),\n            'horario_de_inicio': '14:00',\n            'numero_de_horas': 2,\n            'descricao_da_aula': 'Aula de teste atulizada'\n        }",
+        "detail": "students.tests.test_student_update_classrooms_views",
         "documentation": {}
     },
     {

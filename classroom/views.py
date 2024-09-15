@@ -33,9 +33,13 @@ class ClassroomView(APIView):
             return Response({'detail': 'Não é possível alterar o estudante de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
         if request.data.get('professor', None) is not None:
             return Response({'detail': 'Não é possível alterar o professor de uma aula.'}, status=status.HTTP_400_BAD_REQUEST)
-        request.data['aluno'] = classroom.student.id
-        request.data['professor'] = classroom.teacher.id
-        serializer =  ClassroomSerializer(instance=classroom, data=request.data, context={'request_method': request.method})
+        if classroom.status != 'P':
+            return Response({'detail': 'Está aula já foi aceita ou cancelada não é possivel altera-lá.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        data = request.data.copy()
+        data['aluno'] = classroom.student.id
+        data['professor'] = classroom.teacher.id
+        serializer =  ClassroomSerializer(instance=classroom, data=data, context={'request_method': request.method})
         serializer.is_valid(raise_exception=True)
         serializer.status = 'P'
         serializer.save()

@@ -18,11 +18,11 @@ class ClassroomSerializer(serializers.ModelSerializer):
     numero_de_horas = serializers.IntegerField(source='number_of_hours',  required=False)
     preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)
     status = serializers.SerializerMethodField()
-    descricao_aula = serializers.CharField(source='description_about_class', required=False)
+    descricao_da_aula = serializers.CharField(source='description_about_class', required=False)
     
     class Meta:
         model = Classroom
-        fields = ['id', 'aluno', 'professor', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_aula']
+        fields = ['id', 'aluno', 'professor', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_da_aula']
 
     def get_status(self, obj):
         if obj.get_status_display() == 'Pending':
@@ -42,25 +42,33 @@ class ClassroomSerializer(serializers.ModelSerializer):
         student = data.get('student')
         # Gera uma lista de horários válidos de 07:00 até 20:00 com um intervalo de uma hora
         horarios_validos = [f"{hour:02d}:00" for hour in range(7, 21)]
+        description_about_class = data.get('description_about_class', None)
 
         errors = defaultdict(list)
-        day_of_class_date_obj = datetime.strptime(day_of_class, '%Y-%m-%d').date() if not isinstance(day_of_class, date) else day_of_class
+        if day_of_class is not None:
+            day_of_class_date_obj = datetime.strptime(day_of_class, '%Y-%m-%d').date() if not isinstance(day_of_class, date) else day_of_class
 
         if self.context.get('request_method') == 'PUT':
-            if self.instance.day_of_class - now.date() < timedelta(days=2) and day_of_class_date_obj - now.date() < timedelta(days=2):
-                raise serializers.ValidationError('Não é possível alterar aulas com menos de 2 dias de antecedência.')
+            if day_of_class is not None:
+                if self.instance.day_of_class - now.date() < timedelta(days=2) and day_of_class_date_obj - now.date() < timedelta(days=2):
+                    raise serializers.ValidationError('Não é possível alterar aulas com menos de 2 dias de antecedência.')
             if day_of_class is None:
                 day_of_class = self.instance.day_of_class
             if start_time is None:
                 start_time = self.instance.start_time
             if number_of_hours is None:
                 number_of_hours = self.instance.number_of_hours
-
+            if description_about_class is None:
+                description_about_class = self.instance.description_about_class
+            
         if (str(start_time)[:-3]) not in horarios_validos:
             errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 20:00 com um intervalo de uma hora.')
 
-        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, teacher=teacher, student=student).exclude(pk=classroom_id).exists():
-            errors['error'].append('Já existe uma aula marcada para esse dia e horário.') 
+        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student).exclude(pk=classroom_id).exists():
+            errors['error'].append('Você já tem uma aula marcada para esse dia e horário.')
+
+        if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student, teacher=teacher).exclude(pk=classroom_id).exists():
+            errors['error'].append('Você já tem uma aula marcada com este professor para esse dia e horário.') 
 
         if day_of_class == now.date():
            errors['dia_da_aula'].append('Não é possível marcar aulas no mesmo dia. A aula deve ser marcada com antecedência.')

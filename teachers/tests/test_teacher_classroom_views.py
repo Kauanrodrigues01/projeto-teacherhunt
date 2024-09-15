@@ -13,7 +13,7 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
         self.assertEqual(response.data[1]['id'], self.classroom_accepted.id)
         self.assertEqual(response.data[2]['id'], self.classroom_cancelled.id)
 
-    def test_whether_the_class_status_filter_is_working_correctly(self):
+    def test_if_the_class_status_filter_is_working_correctly_from_the_teacher_view(self):
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         status_mapping =[
@@ -30,7 +30,6 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
             self.assertEqual(response.data[0]['id'], id_classroom)
             self.assertEqual(len(response.data), 1)
 
-
     def test_if_a_teacher_can_view_the_classroom_detail_related_to_them(self):
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
@@ -39,7 +38,6 @@ class TestTeacherClassroomsViews(TeacherClassroomTestBase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], self.classroom.id)
         self.assertEqual(response.data['professor'], self.teacher.id)
-        self.assertNotEqual(response.data['professor'], self.teacher_alternative.id)
 
     def test_if_a_teacher_cannot_view_the_classroom_detail_that_is_not_related_to_him(self):
         token = self.obtain_token(email='teacher2alternative@gmail.com', password='@Passwordteacher222')
