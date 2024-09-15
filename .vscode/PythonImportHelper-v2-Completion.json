@@ -883,6 +883,14 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -2684,7 +2692,7 @@
         "kind": 6,
         "importPath": "students.tests.test_student_list_view",
         "description": "students.tests.test_student_list_view",
-        "peekOfCode": "class studentListTests(StudentTestBase):\n    def test_post_student(self):\n        data = {\n            'nome': 'Jane Doe',\n            'email': 'jane@example.com',\n            'password': '@Password1234',\n            'password_confirmation': '@Password1234'\n        }\n        response = self.client.post(self.url, data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)",
+        "peekOfCode": "class studentListTests(StudentTestBase):\n    def test_post_student(self):\n        response = self.client.post(self.url, self.data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)\n        self.assertTrue(Student.objects.filter(name=self.data['nome']).exists())\n        self.assertTrue(User.objects.filter(email=self.data['email']).exists())\n    def test_post_student_with_invalid_email(self):\n        self.data['email'] = 'janeexample.com',\n        response = self.client.post(self.url, self.data, format='json')\n        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)",
         "detail": "students.tests.test_student_list_view",
         "documentation": {}
     },
@@ -2756,7 +2764,7 @@
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=True, source='name')\n    foto = serializers.ImageField(required=False, source='profile_image')\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']\n    def validate(self, data):",
+        "peekOfCode": "class StudentSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(required=True, source='user.email')\n    password = serializers.CharField(write_only=True)\n    password_confirmation = serializers.CharField(write_only=True)\n    nome = serializers.CharField(required=False, source='name')\n    foto = serializers.ImageField(required=False, source='profile_image')\n    class Meta:\n        model = Student\n        fields = ['id', 'nome', 'password', 'password_confirmation', 'email', 'foto']\n    def validate(self, data):",
         "detail": "students.serializers",
         "documentation": {}
     },

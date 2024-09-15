@@ -19,6 +19,13 @@ class StudentTestBase(TestCase):
             name='John Doe',
         )
         self.image = SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
+
+        self.data = {
+            'nome': 'Jane Doe',
+            'email': 'jane@example.com',
+            'password': '@Password1234',
+            'password_confirmation': '@Password1234'
+        }
         
     def obtain_token(self, email='user@example.com', password='@Password1234'):
         login_url = reverse('accounts:login')

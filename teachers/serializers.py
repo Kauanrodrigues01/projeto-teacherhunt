@@ -148,7 +148,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             errors['email'].append('O email é obrigatório')
         if email is not None:
             if User.objects.filter(email=email).exists():
-                errors['email'].append('O email já está em uso')
+                errors['email'].append('Este email já está cadastrado')
             if not verificar_email_valido(email) and email is not None:
                 errors['email'].append('Insira um email válido')
 

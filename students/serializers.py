@@ -10,7 +10,7 @@ class StudentSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, source='user.email')
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
-    nome = serializers.CharField(required=True, source='name')
+    nome = serializers.CharField(required=False, source='name')
     foto = serializers.ImageField(required=False, source='profile_image')
     
     class Meta:
@@ -41,7 +41,7 @@ class StudentSerializer(serializers.ModelSerializer):
             if password_confirmation.strip() == '' or password_confirmation is None:
                 errors['password_confirmation'].append('O campo password_confirmation é obrigatório')
             if password != password_confirmation:
-                errors['password'].append('As senhas não coincidem.')
+                errors['password'].append('As senhas não conferem.')
             
             # Validação de força da senha
             if len(password) < 8:
@@ -54,16 +54,16 @@ class StudentSerializer(serializers.ModelSerializer):
                 errors['password'].append('A senha deve conter pelo menos um número.')
             if not re.search(r'[@#$%^&+=]', password):
                 errors['password'].append('A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).')
-        
+
         if not name or name.isnumeric():
-            errors['nome'].append('O nome não pode ser vazio e não pode ser apenas números.')
-        if len(name) < 3:
-            errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
+            errors['nome'].append('O nome não pode ser apenas números.')
+        if len(name) < 5:
+            errors['nome'].append('O nome deve ter no mínimo 5 caracteres.')
         if len(name) > 255:
             errors['nome'].append('O nome deve ter no máximo 255 caracteres.')
         
         if User.objects.filter(email=email).exists():
-            errors['email'].append('O email já está em uso')
+            errors['email'].append('Este email já está cadastrado')
         if not verificar_email_valido(email) and email is not None:
             errors['email'].append('Insira um email válido')
         
