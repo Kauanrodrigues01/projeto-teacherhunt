@@ -13,19 +13,139 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.data, serializer.data)
 
     def test_post_teacher(self):
-        data = {
-            'nome': 'Jane Doe',
-            'descricao': 'An excellent teacher',
-            'valor_hora': 60.00,
-            'idade': 28,
-            'materias': [self.subject.id],
-            'email': 'jane@example.com',
-            'password': '@Password1234',
-            'password_confirmation': '@Password1234'
-        }
-        response = self.client.post(self.url, data, format='json')
+        response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Teacher.objects.filter(name=data['nome']).exists())
+        self.assertTrue(Teacher.objects.filter(name=self.data['nome']).exists())
+
+    def test_post_teacher_with_invalid_email(self):
+        self.data['email'] = 'janeexample.com',
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(Teacher.objects.filter(name=self.data['nome']).exists())
+        self.assertEqual(response.data['email'][0], 'Insira um endereço de email válido.')
+
+    def test_post_teacher_with_invalid_password(self):
+        self.data['password'] = 'password'
+        self.data['password_confirmation'] = 'password'
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(Teacher.objects.filter(name=self.data['nome']).exists())
+        self.assertEqual(response.data['password'][0], 'A senha deve conter pelo menos uma letra maiúscula.')
+        self.assertEqual(response.data['password'][1], 'A senha deve conter pelo menos um número.')
+        self.assertEqual(response.data['password'][2], 'A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).')
+
+    def test_post_teacher_with_password_confirmation_not_matching(self):
+        self.data['password'] = '@Password123'
+        self.data['password_confirmation'] = '@Password1234'
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(Teacher.objects.filter(name=self.data['nome']).exists())
+        self.assertEqual(response.data['password'][0], 'As senhas não conferem.')
+
+    def test_post_teacher_with_email_already_registered(self):
+        self.client.post(self.url, self.data, format='json')
+        self.data['nome'] = 'Teacher alternative'
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['email'][0], 'Este email já está cadastrado')
+    
+    def test_post_teacher_with_empty_name(self):
+        self.data['nome'] = ''
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'Este campo não pode ser em branco.')
+
+    def test_post_teacher_with_name_only_numbers(self):
+        self.data['nome'] = '1234'
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'O nome deve conter apenas letras.')
+
+    def test_post_teacher_with_name_special_characters(self):
+        self.data['nome'] = '@#$%&*'
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'O nome deve conter apenas letras.')
+
+    def test_post_teacher_with_name_less_than_3_characters(self):
+        self.data['nome'] = 'Jo'
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'O nome deve ter no mínimo 3 caracteres.')
+
+    def test_post_teacher_with_name_greater_than_255_characters(self):
+        self.data['nome'] = 'J' * 256
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'O nome deve ter no máximo 255 caracteres.')
+
+    def test_post_teacher_with_empty_description(self):
+        self.data['descricao'] = ''
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['descricao'][0], 'Este campo não pode ser em branco.')
+
+    def test_post_teacher_with_description_only_numbers(self):
+        self.data['descricao'] = '1234567890'
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['descricao'][0], 'A descrição não pode ser apenas números.')
+
+    def test_post_teacher_with_age_empty(self):
+        self.data['idade'] = ''
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['idade'][0], 'Um número inteiro válido é exigido.')
+
+    def test_post_teacher_with_age_negative(self):
+        self.data['idade'] = -1
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['idade'][0], 'A idade deve ser maior que zero.')
+
+    def test_post_teacher_with_hourly_price_empty(self):
+        self.data['valor_hora'] = ''
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['valor_hora'][0], 'Um número válido é necessário.')
+
+    def test_post_teacher_with_hourly_price_negative(self):
+        self.data['valor_hora'] = -1
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['valor_hora'][0], 'O valor por hora deve ser maior que zero.')
+
+    def test_post_teacher_without_the_name(self):
+        del self.data['nome']
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['nome'][0], 'Este campo é obrigatório.')
+
+    def test_post_teacher_without_the_description(self):
+        del self.data['descricao']
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['descricao'][0], 'Este campo é obrigatório.')
+    
+    def test_post_teacher_without_the_hourly_price(self):
+        del self.data['valor_hora']
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['valor_hora'][0], 'Este campo é obrigatório.')
+
+    def test_post_teacher_without_the_age(self):
+        del self.data['idade']
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['idade'][0], 'Este campo é obrigatório.')
+
+    def test_post_teacher_without_the_subjects(self):
+        del self.data['materias']
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['materias'][0], 'Este campo é obrigatório.')
 
     def test_put_all_fields_teacher(self):
         token = self.obtain_token()

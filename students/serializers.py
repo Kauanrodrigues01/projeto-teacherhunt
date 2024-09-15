@@ -24,6 +24,7 @@ class StudentSerializer(serializers.ModelSerializer):
         password_confirmation = data.get('password_confirmation')
         errors = defaultdict(list)
         request_method = self.context.get('request_method')
+        pattern = r'^[a-zA-Z]+$'
         
         if request_method == 'PUT':
             if self.instance:
@@ -55,10 +56,15 @@ class StudentSerializer(serializers.ModelSerializer):
             if not re.search(r'[@#$%^&+=]', password):
                 errors['password'].append('A senha deve conter pelo menos um caractere especial (@, #, $, %, etc.).')
 
-        if not name or name.isnumeric():
-            errors['nome'].append('O nome não pode ser apenas números.')
-        if len(name) < 5:
-            errors['nome'].append('O nome deve ter no mínimo 5 caracteres.')
+        name_list = name.split(' ')
+        errors_name_list = 0
+        for name in name_list:
+            if not re.match(pattern, name):
+                errors_name_list += 1
+        if errors_name_list > 0:
+            errors['nome'].append('O nome deve conter apenas letras.')
+        if len(name) < 3:
+            errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
         if len(name) > 255:
             errors['nome'].append('O nome deve ter no máximo 255 caracteres.')
         

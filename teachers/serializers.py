@@ -51,6 +51,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         subjects = data.get('subjects')
         errors = defaultdict(list)
         request_method = self.context.get('request_method')
+        pattern = r'^[a-zA-Z]+$'
         
         if request_method == 'PUT':
             if self.instance:
@@ -81,7 +82,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             if password_confirmation.strip() == '':
                 errors['password_confirmation'].append('O campo password_confirmation é obrigatório')
             if password != password_confirmation:
-                errors['password'].append('As senhas não coincidem.')
+                errors['password'].append('As senhas não conferem.')
         
             # Validação de força da senha
             if len(password) < 8:
@@ -100,8 +101,8 @@ class TeacherSerializer(serializers.ModelSerializer):
             errors['descricao'].append('A descrição é obrigatória.')
         
         if request_method == 'POST':
-            if not description or description.isnumeric():
-                errors['descricao'].append('A descrição não pode ser vazia e não pode ser apenas números.')
+            if description.isnumeric():
+                errors['descricao'].append('A descrição não pode ser apenas números.')
         
         # validação de valor por hora
         if hourly_price is None and request_method == 'POST':
@@ -126,8 +127,13 @@ class TeacherSerializer(serializers.ModelSerializer):
         if name is None and request_method == 'POST':
             errors['nome'].append('O nome é obrigatório.')
         if name is not None:
-            if name.isnumeric():
-                errors['nome'].append('O nome não pode ser apenas números.')
+            name_list = name.split(' ')
+            errors_name_list = 0
+            for name in name_list:
+                if not re.match(pattern, name):
+                    errors_name_list += 1
+            if errors_name_list > 0:
+                errors['nome'].append('O nome deve conter apenas letras.')
             if len(name) < 3:
                 errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
             if len(name) > 255:

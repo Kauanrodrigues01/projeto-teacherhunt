@@ -21,7 +21,7 @@ class TestTeacherListForSubjectsView(TeacherTestBase):
         self.teacher.subjects.add(self.subject)
         self.teacher.save()
 
-        response = self.client.get(reverse('teachers:list-for-subject', kwargs={'pk':1}))
+        response = self.client.get(reverse('teachers:teachers-list-for-subject', kwargs={'pk':self.subject.id}))
         response_data = response.data
         teacher2_serializer_data = teacher2_serializer.data
         if isinstance(response_data, dict):

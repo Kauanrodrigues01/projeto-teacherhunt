@@ -3,7 +3,7 @@ from accounts.models import Student, User
 from .base.test_base_student_view import StudentTestBase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-class studentListTests(StudentTestBase):
+class StudentListTests(StudentTestBase):
     def test_post_student(self):
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -54,13 +54,13 @@ class studentListTests(StudentTestBase):
         self.data['nome'] = '1234'
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['nome'][0], 'O nome não pode ser apenas números.')
+        self.assertEqual(response.data['nome'][0], 'O nome deve conter apenas letras.')
 
-    def test_post_student_with_name_less_than_5_characters(self):
+    def test_post_student_with_name_less_than_3_characters(self):
         self.data['nome'] = 'Jo'
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['nome'][0], 'O nome deve ter no mínimo 5 caracteres.')
+        self.assertEqual(response.data['nome'][0], 'O nome deve ter no mínimo 3 caracteres.')
 
     def test_post_student_with_name_greater_than_255_characters(self):
         self.data['nome'] = 'a'*266

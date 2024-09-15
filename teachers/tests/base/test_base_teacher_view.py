@@ -24,6 +24,17 @@ class TeacherTestBase(TestCase):
         )
         self.subject = Subject.objects.create(name='Math')
         self.image = SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
+
+        self.data = {
+            'nome': 'Jane Doe',
+            'descricao': 'An excellent teacher',
+            'valor_hora': 60.00,
+            'idade': 28,
+            'materias': [self.subject.id],
+            'email': 'jane@example.com',
+            'password': '@Password1234',
+            'password_confirmation': '@Password1234'
+        }
         
     def obtain_token(self, email='teacher@example.com', password='@Password1234'):
         login_url = reverse('accounts:login')
