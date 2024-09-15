@@ -87,7 +87,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
             errors['error'].append('O estudante já tem uma aula marcada nesse horário.')
 
         if Classroom.objects.filter(day_of_class=day_of_class, start_time=start_time, student=student, teacher=teacher).exclude(pk=classroom_id).exists():
-            errors['error'].append('Você já tem uma aula marcada com este professor para esse dia e horário.') 
+            errors['error'].append('O estudante já tem uma aula marcada com este professor para esse dia e horário.') 
 
         overlapping_classes_teacher = Classroom.objects.filter(
             teacher=teacher,

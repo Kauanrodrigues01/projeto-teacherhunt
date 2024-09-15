@@ -119,7 +119,7 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
 
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['detail'], 'Pk inválido \"-1\" - objeto não existe.')
+        self.assertEqual(response.data['professor'], 'Pk inválido "-1" - objeto não existe.')
 
     def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_number_of_hours_with_a_negative_number_or_zero(self):
         self.data['numero_de_horas'] = -1
@@ -145,7 +145,7 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
         self.assertTrue(Classroom.objects.filter(id=response1.data['id']).exists())
         response2 = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response2.data['error'][0], 'Você já tem uma aula marcada para esse dia e horário.')
+        self.assertEqual(response2.data['error'][0], 'O estudante já tem uma aula marcada nesse horário.')
 
     def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_teacher_that_already_has_a_class_scheduled_for_the_same_day_and_time_with_another_student(self):
         user2_student = User.objects.create_user(email='userstudent2@example.com', password='@Password1234',)
