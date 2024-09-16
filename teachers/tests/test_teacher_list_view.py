@@ -75,11 +75,11 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['nome'][0], 'O nome deve ter no mínimo 3 caracteres.')
 
-    def test_post_teacher_with_name_greater_than_255_characters(self):
+    def test_post_teacher_with_name_greater_than_100_characters(self):
         self.data['nome'] = 'J' * 256
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['nome'][0], 'O nome deve ter no máximo 255 caracteres.')
+        self.assertEqual(response.data['nome'][0], 'O nome deve ter no máximo 100 caracteres.')
 
     def test_post_teacher_with_empty_description(self):
         self.data['descricao'] = ''
@@ -99,11 +99,11 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['idade'][0], 'Um número inteiro válido é exigido.')
 
-    def test_post_teacher_with_age_negative(self):
+    def test_post_teacher_with_age_less_than_10(self):
         self.data['idade'] = -1
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['idade'][0], 'A idade deve ser maior que zero.')
+        self.assertEqual(response.data['idade'][0], 'A idade deve ser maior ou igual a 18.')
 
     def test_post_teacher_with_hourly_price_empty(self):
         self.data['valor_hora'] = ''
@@ -111,11 +111,11 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['valor_hora'][0], 'Um número válido é necessário.')
 
-    def test_post_teacher_with_hourly_price_negative(self):
+    def test_post_teacher_with_hourly_price_less_than_10(self):
         self.data['valor_hora'] = -1
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['valor_hora'][0], 'O valor por hora deve ser maior que zero.')
+        self.assertEqual(response.data['valor_hora'][0], 'O valor por hora deve ser maior que 10.')
 
     def test_post_teacher_without_the_name(self):
         del self.data['nome']

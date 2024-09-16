@@ -62,11 +62,11 @@ class StudentListTests(StudentTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['nome'][0], 'O nome deve ter no mínimo 3 caracteres.')
 
-    def test_post_student_with_name_greater_than_255_characters(self):
+    def test_post_student_with_name_greater_than_100_characters(self):
         self.data['nome'] = 'a'*266
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['nome'][0], 'O nome deve ter no máximo 255 caracteres.')
+        self.assertEqual(response.data['nome'][0], 'O nome deve ter no máximo 100 caracteres.')
 
     def test_post_student_with_empty_email(self):
         self.data['email'] = ''

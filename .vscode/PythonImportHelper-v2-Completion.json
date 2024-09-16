@@ -2724,11 +2724,11 @@
         "documentation": {}
     },
     {
-        "label": "TestTeacherClassroomsViews",
+        "label": "TestStudentUpdateClassroomsViews",
         "kind": 6,
         "importPath": "students.tests.test_student_update_classrooms_views",
         "description": "students.tests.test_student_update_classrooms_views",
-        "peekOfCode": "class TestTeacherClassroomsViews(StudentClassroomTestBase):\n    def test_update_all_fields_in_the_class(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        data={ \n            'dia_da_aula': self.tomorrow + timedelta(days=1),\n            'horario_de_inicio': '14:00',\n            'numero_de_horas': 2,\n            'descricao_da_aula': 'Aula de teste atulizada'\n        }",
+        "peekOfCode": "class TestStudentUpdateClassroomsViews(StudentClassroomTestBase):\n    def test_update_all_fields_in_the_class(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        data={ \n            'dia_da_aula': self.tomorrow + timedelta(days=1),\n            'horario_de_inicio': '14:00',\n            'numero_de_horas': 2,\n            'descricao_da_aula': 'Aula de teste atulizada'\n        }",
         "detail": "students.tests.test_student_update_classrooms_views",
         "documentation": {}
     },

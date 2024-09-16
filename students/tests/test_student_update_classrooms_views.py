@@ -3,7 +3,7 @@ from django.urls import reverse
 from datetime import timedelta
 from datetime import datetime
 
-class TestTeacherClassroomsViews(StudentClassroomTestBase):
+class TestStudentUpdateClassroomsViews(StudentClassroomTestBase):
     def test_update_all_fields_in_the_class(self):
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
@@ -36,7 +36,7 @@ class TestTeacherClassroomsViews(StudentClassroomTestBase):
         response = self.client.put(reverse('students:student-update-classroom', kwargs={'pk': self.classroom_alternative.id}), data=data)
         self.classroom_alternative.refresh_from_db()
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(response.data, {'detail': 'Você não tem permissão para alterar esta aula.'})
+        self.assertEqual(response.data, {'error': 'Você não tem permissão para alterar esta aula.'})
 
     def test_update_only_day_of_class_in_the_class(self):
         token = self.obtain_token()
