@@ -739,14 +739,6 @@
         "documentation": {}
     },
     {
-        "label": "User",
-        "importPath": "accounts.models",
-        "description": "accounts.models",
-        "isExtraImport": true,
-        "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
         "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -1515,14 +1507,6 @@
         "documentation": {}
     },
     {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -1532,6 +1516,22 @@
     },
     {
         "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,

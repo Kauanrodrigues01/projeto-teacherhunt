@@ -1,10 +1,9 @@
 from rest_framework import serializers
 from django.db import models
 from django.utils import timezone
-from datetime import timedelta
 from .models import Classroom
-from accounts.models import User, Student, Teacher
-from datetime import datetime, date
+from accounts.models import Student, Teacher
+from datetime import datetime, date, time, timedelta
 from collections import defaultdict
 
 class ClassroomSerializer(serializers.ModelSerializer):
@@ -41,7 +40,8 @@ class ClassroomSerializer(serializers.ModelSerializer):
         teacher = data.get('teacher', None)
         student = data.get('student')
         # Gera uma lista de horários válidos de 07:00 até 20:00 com um intervalo de uma hora
-        horarios_validos = [f"{hour:02d}:00" for hour in range(7, 20)]
+        horarios_validos = [f"{hour:02d}:{minute:02d}" for hour in range(7, 21) for minute in (0, 30)]
+        horarios_validos.pop()
         description_about_class = data.get('description_about_class', None)
 
         errors = defaultdict(list)
@@ -60,9 +60,15 @@ class ClassroomSerializer(serializers.ModelSerializer):
                 number_of_hours = self.instance.number_of_hours
             if description_about_class is None:
                 description_about_class = self.instance.description_about_class
+
+        start_time_obj_datetime = datetime.combine(datetime.today(), start_time)
+        limit_hour = datetime.combine(datetime.today(), time(21, 0))
+        if start_time is not None and number_of_hours is not None:
+            if start_time_obj_datetime + timedelta(hours=number_of_hours) > limit_hour:
+                errors['error'].append('O Hórario de termino não deve exceder 21:00.')
             
         if (str(start_time)[:-3]) not in horarios_validos:
-            errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 19:00 com um intervalo de uma hora.')
+            errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 20:00 com um intervalo de uma meia hora.')
 
         if day_of_class == now.date():
            errors['dia_da_aula'].append('Não é possível marcar aulas no mesmo dia. A aula deve ser marcada com antecedência.')
@@ -76,6 +82,14 @@ class ClassroomSerializer(serializers.ModelSerializer):
         if number_of_hours is not None:
             if number_of_hours < 1:
                 errors['numero_de_horas'].append('O número de horas deve ser maior que 0.')
+            if number_of_hours > 4:
+                errors['numero_de_horas'].append('O número de horas deve ser menor que 5.')
+
+        if description_about_class is not None:
+            if description_about_class.replace(' ', '').isnumeric():
+                errors['descricao_da_aula'].append('A descrição da aula não pode conter apenas números.')
+            if len(description_about_class.replace(' ', '')) < 10:
+                errors['descricao_da_aula'].append('A descrição da aula deve ter mais de 10 caracteres.')
 
         if start_time and number_of_hours and start_time is not None and number_of_hours is not None:
             datetime_start = timezone.make_aware(timezone.datetime.combine(day_of_class, start_time))

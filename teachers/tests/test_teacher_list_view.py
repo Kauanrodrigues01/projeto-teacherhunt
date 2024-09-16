@@ -105,6 +105,12 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['idade'][0], 'A idade deve ser maior ou igual a 18.')
 
+    def test_post_teacher_with_age_greater_than_100(self):
+        self.data['idade'] = 101
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['idade'][0], 'A idade deve ser menor ou igual a 100.')
+
     def test_post_teacher_with_hourly_price_empty(self):
         self.data['valor_hora'] = ''
         response = self.client.post(self.url, self.data, format='json')

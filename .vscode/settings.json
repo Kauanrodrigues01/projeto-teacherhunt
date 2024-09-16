@@ -7,7 +7,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "window.zoomLevel": 0.2,
+  "window.zoomLevel": -0.6,
   "python.languageServer": "Pylance", // ms-python.vscode-pylance
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,

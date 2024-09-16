@@ -40,6 +40,24 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
         self.assertEqual(response.data['numero_de_horas'], self.data['numero_de_horas'])
         self.assertTrue(Classroom.objects.filter(id=response.data['id']).exists())
 
+    def test_create_classroom_with_description_about_class_just_numbers(self):
+        self.data['descricao_da_aula'] = '1234    56789    10'
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['descricao_da_aula'][0], 'A descrição da aula não pode conter apenas números.')
+
+    def test_create_classroom_with_description_about_class_less_than_10(self):
+        self.data['descricao_da_aula'] = '     a' * 9
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['descricao_da_aula'][0], 'A descrição da aula deve ter mais de 10 caracteres.')
+
     def test_if_an_error_arises_when_trying_to_create_a_classroom_without_a_teacher(self):
         del self.data['professor']
         token = self.obtain_token()
@@ -76,6 +94,15 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['numero_de_horas'][0], 'Este campo é obrigatório.')
 
+    def test_if_an_error_arises_when_to_create_a_classroom_with_number_of_hours_greater_than_4_hours(self):
+        self.data['numero_de_horas'] = 5
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['numero_de_horas'][0], 'O número de horas deve ser menor que 5.')
+
     def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_teacher_with_an_empty_string(self):
         self.data['professor'] = ''
         token = self.obtain_token()
@@ -102,6 +129,36 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['horario_de_inicio'][0], 'Formato inválido para Tempo. Use um dos formatos a seguir: hh:mm[:ss[.uuuuuu]].')
+
+    def test_whether_to_create_classrooms_with_a_time_of_19_30(self):
+        self.data['horario_de_inicio'] = '19:30'
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_an_end_time_greater_than_21_00(self):
+        '''
+        end_time = start_time + number_of_hours
+        '''
+        self.data['horario_de_inicio'] = '20:30'
+        self.data['numero_de_horas'] = 2
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['error'][0], 'O Hórario de termino não deve exceder 21:00.')
+
+    def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_an_invalid_start_time(self):
+        self.data['horario_de_inicio'] = '20:35'
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['horario_de_inicio'][0], 'Horário inválido. Os horários permitidos são de 07:00 até 20:00 com um intervalo de uma meia hora.')
 
     def test_if_an_error_occurs_when_trying_to_create_a_classroom_with_number_of_hours_with_an_empty_string(self):
         self.data['numero_de_horas'] = ''
@@ -194,4 +251,3 @@ class StudentCreateClassroomView(TestBaseCreateClassroomView):
         self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response2.data['error'][0], 'O estudante já tem uma aula marcada nesse horário.')
         self.assertFalse(Classroom.objects.filter(teacher=self.data['professor'], student=self.student).exists())
-

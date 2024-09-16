@@ -81,7 +81,7 @@ class StudentListTests(StudentTestBase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['password'][0], 'Este campo não pode ser em branco.')
         self.assertEqual(response.data['password_confirmation'][0], 'Este campo não pode ser em branco.')
-
+        
     def test_put_all_fields_student(self):
         token = self.obtain_token()
         data = {
@@ -155,7 +155,6 @@ class StudentListTests(StudentTestBase):
         self.assertIn('png', self.student.profile_image.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
-    
     def test_delete_student(self):
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
