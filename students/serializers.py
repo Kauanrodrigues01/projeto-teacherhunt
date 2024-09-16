@@ -65,8 +65,8 @@ class StudentSerializer(serializers.ModelSerializer):
             errors['nome'].append('O nome deve conter apenas letras.')
         if len(name) < 3:
             errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
-        if len(name) > 255:
-            errors['nome'].append('O nome deve ter no máximo 255 caracteres.')
+        if len(name) > 100:
+            errors['nome'].append('O nome deve ter no máximo 100 caracteres.')
         
         if User.objects.filter(email=email).exists():
             errors['email'].append('Este email já está cadastrado')
@@ -108,6 +108,13 @@ class StudentSerializer(serializers.ModelSerializer):
         instance.save()
         
         return instance
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['foto_perfil'] = data.pop('foto')
+        data['created_at'] = instance.create_at
+        data['updated_at'] = instance.update_at
+        return data
     
     
 class StudentProfileImageSerializer(serializers.ModelSerializer):

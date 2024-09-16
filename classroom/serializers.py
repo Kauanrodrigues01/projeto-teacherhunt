@@ -10,7 +10,7 @@ from collections import defaultdict
 class ClassroomSerializer(serializers.ModelSerializer):
     aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')
     professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')
-    nome_estudante = serializers.CharField(source='student.name', read_only=True)
+    nome_aluno = serializers.CharField(source='student.name', read_only=True)
     nome_professor = serializers.CharField(source='teacher.name', read_only=True)
     dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)
     horario_de_inicio = serializers.TimeField(source='start_time', required=False)
@@ -22,7 +22,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Classroom
-        fields = ['id', 'aluno', 'professor', 'nome_estudante', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_da_aula']
+        fields = ['id', 'aluno', 'professor', 'nome_aluno', 'nome_professor', 'dia_da_aula', 'horario_de_inicio', 'horario_de_termino', 'numero_de_horas', 'preco', 'status', 'descricao_da_aula']
 
     def get_status(self, obj):
         if obj.get_status_display() == 'Pending':
@@ -41,7 +41,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
         teacher = data.get('teacher', None)
         student = data.get('student')
         # Gera uma lista de horários válidos de 07:00 até 20:00 com um intervalo de uma hora
-        horarios_validos = [f"{hour:02d}:00" for hour in range(7, 21)]
+        horarios_validos = [f"{hour:02d}:00" for hour in range(7, 20)]
         description_about_class = data.get('description_about_class', None)
 
         errors = defaultdict(list)
@@ -62,7 +62,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
                 description_about_class = self.instance.description_about_class
             
         if (str(start_time)[:-3]) not in horarios_validos:
-            errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 20:00 com um intervalo de uma hora.')
+            errors['horario_de_inicio'].append('Horário inválido. Os horários permitidos são de 07:00 até 19:00 com um intervalo de uma hora.')
 
         if day_of_class == now.date():
            errors['dia_da_aula'].append('Não é possível marcar aulas no mesmo dia. A aula deve ser marcada com antecedência.')
@@ -142,3 +142,9 @@ class ClassroomSerializer(serializers.ModelSerializer):
         instance.status = 'P'
         instance.save()
         return super().update(instance, validated_data)
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['created_at'] = instance.created_at
+        data['updated_at'] = instance.updated_at
+        return data

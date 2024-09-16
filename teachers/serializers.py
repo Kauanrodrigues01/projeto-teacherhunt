@@ -108,8 +108,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         if hourly_price is None and request_method == 'POST':
             errors['valor_hora'].append('O valor por hora é obrigatório.')
         if hourly_price is not None:
-            if hourly_price <= 0:
-                errors['valor_hora'].append('O valor por hora deve ser maior que zero.')
+            if hourly_price < 10:
+                errors['valor_hora'].append('O valor por hora deve ser maior que 10.')
             if hourly_price > 500:
                 errors['valor_hora'].append('O valor por hora deve ser menor ou igual a 500.')
 
@@ -117,10 +117,10 @@ class TeacherSerializer(serializers.ModelSerializer):
         if age is None and request_method == 'POST':
             errors['idade'].append('A idade é obrigatória.')
         if age is not None:
-            if age <= 0:
-                errors['idade'].append('A idade deve ser maior que zero.')
-            if age > 120:
-                errors['idade'].append('A idade deve ser menor ou igual a 120.')
+            if age < 18:
+                errors['idade'].append('A idade deve ser maior ou igual a 18.')
+            if age > 100:
+                errors['idade'].append('A idade deve ser menor ou igual a 100.')
         
 
         # Validação de nome
@@ -136,8 +136,8 @@ class TeacherSerializer(serializers.ModelSerializer):
                 errors['nome'].append('O nome deve conter apenas letras.')
             if len(name) < 3:
                 errors['nome'].append('O nome deve ter no mínimo 3 caracteres.')
-            if len(name) > 255:
-                errors['nome'].append('O nome deve ter no máximo 255 caracteres.')
+            if len(name) > 100:
+                errors['nome'].append('O nome deve ter no máximo 100 caracteres.')
         
         if subjects is None and request_method == 'POST':
             errors['materias'].append(f'O campo materias é obrigatório')
@@ -235,7 +235,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         data['idade'] = age
         data['descricao'] = description
         data['valor_hora'] = hourly_price
-        data['foto'] = profile_image
+        data['foto_perfil'] = profile_image
         data['materias'] = subjects
         data['materias_objetos'] = subjects_obejcts
         data['create_at'] = create_at

@@ -2152,7 +2152,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Teacher(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile', blank=False, null=False)\n    name = models.CharField(max_length=255, blank=False, null=False)\n    age = models.PositiveIntegerField(blank=False, null=False)\n    description = models.TextField(blank=False, null=False)\n    hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='teachers_image/', blank=True, null=True)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    subjects = models.ManyToManyField('Subject', related_name='teachers')",
+        "peekOfCode": "class Teacher(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    age = models.PositiveIntegerField(blank=False, null=False)\n    description = models.TextField(blank=False, null=False)\n    hourly_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='teachers_image/', blank=True, null=True)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    subjects = models.ManyToManyField('Subject', related_name='teachers')",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2161,7 +2161,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=255, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=255, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=30, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2170,7 +2170,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=255, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
+        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2323,7 +2323,7 @@
         "kind": 6,
         "importPath": "classroom.serializers",
         "description": "classroom.serializers",
-        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    nome_estudante = serializers.CharField(source='student.name', read_only=True)\n    nome_professor = serializers.CharField(source='teacher.name', read_only=True)\n    dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)\n    horario_de_inicio = serializers.TimeField(source='start_time', required=False)\n    horario_de_termino = serializers.TimeField(source='end_time', read_only=True)\n    numero_de_horas = serializers.IntegerField(source='number_of_hours',  required=False)\n    preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)",
+        "peekOfCode": "class ClassroomSerializer(serializers.ModelSerializer):\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    nome_aluno = serializers.CharField(source='student.name', read_only=True)\n    nome_professor = serializers.CharField(source='teacher.name', read_only=True)\n    dia_da_aula = serializers.DateField(source='day_of_class', format='%d/%m/%Y',  required=False)\n    horario_de_inicio = serializers.TimeField(source='start_time', required=False)\n    horario_de_termino = serializers.TimeField(source='end_time', read_only=True)\n    numero_de_horas = serializers.IntegerField(source='number_of_hours',  required=False)\n    preco = serializers.DecimalField(source='price', max_digits=6, decimal_places=2, read_only=True)",
         "detail": "classroom.serializers",
         "documentation": {}
     },
