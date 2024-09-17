@@ -40,6 +40,7 @@ class StudentList(APIView):
         except Student.DoesNotExist:
             return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         student.delete()
+        user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class StudentMeView(APIView):

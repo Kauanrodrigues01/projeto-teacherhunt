@@ -1,3 +1,4 @@
+from datetime import timedelta
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -64,8 +65,11 @@ class TeacherList(APIView):
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
             return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Deleta o professor e o usuário associado
         teacher.delete()
-        teacher.user.delete()
+        user.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class TeacherProfileImageView(APIView):
