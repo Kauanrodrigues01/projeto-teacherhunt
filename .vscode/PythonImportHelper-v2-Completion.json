@@ -3187,7 +3187,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().order_by('id')\n    serializer_class = SubjectSerializer\n    http_method_names = ['get', 'post', 'put', 'delete']\n    def get_queryset(self):\n        name = self.request.query_params.get('name', None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
+        "peekOfCode": "class SubjectsList(viewsets.ModelViewSet):\n    queryset = Subject.objects.all().order_by('id')\n    serializer_class = SubjectSerializer\n    http_method_names = ['get', 'post', 'put', 'delete']\n    def get_queryset(self):\n        name = self.request.query_params.get('nome', None)\n        queryset = self.queryset\n        if name is not None:\n            return queryset.filter(name__icontains=name)\n        return queryset",
         "detail": "teachers.views",
         "documentation": {}
     },

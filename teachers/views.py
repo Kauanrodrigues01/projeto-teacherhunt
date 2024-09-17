@@ -65,6 +65,9 @@ class TeacherList(APIView):
             teacher = Teacher.objects.get(user=user)
         except Teacher.DoesNotExist:
             return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if teacher.classrooms.all().filter(status='A', day_of_class__gt=timezone.now().date()).exists():
+            return Response({'error': 'Você não pode excluir sua conta enquanto tiver aulas aceitas.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Deleta o professor e o usuário associado
         teacher.delete()
@@ -117,7 +120,7 @@ class SubjectsList(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_queryset(self):
-        name = self.request.query_params.get('name', None)
+        name = self.request.query_params.get('nome', None)
         queryset = self.queryset
         if name is not None:
             return queryset.filter(name__icontains=name)
@@ -212,7 +215,7 @@ class TeacherAcceptedClassroomView(APIView):
             classroom.status = 'C'
             classroom.save()
             return Response({'error': 'Já passou o horário da aula, não é possível aceitar.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+    
         classroom.status = 'A'
         classroom.save()
         return Response({'message': 'Aula aceita com sucesso.'}, status=status.HTTP_200_OK)
