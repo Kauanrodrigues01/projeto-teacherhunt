@@ -69,7 +69,7 @@ class TeacherList(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class TeacherProfileImageView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsTeacherAuthenticated,)
     
     def post(self, request):
         user = request.user
@@ -89,7 +89,7 @@ class TeacherDetail(APIView):
         return Response(serializer.data)
     
 class TeacherMeView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsTeacherAuthenticated,)
     
     def get(self, request):
         user = request.user

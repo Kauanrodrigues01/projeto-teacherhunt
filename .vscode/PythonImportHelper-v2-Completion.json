@@ -1315,94 +1315,6 @@
         "documentation": {}
     },
     {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "BasePermission",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "SAFE_METHODS",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "BasePermission",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "SAFE_METHODS",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "BasePermission",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "SAFE_METHODS",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAdminUser",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "AllowAny",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
         "label": "Response",
         "importPath": "rest_framework.response",
         "description": "rest_framework.response",
@@ -1704,6 +1616,86 @@
         "description": "django.core.exceptions",
         "isExtraImport": true,
         "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "BasePermission",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAdminUser",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "AllowAny",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
         "documentation": {}
     },
     {
@@ -2804,7 +2796,7 @@
         "kind": 6,
         "importPath": "students.permissions",
         "description": "students.permissions",
-        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student\n    def has_object_permission(self, request, view, obj):\n        return request.user == obj.student.user",
+        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student\n    def has_object_permission(self, request, view, obj):\n        return request.user == obj.student.user and request.user.is_student",
         "detail": "students.permissions",
         "documentation": {}
     },
@@ -2858,7 +2850,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentSerializer(student)\n        return Response(serializer.data)",
+        "peekOfCode": "class StudentMeView(APIView):\n    permission_classes = (IsStudentAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentSerializer(student)\n        return Response(serializer.data)",
         "detail": "students.views",
         "documentation": {}
     },
@@ -2867,7 +2859,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class StudentProfileImageView(APIView):\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():\n            serializer.save()",
+        "peekOfCode": "class StudentProfileImageView(APIView):\n    permission_classes = (IsStudentAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = StudentProfileImageSerializer(student, data=request.data)\n        if serializer.is_valid():",
         "detail": "students.views",
         "documentation": {}
     },
@@ -3101,7 +3093,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
+        "peekOfCode": "class TeacherProfileImageView(APIView):\n    permission_classes = (IsTeacherAuthenticated,)\n    def post(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherProfileImageSerializer(teacher, data=request.data)\n        serializer.is_valid(raise_exception=True)",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -3110,7 +3102,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
+        "peekOfCode": "class TeacherDetail(APIView):\n    def get(self, request, pk):\n        teacher = get_object_or_404(Teacher.objects.all(), pk=pk)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)\nclass TeacherMeView(APIView):\n    permission_classes = (IsTeacherAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:",
         "detail": "teachers.views",
         "documentation": {}
     },
@@ -3119,7 +3111,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherMeView(APIView):\n    permission_classes = (IsAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
+        "peekOfCode": "class TeacherMeView(APIView):\n    permission_classes = (IsTeacherAuthenticated,)\n    def get(self, request):\n        user = request.user\n        try:\n            teacher = Teacher.objects.get(user=user)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = TeacherSerializer(teacher)\n        return Response(serializer.data)",
         "detail": "teachers.views",
         "documentation": {}
     },

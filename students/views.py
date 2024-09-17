@@ -43,7 +43,7 @@ class StudentList(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class StudentMeView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsStudentAuthenticated,)
     
     def get(self, request):
         user = request.user
@@ -55,6 +55,8 @@ class StudentMeView(APIView):
         return Response(serializer.data)
 
 class StudentProfileImageView(APIView):
+    permission_classes = (IsStudentAuthenticated,)
+    
     def post(self, request):
         user = request.user
         try:
