@@ -56,6 +56,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -97,6 +113,22 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -2144,6 +2176,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0003_alter_student_name_alter_subject_name_and_more",
+        "description": "accounts.migrations.0003_alter_student_name_alter_subject_name_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0002_alter_teacher_profile_image\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"student\",\n            name=\"name\",\n            field=models.CharField(max_length=100),\n        ),",
+        "detail": "accounts.migrations.0003_alter_student_name_alter_subject_name_and_more",
+        "documentation": {}
+    },
+    {
         "label": "AccountsTest",
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
@@ -2312,6 +2353,15 @@
         "description": "classroom.migrations.0005_alter_classroom_status",
         "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"classroom\", \"0004_alter_classroom_status\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"classroom\",\n            name=\"status\",\n            field=models.CharField(\n                choices=[(\"P\", \"Pending\"), (\"A\", \"Completed\"), (\"C\", \"Cancelled\")],",
         "detail": "classroom.migrations.0005_alter_classroom_status",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "classroom.migrations.0006_alter_classroom_status",
+        "description": "classroom.migrations.0006_alter_classroom_status",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"classroom\", \"0005_alter_classroom_status\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"classroom\",\n            name=\"status\",\n            field=models.CharField(\n                choices=[(\"P\", \"Pending\"), (\"A\", \"Accepted\"), (\"C\", \"Cancelled\")],",
+        "detail": "classroom.migrations.0006_alter_classroom_status",
         "documentation": {}
     },
     {
