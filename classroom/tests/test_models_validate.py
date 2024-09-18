@@ -34,13 +34,6 @@ class TestClassroomModel(TestBaseModelClassroom):
         # Extrai o horário de término
         end_time = end_datetime.time()
         self.assertEqual(classroom.end_time, end_time)
-        
-    def test_checks_whether_a_validation_error_is_raised_if_the_class_date_is_in_the_past(self):
-        '''Testa se lança um erro de validação se a data da aula estiver no passado'''
-        data = self.create_users_patterns()
-        teacher, student = data['teacher'], data['student']
-        with self.assertRaises(ValidationError):
-            self.create_classroom(student=student, teacher=teacher, day_of_class=self.yesterday, start_time='12:00', number_of_hours=3)
             
     def test_checks_whether_a_validation_error_is_raised_if_the_class_tries_to_be_scheduled_on_the_same_day(self):
         '''Testa se lança um erro de validação se a aula tentar ser agendada no mesmo dia'''

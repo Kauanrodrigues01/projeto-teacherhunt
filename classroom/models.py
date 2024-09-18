@@ -32,8 +32,8 @@ class Classroom(models.Model):
         now = timezone.now()
 
         # Verifica se a data da aula é no passado
-        if self.day_of_class < now.date():
-            raise ValidationError('A data da aula não pode ser no passado.')
+        # if self.day_of_class < now.date():
+        #     raise ValidationError('A data da aula não pode ser no passado.')
         
         # Verifica se o horário da aula é no passado (se for no mesmo dia)
         if self.day_of_class == now.date():

@@ -266,6 +266,14 @@
         "documentation": {}
     },
     {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
         "label": "rest_framework",
         "kind": 6,
         "isExtraImport": true,
@@ -435,14 +443,6 @@
         "documentation": {}
     },
     {
-        "label": "status",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
         "label": "serializers",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -515,6 +515,14 @@
         "documentation": {}
     },
     {
+        "label": "APIClient",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
         "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -699,6 +707,22 @@
         "documentation": {}
     },
     {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -963,6 +987,30 @@
         "documentation": {}
     },
     {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Subject",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -1027,7 +1075,7 @@
         "documentation": {}
     },
     {
-        "label": "Teacher",
+        "label": "Student",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1036,6 +1084,14 @@
     },
     {
         "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1148,6 +1204,14 @@
     },
     {
         "label": "NotFound",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorDetail",
         "importPath": "rest_framework.exceptions",
         "description": "rest_framework.exceptions",
         "isExtraImport": true,
@@ -1427,6 +1491,14 @@
         "documentation": {}
     },
     {
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
+        "isExtraImport": true,
+        "detail": "classroom.models",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -1568,6 +1640,22 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
         "documentation": {}
     },
     {
@@ -2656,7 +2744,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2665,7 +2753,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
+        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2674,7 +2762,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
+        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -2958,6 +3046,15 @@
         "documentation": {}
     },
     {
+        "label": "TestBaseAuthentication",
+        "kind": 6,
+        "importPath": "teachers.tests.base.test_base_routes_with_or_without_authentication",
+        "description": "teachers.tests.base.test_base_routes_with_or_without_authentication",
+        "peekOfCode": "class TestBaseAuthentication(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.user_student = User.objects.create_user(\n            email='studentteste@gmail.com',\n            password='@Student123'\n        )\n        self.student = Student.objects.create(\n            user=self.user_student,\n            name='Student Teste'",
+        "detail": "teachers.tests.base.test_base_routes_with_or_without_authentication",
+        "documentation": {}
+    },
+    {
         "label": "TeacherClassroomTestBase",
         "kind": 6,
         "importPath": "teachers.tests.base.test_base_teacher_classroom",
@@ -2982,6 +3079,15 @@
         "description": "teachers.tests.test_me_view",
         "peekOfCode": "class MeViewTest(TeacherTestBase):\n    def test_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
         "detail": "teachers.tests.test_me_view",
+        "documentation": {}
+    },
+    {
+        "label": "TestTeacherRoutesWithAuthentication",
+        "kind": 6,
+        "importPath": "teachers.tests.test_routers_with_authentication_of_teacher",
+        "description": "teachers.tests.test_routers_with_authentication_of_teacher",
+        "peekOfCode": "class TestTeacherRoutesWithAuthentication(TestBaseAuthentication):\n    '''\n    This class of test, tests the routes that require authentication as a teacher.\n    '''\n    # Test route to update teacher\n    def testi_if_a_401_status_code_is_returned_if_the_user_tries_to_access_the_put_teacher_route_without_authentication(self):\n        response = self.client.put(reverse('teachers:list'))\n        self.assertEqual(401, response.status_code)\n    def test_if_a_status_code_403_is_returned_if_the_user_tries_to_access_the_put_teacher_route_authenticated_as_a_student(self):\n        token = self.obtain_token_student()",
+        "detail": "teachers.tests.test_routers_with_authentication_of_teacher",
         "documentation": {}
     },
     {

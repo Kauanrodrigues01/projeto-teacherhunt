@@ -41,7 +41,6 @@ class StudentListTests(StudentTestBase):
         self.data['nome'] = 'Student alternative'
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        print(response.data)
         self.assertEqual(response.data['email'][0], 'Este email já está cadastrado')
 
     def test_post_student_with_empty_name(self):
@@ -161,3 +160,10 @@ class StudentListTests(StudentTestBase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Student.objects.filter(id=self.student.id).exists())
+
+    def test_if_when_deleting_the_student_it_deletes_the_user_related_to_the_student(self):
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(User.objects.filter(id=self.student.user.id).exists())

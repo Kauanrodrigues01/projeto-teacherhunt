@@ -1,8 +1,12 @@
+from django.utils import timezone
+import django.utils.timezone
 from rest_framework import status
-from accounts.models import Teacher, Subject, User
+from accounts.models import Student, Subject, Teacher, User
 from teachers.serializers import TeacherSerializer
+from classroom.models import Classroom
 from .base.test_base_teacher_view import TeacherTestBase
 from django.core.files.uploadedfile import SimpleUploadedFile
+from datetime import timedelta
 
 class TeacherListTests(TeacherTestBase):
     def test_get_teachers(self):
@@ -288,9 +292,57 @@ class TeacherListTests(TeacherTestBase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Teacher.objects.filter(id=self.teacher.id).exists())
 
-    def test_whether_when_deleting_the_teacher_it_deletes_the_user_related_to_the_teacher(self):
+    def test_if_when_deleting_the_teacher_it_deletes_the_user_related_to_the_teacher(self):
         token = self.obtain_token()
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(User.objects.filter(id=self.teacher.user.id).exists())
+
+    def test_if_a_teacher_cannot_delete_their_account_if_they_have_accepted_classes_that_have_not_yet_been_taken(self):
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        user_student = User.objects.create_user(
+            email='userstudent11@gmail.com',
+            password='@Stuent1234',
+        )
+        student = Student.objects.create(
+            name='Student',
+            user=user_student
+        )
+        Classroom.objects.create(
+            teacher=self.teacher,
+            student=student,
+            day_of_class=(timezone.now() + timedelta(days=2)).date(),
+            start_time='14:00',
+            number_of_hours=1,
+            status='A'
+        )
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue(Teacher.objects.filter(id=self.teacher.id).exists())
+
+    def test_if_a_teacher_can_delete_their_account_if_they_have_accepted_classes_and_the_classes_have_already_taken_place(self):
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        user_student = User.objects.create_user(
+            email='userstudent11@gmail.com',
+            password='@Stuent1234',
+        )
+        student = Student.objects.create(
+            name='Student',
+            user=user_student
+        )
+        classroom = Classroom.objects.create(
+            teacher=self.teacher,
+            student=student,
+            day_of_class=(timezone.now() + timedelta(days=2)).date(),
+            start_time='14:00',
+            number_of_hours=1,
+            status='A'
+        )
+        classroom.day_of_class = (timezone.now() - timedelta(days=2)).date()
+        classroom.save()
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Teacher.objects.filter(id=self.teacher.id).exists())
