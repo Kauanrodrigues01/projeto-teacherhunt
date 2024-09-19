@@ -14,13 +14,13 @@ class TeacherClassroomTestBase(TestCase):
         self.yesterday = self.create_yesterday_date()
         self.today = self.create_today_date()
         self.client = APIClient()
-        self.user_student = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True)
+        self.user_student = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True, is_active=True)
         self.student = Student.objects.create(
             user=self.user_student,
             name='John Doe',
         )
 
-        self.user_teacher = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)
+        self.user_teacher = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True, is_active=True)
         self.teacher = Teacher.objects.create(
             user=self.user_teacher,
             name='John Doe',
@@ -90,7 +90,7 @@ class TeacherClassroomTestBase(TestCase):
         return response_token.data['token']
     
     def create_teacher(self, email, password, name, description, hourly_price, age):
-        user = User.objects.create_user(email=email, password=password, is_teacher=True)
+        user = User.objects.create_user(email=email, password=password, is_teacher=True, is_active=True)
         teacher = Teacher.objects.create(
             user=user,
             name=name,

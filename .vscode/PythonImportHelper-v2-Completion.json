@@ -2487,7 +2487,7 @@
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
         "description": "accounts.tests.test_login_refresh_logout",
-        "peekOfCode": "class AccountsTest(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
+        "peekOfCode": "class AccountsTest(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True, is_active=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
         "detail": "accounts.tests.test_login_refresh_logout",
         "documentation": {}
     },
@@ -3027,7 +3027,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3036,7 +3036,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
+        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3045,7 +3045,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
+        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3207,7 +3207,7 @@
         "kind": 6,
         "importPath": "students.tests.base.test_base_student_view",
         "description": "students.tests.base.test_base_student_view",
-        "peekOfCode": "class StudentTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('students:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True)\n        self.student = Student.objects.create(\n            user=self.user,\n            name='John Doe',\n        )",
+        "peekOfCode": "class StudentTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('students:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True, is_active=True)\n        self.student = Student.objects.create(\n            user=self.user,\n            name='John Doe',\n        )",
         "detail": "students.tests.base.test_base_student_view",
         "documentation": {}
     },
@@ -3396,7 +3396,7 @@
         "kind": 6,
         "importPath": "teachers.tests.base.test_base_routes_with_or_without_authentication",
         "description": "teachers.tests.base.test_base_routes_with_or_without_authentication",
-        "peekOfCode": "class TestBaseAuthentication(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.user_student = User.objects.create_user(\n            email='studentteste@gmail.com',\n            password='@Student123'\n        )\n        self.student = Student.objects.create(\n            user=self.user_student,\n            name='Student Teste'",
+        "peekOfCode": "class TestBaseAuthentication(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.user_student = User.objects.create_user(\n            email='studentteste@gmail.com',\n            password='@Student123',\n            is_student=True,\n            is_active=True\n        )\n        self.student = Student.objects.create(",
         "detail": "teachers.tests.base.test_base_routes_with_or_without_authentication",
         "documentation": {}
     },
@@ -3405,7 +3405,7 @@
         "kind": 6,
         "importPath": "teachers.tests.base.test_base_teacher_classroom",
         "description": "teachers.tests.base.test_base_teacher_classroom",
-        "peekOfCode": "class TeacherClassroomTestBase(TestCase):\n    def setUp(self):\n        self.tomorrow = self.create_tomorrow_date()\n        self.yesterday = self.create_yesterday_date()\n        self.today = self.create_today_date()\n        self.client = APIClient()\n        self.user_student = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True)\n        self.student = Student.objects.create(\n            user=self.user_student,\n            name='John Doe',",
+        "peekOfCode": "class TeacherClassroomTestBase(TestCase):\n    def setUp(self):\n        self.tomorrow = self.create_tomorrow_date()\n        self.yesterday = self.create_yesterday_date()\n        self.today = self.create_today_date()\n        self.client = APIClient()\n        self.user_student = User.objects.create_user(email='user@example.com', password='@Password1234', is_student=True, is_active=True)\n        self.student = Student.objects.create(\n            user=self.user_student,\n            name='John Doe',",
         "detail": "teachers.tests.base.test_base_teacher_classroom",
         "documentation": {}
     },
@@ -3414,7 +3414,7 @@
         "kind": 6,
         "importPath": "teachers.tests.base.test_base_teacher_view",
         "description": "teachers.tests.base.test_base_teacher_view",
-        "peekOfCode": "class TeacherTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
+        "peekOfCode": "class TeacherTestBase(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n        self.url = reverse('teachers:list')\n        # Criar um usuário\n        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True, is_active=True)\n        self.teacher = Teacher.objects.create(\n            user=self.user,\n            name='John Doe',\n            description='A nice teacher',",
         "detail": "teachers.tests.base.test_base_teacher_view",
         "documentation": {}
     },

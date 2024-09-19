@@ -21,7 +21,7 @@ class StudentClassroomTestBase(TestCase):
             name='John Doe Student',
         )
 
-        self.user_teacher = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)
+        self.user_teacher = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True, is_active=True)
         self.teacher = Teacher.objects.create(
             user=self.user_teacher,
             name='Christfer Jhonson Teacher',
@@ -89,7 +89,7 @@ class StudentClassroomTestBase(TestCase):
         return response_token.data['token']
     
     def create_student(self, email, password, name):
-        user = User.objects.create_user(email=email, password=password, is_student=True)
+        user = User.objects.create_user(email=email, password=password, is_student=True, is_active=True)
         student = Student.objects.create(
             user=user,
             name=name

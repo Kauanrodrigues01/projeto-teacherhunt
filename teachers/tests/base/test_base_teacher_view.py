@@ -13,7 +13,7 @@ class TeacherTestBase(TestCase):
         self.url = reverse('teachers:list')
 
         # Criar um usuário
-        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True)
+        self.user = User.objects.create_user(email='teacher@example.com', password='@Password1234', is_teacher=True, is_active=True)
         self.teacher = Teacher.objects.create(
             user=self.user,
             name='John Doe',

@@ -9,7 +9,9 @@ class TestBaseAuthentication(TestCase):
         self.client = APIClient()
         self.user_student = User.objects.create_user(
             email='studentteste@gmail.com',
-            password='@Student123'
+            password='@Student123',
+            is_student=True,
+            is_active=True
         )
         self.student = Student.objects.create(
             user=self.user_student,
@@ -18,7 +20,9 @@ class TestBaseAuthentication(TestCase):
 
         self.user_teacher = User.objects.create_user(
             email='teacherteste@gmail.com',
-            password='@Teacher123'
+            password='@Teacher123',
+            is_teacher=True,
+            is_active=True
         )
         self.teacher = Teacher.objects.create(
             user=self.user_teacher,

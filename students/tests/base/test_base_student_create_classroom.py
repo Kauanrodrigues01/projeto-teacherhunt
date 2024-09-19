@@ -18,14 +18,16 @@ class TestBaseCreateClassroomView(TestCase):
         self.user_student = User.objects.create_user(
             email='user@example.com',
             password='@Password1234',
-            is_student=True
+            is_student=True,
+            is_active=True
         )
         self.student = Student.objects.create(user=self.user_student, name='Student Teste')
 
         self.user_teacher = User.objects.create_user(
             email='teacher@example.com',
             password='@Password1234',
-            is_teacher=True
+            is_teacher=True,
+            is_active=True
         )  
         self.teacher = Teacher.objects.create(
             user=self.user_teacher, 
