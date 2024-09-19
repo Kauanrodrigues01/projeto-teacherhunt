@@ -7,12 +7,9 @@ from .models import User
 
 from accounts.serializers import RequestPasswordResetEmailSerializer, SetNewPasswordSerializer
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
-from django.contrib.sites.shortcuts import get_current_site
-from django.urls import reverse
-from utils import send_email, verify_email
+from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode
+from rest_framework.exceptions import NotAuthenticated
 
 # Create your views here.
 
@@ -31,7 +28,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
+        return Response({'sucesso': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     '''
@@ -43,11 +40,11 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
             user = User.objects.get(id=id)
 
             if not PasswordResetTokenGenerator().check_token(user, token):
-                return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})
 
-            return Response({'success': True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
+            return Response({'message': 'Credenciais válidas', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
         except DjangoUnicodeDecodeError as identifier:
-            return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+            raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})
         
 class SetNewPasswordAPI(generics.GenericAPIView):
     '''
@@ -58,4 +55,4 @@ class SetNewPasswordAPI(generics.GenericAPIView):
     def patch(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Senha redefinida com sucesso.'}, status=status.HTTP_200_OK)

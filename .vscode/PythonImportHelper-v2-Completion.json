@@ -555,14 +555,6 @@
         "documentation": {}
     },
     {
-        "label": "reverse",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -1188,6 +1180,14 @@
     },
     {
         "label": "ErrorDetail",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotAuthenticated",
         "importPath": "rest_framework.exceptions",
         "description": "rest_framework.exceptions",
         "isExtraImport": true,
@@ -1492,22 +1492,6 @@
         "documentation": {}
     },
     {
-        "label": "force_str",
-        "importPath": "django.utils.encoding",
-        "description": "django.utils.encoding",
-        "isExtraImport": true,
-        "detail": "django.utils.encoding",
-        "documentation": {}
-    },
-    {
-        "label": "smart_bytes",
-        "importPath": "django.utils.encoding",
-        "description": "django.utils.encoding",
-        "isExtraImport": true,
-        "detail": "django.utils.encoding",
-        "documentation": {}
-    },
-    {
         "label": "DjangoUnicodeDecodeError",
         "importPath": "django.utils.encoding",
         "description": "django.utils.encoding",
@@ -1532,14 +1516,6 @@
         "documentation": {}
     },
     {
-        "label": "urlsafe_base64_encode",
-        "importPath": "django.utils.http",
-        "description": "django.utils.http",
-        "isExtraImport": true,
-        "detail": "django.utils.http",
-        "documentation": {}
-    },
-    {
         "label": "urlsafe_base64_decode",
         "importPath": "django.utils.http",
         "description": "django.utils.http",
@@ -1553,30 +1529,6 @@
         "description": "django.contrib.sites.shortcuts",
         "isExtraImport": true,
         "detail": "django.contrib.sites.shortcuts",
-        "documentation": {}
-    },
-    {
-        "label": "get_current_site",
-        "importPath": "django.contrib.sites.shortcuts",
-        "description": "django.contrib.sites.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.contrib.sites.shortcuts",
-        "documentation": {}
-    },
-    {
-        "label": "send_email",
-        "importPath": "utils",
-        "description": "utils",
-        "isExtraImport": true,
-        "detail": "utils",
-        "documentation": {}
-    },
-    {
-        "label": "verify_email",
-        "importPath": "utils",
-        "description": "utils",
-        "isExtraImport": true,
-        "detail": "utils",
         "documentation": {}
     },
     {
@@ -2592,7 +2544,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class RequestPasswordResetEmailSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(min_length=2)\n    class Meta:\n        model = User\n        fields = ['email']\n    def validate(self, attrs):\n        email = attrs.get('email', '')\n        if not verify_email(email):\n            raise serializers.ValidationError('Email inválido')\n        if User.objects.filter(email=email).exists():",
+        "peekOfCode": "class RequestPasswordResetEmailSerializer(serializers.ModelSerializer):\n    email = serializers.EmailField(min_length=2)\n    class Meta:\n        model = User\n        fields = ['email']\n    def validate(self, attrs):\n        email = attrs.get('email', '')\n        if not verify_email(email):\n            raise serializers.ValidationError({'email': 'Email inválido'})\n        if User.objects.filter(email=email).exists():",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -2601,7 +2553,7 @@
         "kind": 6,
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
-        "peekOfCode": "class SetNewPasswordSerializer(serializers.Serializer):\n    password = serializers.CharField(min_length=8, max_length=68, write_only=True)\n    password_confirmation = serializers.CharField(min_length=8, max_length=68, write_only=True)\n    uidb64 = serializers.CharField(min_length=1 ,write_only=True)\n    token = serializers.CharField(min_length=1, write_only=True)\n    class Meta:\n        fields = ['password', 'password_confirmation', 'uidb64', 'token']\n    def validate(self, attrs):\n        password = attrs.get('password')\n        password_confirmation = attrs.get('password_confirmation')",
+        "peekOfCode": "class SetNewPasswordSerializer(serializers.Serializer):\n    password = serializers.CharField( write_only=True)\n    password_confirmation = serializers.CharField( write_only=True)\n    uidb64 = serializers.CharField(min_length=1 ,write_only=True)\n    token = serializers.CharField(min_length=1, write_only=True)\n    class Meta:\n        fields = ['password', 'password_confirmation', 'uidb64', 'token']\n    def validate(self, attrs):\n        password = attrs.get('password')\n        password_confirmation = attrs.get('password_confirmation')",
         "detail": "accounts.serializers",
         "documentation": {}
     },
@@ -2637,7 +2589,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class RequestPasswordResetEmail(generics.GenericAPIView):\n    '''\n    # Send request to reset password to the user's email\n    '''\n    serializer_class = RequestPasswordResetEmailSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)\nclass PasswordTokenCheckAPI(generics.GenericAPIView):",
+        "peekOfCode": "class RequestPasswordResetEmail(generics.GenericAPIView):\n    '''\n    # Send request to reset password to the user's email\n    '''\n    serializer_class = RequestPasswordResetEmailSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'sucesso': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)\nclass PasswordTokenCheckAPI(generics.GenericAPIView):",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -2646,7 +2598,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class PasswordTokenCheckAPI(generics.GenericAPIView):\n    '''\n    # Check if the token is valid\n    '''\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))\n            user = User.objects.get(id=id)\n            if not PasswordResetTokenGenerator().check_token(user, token):\n                return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)",
+        "peekOfCode": "class PasswordTokenCheckAPI(generics.GenericAPIView):\n    '''\n    # Check if the token is valid\n    '''\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))\n            user = User.objects.get(id=id)\n            if not PasswordResetTokenGenerator().check_token(user, token):\n                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -2655,7 +2607,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class SetNewPasswordAPI(generics.GenericAPIView):\n    '''\n    # Set new password\n    '''\n    serializer_class = SetNewPasswordSerializer\n    def patch(self, request):\n        serializer = self.serializer_class(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)",
+        "peekOfCode": "class SetNewPasswordAPI(generics.GenericAPIView):\n    '''\n    # Set new password\n    '''\n    serializer_class = SetNewPasswordSerializer\n    def patch(self, request):\n        serializer = self.serializer_class(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Senha redefinida com sucesso.'}, status=status.HTTP_200_OK)",
         "detail": "accounts.views",
         "documentation": {}
     },

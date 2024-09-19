@@ -75,7 +75,7 @@ class RequestPasswordResetEmailSerializer(serializers.ModelSerializer):
         email = attrs.get('email', '')
 
         if not verify_email(email):
-            raise serializers.ValidationError('Email inválido')
+            raise serializers.ValidationError({'email': 'Email inválido'})
         
         if User.objects.filter(email=email).exists():
 
@@ -98,13 +98,13 @@ class RequestPasswordResetEmailSerializer(serializers.ModelSerializer):
 
             send_email('Reset your Password', email_body, user.email)
         else:
-            raise serializers.ValidationError('Email não encontrado')
+            raise serializers.ValidationError({'email': 'Email não encontrado'})
 
         return super().validate(attrs)
     
 class SetNewPasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(min_length=8, max_length=68, write_only=True)
-    password_confirmation = serializers.CharField(min_length=8, max_length=68, write_only=True)
+    password = serializers.CharField( write_only=True)
+    password_confirmation = serializers.CharField( write_only=True)
     uidb64 = serializers.CharField(min_length=1 ,write_only=True)
     token = serializers.CharField(min_length=1, write_only=True)
 
@@ -145,10 +145,10 @@ class SetNewPasswordSerializer(serializers.Serializer):
             user = User.objects.get(id=id)
 
             if not PasswordResetTokenGenerator().check_token(user, token):
-                raise serializers.ValidationError('Token inválido, solicite um novo.')
+                raise serializers.ValidationError({'token': 'Token inválido, solicite um novo.'})
 
             user.set_password(password)
             user.save()
             return user
-        except DjangoUnicodeDecodeError as identifier:
-            raise serializers.ValidationError('Token inválido, solicite um novo.')
+        except DjangoUnicodeDecodeError:
+            raise serializers.ValidationError({'token': 'Token inválido, solicite um novo.'})
