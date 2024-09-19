@@ -7,7 +7,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=False, blank=False)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)

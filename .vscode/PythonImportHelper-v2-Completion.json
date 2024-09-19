@@ -72,6 +72,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1371,6 +1387,23 @@
         "documentation": {}
     },
     {
+        "label": "django.core.validators",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.core.validators",
+        "description": "django.core.validators",
+        "detail": "django.core.validators",
+        "documentation": {}
+    },
+    {
+        "label": "validate_email",
+        "importPath": "django.core.validators",
+        "description": "django.core.validators",
+        "isExtraImport": true,
+        "detail": "django.core.validators",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -1645,6 +1678,14 @@
     },
     {
         "label": "SetNewPasswordSerializer",
+        "importPath": "accounts.serializers",
+        "description": "accounts.serializers",
+        "isExtraImport": true,
+        "detail": "accounts.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SendRequestEmailActiveUserSerializer",
         "importPath": "accounts.serializers",
         "description": "accounts.serializers",
         "isExtraImport": true,
@@ -2398,14 +2439,6 @@
         "documentation": {}
     },
     {
-        "label": "validate_email",
-        "importPath": "django.core.validators",
-        "description": "django.core.validators",
-        "isExtraImport": true,
-        "detail": "django.core.validators",
-        "documentation": {}
-    },
-    {
         "label": "EmailMessage",
         "importPath": "django.core.mail",
         "description": "django.core.mail",
@@ -2441,6 +2474,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0004_alter_user_is_active",
+        "description": "accounts.migrations.0004_alter_user_is_active",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0003_alter_student_name_alter_subject_name_and_more\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"user\",\n            name=\"is_active\",\n            field=models.BooleanField(default=False),\n        ),",
+        "detail": "accounts.migrations.0004_alter_user_is_active",
+        "documentation": {}
+    },
+    {
         "label": "AccountsTest",
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
@@ -2472,7 +2514,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class User(AbstractBaseUser, PermissionsMixin):\n    email = models.EmailField(unique=True, null=False, blank=False)\n    is_teacher = models.BooleanField(default=False)\n    is_student = models.BooleanField(default=False)\n    is_active = models.BooleanField(default=True)\n    is_staff = models.BooleanField(default=False)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = []  # Campos obrigatórios para o comando createsuperuser",
+        "peekOfCode": "class User(AbstractBaseUser, PermissionsMixin):\n    email = models.EmailField(unique=True, null=False, blank=False)\n    is_teacher = models.BooleanField(default=False)\n    is_student = models.BooleanField(default=False)\n    is_active = models.BooleanField(default=False)\n    is_staff = models.BooleanField(default=False)\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = []  # Campos obrigatórios para o comando createsuperuser",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2558,11 +2600,20 @@
         "documentation": {}
     },
     {
+        "label": "SendRequestEmailActiveUserSerializer",
+        "kind": 6,
+        "importPath": "accounts.serializers",
+        "description": "accounts.serializers",
+        "peekOfCode": "class SendRequestEmailActiveUserSerializer(serializers.Serializer):\n    email = serializers.EmailField()\n    class Meta:\n        fields = ['email']\n    def validate(self, attrs):\n        email = attrs.get('email', '')\n        if not verify_email(email):\n            raise serializers.ValidationError({'email': 'Email inválido'})\n        if User.objects.filter(email=email).exists():\n            user = User.objects.get(email=email)",
+        "detail": "accounts.serializers",
+        "documentation": {}
+    },
+    {
         "label": "app_name",
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n]",
+        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -2571,7 +2622,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "urlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')\n]",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -2607,7 +2658,25 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class SetNewPasswordAPI(generics.GenericAPIView):\n    '''\n    # Set new password\n    '''\n    serializer_class = SetNewPasswordSerializer\n    def patch(self, request):\n        serializer = self.serializer_class(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Senha redefinida com sucesso.'}, status=status.HTTP_200_OK)",
+        "peekOfCode": "class SetNewPasswordAPI(generics.GenericAPIView):\n    '''\n    # Set new password\n    '''\n    serializer_class = SetNewPasswordSerializer\n    def patch(self, request):\n        serializer = self.serializer_class(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Senha redefinida com sucesso.'}, status=status.HTTP_200_OK)\nclass SendRequestEmailActiveUser(generics.GenericAPIView):",
+        "detail": "accounts.views",
+        "documentation": {}
+    },
+    {
+        "label": "SendRequestEmailActiveUser",
+        "kind": 6,
+        "importPath": "accounts.views",
+        "description": "accounts.views",
+        "peekOfCode": "class SendRequestEmailActiveUser(generics.GenericAPIView):\n    serializer_class = SendRequestEmailActiveUserSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)\nclass ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))",
+        "detail": "accounts.views",
+        "documentation": {}
+    },
+    {
+        "label": "ActiveUser",
+        "kind": 6,
+        "importPath": "accounts.views",
+        "description": "accounts.views",
+        "peekOfCode": "class ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))\n            user = User.objects.get(id=id)\n            if not PasswordResetTokenGenerator().check_token(user, token):\n                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})\n            user.is_active = True\n            user.save()\n            return Response({'message': 'Conta ativada com sucesso!'})",
         "detail": "accounts.views",
         "documentation": {}
     },

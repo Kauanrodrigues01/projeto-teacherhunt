@@ -5,7 +5,7 @@ from rest_framework import generics
 from .models import User
 
 
-from accounts.serializers import RequestPasswordResetEmailSerializer, SetNewPasswordSerializer
+from accounts.serializers import RequestPasswordResetEmailSerializer, SetNewPasswordSerializer, SendRequestEmailActiveUserSerializer
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode
@@ -56,3 +56,27 @@ class SetNewPasswordAPI(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'message': 'Senha redefinida com sucesso.'}, status=status.HTTP_200_OK)
+    
+
+class SendRequestEmailActiveUser(generics.GenericAPIView):
+    serializer_class = SendRequestEmailActiveUserSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)
+
+class ActiveUser(generics.GenericAPIView):
+    def get(self, request, uidb64, token):
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})
+            
+            user.is_active = True
+            user.save()
+            return Response({'message': 'Conta ativada com sucesso!'})
+        except DjangoUnicodeDecodeError as identifier:
+            raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})

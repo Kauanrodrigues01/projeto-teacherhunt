@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from core.urls import urlpatterns
-from .views import CustomTokenBlacklistView, RequestPasswordResetEmail, PasswordTokenCheckAPI, SetNewPasswordAPI
+from .views import CustomTokenBlacklistView, RequestPasswordResetEmail, PasswordTokenCheckAPI, SetNewPasswordAPI, SendRequestEmailActiveUser, ActiveUser
 
 
 app_name = 'accounts'
@@ -13,4 +13,6 @@ urlpatterns = [
     path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),
     path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),
     path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),
+    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),
+    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')
 ]

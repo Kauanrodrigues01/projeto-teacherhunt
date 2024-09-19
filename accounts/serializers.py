@@ -1,3 +1,4 @@
+import django.core.validators
 import re
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer, TokenBlacklistSerializer
 from rest_framework import serializers
@@ -152,3 +153,39 @@ class SetNewPasswordSerializer(serializers.Serializer):
             return user
         except DjangoUnicodeDecodeError:
             raise serializers.ValidationError({'token': 'Token inválido, solicite um novo.'})
+
+class SendRequestEmailActiveUserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        fields = ['email']
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+
+        if not verify_email(email):
+            raise serializers.ValidationError({'email': 'Email inválido'})
+        
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            if user.is_student:
+                student = Student.objects.get(user=user)
+                username = student.name
+            else:
+                teacher = Teacher.objects.get(user=user)
+                username = teacher.name
+
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+
+            current_site = get_current_site(self.context['request']).domain
+            relative_link = reverse('accounts:active-user', kwargs={'uidb64': uidb64, 'token': token})
+            absurl = f'http://{current_site}{relative_link}'
+            email_body = f'Hi, {username} \n Use the link below to active account \n {absurl}'
+
+            send_email('Ativar conta', email_body, user.email)
+        else:
+            raise serializers.ValidationError({'email': 'Email não encontrado'})
+
+        return super().validate(attrs)
+
