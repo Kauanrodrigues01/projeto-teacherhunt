@@ -2,7 +2,7 @@ from rest_framework import serializers
 from accounts.models import Teacher, Subject
 from accounts.serializers import UserSerializer
 from collections import defaultdict
-from utils import verificar_email_valido
+from utils import verify_email
 from accounts.models import User
 import re
 
@@ -155,7 +155,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         if email is not None:
             if User.objects.filter(email=email).exists():
                 errors['email'].append('Este email já está cadastrado')
-            if not verificar_email_valido(email) and email is not None:
+            if not verify_email(email) and email is not None:
                 errors['email'].append('Insira um email válido')
 
         if errors:

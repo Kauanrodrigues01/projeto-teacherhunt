@@ -48,7 +48,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     "drf_yasg",
-    "debug_toolbar",
+    "debug_toolbar"
 ]
 
 LOCAL_APPS = [
@@ -171,14 +171,22 @@ SIMPLE_JWT = {
     "TOKEN_BLACKLIST_SERIALIZER": "accounts.serializers.CustomTokenBlacklistSerializer",
 }
 
-# Configurações de upload de mídia
+# Configurations of upload files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Configurações de CORS
+# Configurations of CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Debug Toolbar
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'testandoemail1100@gmail.com'
+EMAIL_HOST_PASSWORD = 'yzuy uyju jxpo faxf'  # Use uma senha de app se a autenticação de dois fatores estiver ativada
+DEFAULT_FROM_EMAIL = 'testandoemail1100@gmail.com'
