@@ -1597,14 +1597,6 @@
         "documentation": {}
     },
     {
-        "label": "TokenObtainPairView",
-        "importPath": "rest_framework_simplejwt.views",
-        "description": "rest_framework_simplejwt.views",
-        "isExtraImport": true,
-        "detail": "rest_framework_simplejwt.views",
-        "documentation": {}
-    },
-    {
         "label": "TokenRefreshView",
         "importPath": "rest_framework_simplejwt.views",
         "description": "rest_framework_simplejwt.views",
@@ -1614,6 +1606,14 @@
     },
     {
         "label": "TokenBlacklistView",
+        "importPath": "rest_framework_simplejwt.views",
+        "description": "rest_framework_simplejwt.views",
+        "isExtraImport": true,
+        "detail": "rest_framework_simplejwt.views",
+        "documentation": {}
+    },
+    {
+        "label": "TokenObtainPairView",
         "importPath": "rest_framework_simplejwt.views",
         "description": "rest_framework_simplejwt.views",
         "isExtraImport": true,
@@ -2613,7 +2613,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')",
+        "peekOfCode": "app_name = 'accounts'\nurlpatterns = [\n    path('login', CustomTokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -2622,8 +2622,17 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "urlpatterns = [\n    path('login', TokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')\n]",
+        "peekOfCode": "urlpatterns = [\n    path('login', CustomTokenObtainPairView.as_view(), name='login'),\n    path('refresh', TokenRefreshView.as_view(), name='refresh'),\n    path('logout', CustomTokenBlacklistView.as_view(), name='logout'),\n    path('password-reset-request', RequestPasswordResetEmail.as_view(), name='password-reset'),\n    path('password-reset/<uidb64>/<token>', PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),\n    path('password-reset-complete', SetNewPasswordAPI.as_view(), name='password-reset-complete'),\n    path('send-request-active-user', SendRequestEmailActiveUser.as_view(), name='send-request-active-user'),\n    path('active-user/<uidb64>/<token>', ActiveUser.as_view(), name='active-user')\n]",
         "detail": "accounts.urls",
+        "documentation": {}
+    },
+    {
+        "label": "CustomTokenObtainPairView",
+        "kind": 6,
+        "importPath": "accounts.views",
+        "description": "accounts.views",
+        "peekOfCode": "class CustomTokenObtainPairView(TokenObtainPairView):\n    \"\"\"\n    Custom Token view to handle inactive users.\n    \"\"\"\n    def post(self, request, *args, **kwargs):\n        email = request.data.get('email', '')\n        password = request.data.get('password', '')\n        try:\n            user = User.objects.get(email=email)\n        except User.DoesNotExist:",
+        "detail": "accounts.views",
         "documentation": {}
     },
     {
@@ -3279,7 +3288,7 @@
         "kind": 6,
         "importPath": "students.permissions",
         "description": "students.permissions",
-        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student\n    def has_object_permission(self, request, view, obj):\n        return request.user == obj.student.user and request.user.is_student",
+        "peekOfCode": "class IsStudentAuthenticated(BasePermission):\n    def has_permission(self, request, view):\n        return request.user.is_authenticated and request.user.is_student and request.user.is_active\n    def has_object_permission(self, request, view, obj):\n        return request.user == obj.student.user and request.user.is_student",
         "detail": "students.permissions",
         "documentation": {}
     },

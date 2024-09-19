@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenBlacklistView
 from rest_framework import generics
 from .models import User
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 from accounts.serializers import RequestPasswordResetEmailSerializer, SetNewPasswordSerializer, SendRequestEmailActiveUserSerializer
@@ -11,7 +12,24 @@ from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.exceptions import NotAuthenticated
 
-# Create your views here.
+class CustomTokenObtainPairView(TokenObtainPairView):
+    """
+    Custom Token view to handle inactive users.
+    """
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email', '')
+        password = request.data.get('password', '')
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({"detail": "No active account found with the given credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not user.is_active:
+            return Response({"detail": "Sua conta ainda não foi ativada. Por favor, verifique seu e-mail para ativar sua conta."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        return super().post(request, *args, **kwargs)
 
 class CustomTokenBlacklistView(TokenBlacklistView):
 

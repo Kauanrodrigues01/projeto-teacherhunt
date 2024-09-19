@@ -13,7 +13,7 @@ class StudentListPermission(BasePermission):
     
 class IsStudentAuthenticated(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.is_student
+        return request.user.is_authenticated and request.user.is_student and request.user.is_active
     
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.student.user and request.user.is_student
+        return request.user == obj.student.user and request.user.is_student 
