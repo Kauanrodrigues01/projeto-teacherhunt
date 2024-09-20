@@ -3027,7 +3027,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3036,7 +3036,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
+        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3045,7 +3045,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
+        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
         "detail": "setup.settings",
         "documentation": {}
     },
