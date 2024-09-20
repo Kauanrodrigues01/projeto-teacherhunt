@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from accounts.models import Teacher, Subject
+from accounts.models import Teacher, Subject, Rating, User
 from accounts.serializers import UserSerializer
 from collections import defaultdict
 from utils import verify_email
-from accounts.models import User
 import re
+from django.db import models
 
 class SubjectSerializer(serializers.ModelSerializer):
     nome = serializers.CharField(required=True, max_length=255, source='name')
@@ -228,6 +228,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         subjects_obejcts = SubjectSerializer(instance.subjects.all(), many=True).data
         create_at = instance.create_at
         update_at = instance.update_at
+        avaliacao = Rating.objects.filter(teacher=instance).aggregate(models.Avg('rating'))['rating__avg']
         
         data['id'] = id
         data['nome'] = name
@@ -236,6 +237,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         data['descricao'] = description
         data['valor_hora'] = hourly_price
         data['foto_perfil'] = profile_image
+        data['avaliacao'] = avaliacao
         data['materias'] = subjects
         data['materias_objetos'] = subjects_obejcts
         data['create_at'] = create_at

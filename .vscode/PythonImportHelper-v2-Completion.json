@@ -88,6 +88,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -169,6 +201,14 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -987,6 +1027,22 @@
         "documentation": {}
     },
     {
+        "label": "Rating",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "User",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -1164,6 +1220,14 @@
     },
     {
         "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Rating",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -2037,14 +2101,6 @@
         "documentation": {}
     },
     {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
         "label": "BasePermission",
         "importPath": "rest_framework.permissions",
         "description": "rest_framework.permissions",
@@ -2483,6 +2539,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0005_rating",
+        "description": "accounts.migrations.0005_rating",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0004_alter_user_is_active\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Rating\",\n            fields=[\n                (\n                    \"id\",",
+        "detail": "accounts.migrations.0005_rating",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0006_alter_rating_rating",
+        "description": "accounts.migrations.0006_alter_rating_rating",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0005_rating\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"rating\",\n            name=\"rating\",\n            field=models.FloatField(),\n        ),",
+        "detail": "accounts.migrations.0006_alter_rating_rating",
+        "documentation": {}
+    },
+    {
         "label": "AccountsTest",
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
@@ -2541,7 +2615,16 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'",
+        "peekOfCode": "class Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Student: {self.name}'\nclass Rating(models.Model):\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='ratings')",
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Rating",
+        "kind": 6,
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "peekOfCode": "class Rating(models.Model):\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='ratings')\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='ratings')\n    rating = models.FloatField()\n    comment = models.TextField()\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Rating: {self.rating}'",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -3027,7 +3110,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3036,7 +3119,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
+        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3045,7 +3128,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
+        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3306,7 +3389,16 @@
         "kind": 6,
         "importPath": "students.serializers",
         "description": "students.serializers",
-        "peekOfCode": "class StudentProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)\n    class Meta:\n        model = Student\n        fields = ['foto']",
+        "peekOfCode": "class StudentProfileImageSerializer(serializers.ModelSerializer):\n    foto = serializers.ImageField(required=True, source='profile_image', write_only=True)\n    class Meta:\n        model = Student\n        fields = ['foto']\nclass RatingSerializer(serializers.ModelSerializer):\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    avaliacao = serializers.FloatField(source='rating')\n    comentario = serializers.CharField(source='comment')",
+        "detail": "students.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "RatingSerializer",
+        "kind": 6,
+        "importPath": "students.serializers",
+        "description": "students.serializers",
+        "peekOfCode": "class RatingSerializer(serializers.ModelSerializer):\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    avaliacao = serializers.FloatField(source='rating')\n    comentario = serializers.CharField(source='comment')\n    class Meta:\n        model = Rating\n        fields = ['id', 'professor', 'aluno', 'avaliacao', 'comentario']\n    def validate(self, attrs):\n        teacher = attrs.get('teacher', None)",
         "detail": "students.serializers",
         "documentation": {}
     },
@@ -3315,7 +3407,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n]",
+        "peekOfCode": "app_name = 'students'\nurlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n    path('alunos/avaliar-professor', RatingTeacherView.as_view(), name='rating-teacher'),",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -3324,7 +3416,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n    path('alunos/avaliar-professor', RatingTeacherView.as_view(), name='rating-teacher'),\n]",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -3378,7 +3470,7 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class ClassroomCreateView(ClassroomView):\n    http_method_names = ['post']\nclass ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']",
+        "peekOfCode": "class ClassroomCreateView(ClassroomView):\n    http_method_names = ['post']\nclass ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']\nclass RatingTeacherView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)",
         "detail": "students.views",
         "documentation": {}
     },
@@ -3387,7 +3479,16 @@
         "kind": 6,
         "importPath": "students.views",
         "description": "students.views",
-        "peekOfCode": "class ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']",
+        "peekOfCode": "class ClassroomUpdateView(ClassroomView):\n    http_method_names = ['put']\nclass RatingTeacherView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "RatingTeacherView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class RatingTeacherView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        data = request.data.copy()\n        data['aluno'] = student.id",
         "detail": "students.views",
         "documentation": {}
     },

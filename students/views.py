@@ -1,13 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import StudentSerializer, StudentProfileImageSerializer
+from .serializers import StudentSerializer, StudentProfileImageSerializer, RatingSerializer
 from accounts.models import Student
 from .permissions import IsStudentAuthenticated, StudentListPermission
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from classroom.views import ClassroomView
 
@@ -124,3 +123,20 @@ class ClassroomCreateView(ClassroomView):
 
 class ClassroomUpdateView(ClassroomView):
     http_method_names = ['put']
+
+class RatingTeacherView(APIView):
+    permission_classes = [IsStudentAuthenticated]
+    
+    def post(self, request):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        data = request.data.copy()
+        data['aluno'] = student.id
+        serializer = RatingSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': 'Professor avaliado com sucesso.'}, status=status.HTTP_201_CREATED)

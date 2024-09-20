@@ -49,3 +49,14 @@ class Student(models.Model):
 
     def __str__(self):
         return f'Student: {self.name}'
+
+class Rating(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='ratings')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.FloatField()
+    comment = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Rating: {self.rating}'

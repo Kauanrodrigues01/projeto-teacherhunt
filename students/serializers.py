@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.models import Student
+from accounts.models import Student, Rating, Teacher
 from accounts.serializers import UserSerializer
 from collections import defaultdict
 from utils import verify_email
@@ -123,3 +123,62 @@ class StudentProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['foto']
+
+class RatingSerializer(serializers.ModelSerializer):
+    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')
+    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')
+    avaliacao = serializers.FloatField(source='rating')
+    comentario = serializers.CharField(source='comment')
+
+    class Meta:
+        model = Rating
+        fields = ['id', 'professor', 'aluno', 'avaliacao', 'comentario']
+
+    def validate(self, attrs):
+        teacher = attrs.get('teacher', None)
+        student = attrs.get('student',  None)
+        rating = attrs.get('rating', None)
+        comment = attrs.get('comment', None)
+        errors = defaultdict(list)
+
+        if teacher is None:
+            errors['professor'].append('Este campo é obrigatório.')
+        if student is None:
+            errors['aluno'].append('Este campo é obrigatório.')
+        if rating is None:
+            errors['avaliacao'].append('Este campo é obrigatório.')
+
+        if not Teacher.objects.filter(id=teacher.id).exists():
+            errors['professor'].append('Professor não encontrado.')
+        if Rating.objects.filter(teacher=teacher, student=student).exists():
+            errors['detail'].append('Você já avaliou este professor.')
+        if rating is not None:
+            if not isinstance(rating, int) and not isinstance(rating, float):
+                errors['avaliacao'].append('A nota deve ser um número.') 
+            if rating < 0 or rating > 5:
+                errors['avaliacao'].append('A nota deve ser um valor entre 0 e 5.')
+        if comment is not None:
+            if not isinstance(comment, str):
+                errors['comentario'].append('O comentário deve ser uma string.')
+            if len(comment) < 10:
+                errors['comentario'].append('O comentário deve ter no mínimo 10 caracteres.')
+            if len(comment) > 500:
+                errors['comentario'].append('O comentário deve ter no máximo 500 caracteres.')
+            if comment.isnumeric():
+                errors['comentario'].append('O comentário não pode ser apenas números.')
+        
+        if errors:
+            raise serializers.ValidationError(errors)
+        
+        return super().validate(attrs)
+    
+    def create(self, validated_data):
+        teacher = validated_data.pop('teacher')
+        student = validated_data.pop('student')
+        rating = validated_data.pop('rating')
+        comment = validated_data.pop('comment')
+        
+        rating = Rating.objects.create(teacher=teacher, student=student, rating=rating, comment=comment)
+        
+        return rating
+    
