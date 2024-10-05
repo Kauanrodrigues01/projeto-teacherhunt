@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-from core.urls import urlpatterns
 from .views import CustomTokenBlacklistView, RequestPasswordResetEmail, PasswordTokenCheckAPI, SetNewPasswordAPI, SendRequestEmailActiveUser, ActiveUser, CustomTokenObtainPairView
 
 

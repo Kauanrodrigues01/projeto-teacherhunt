@@ -168,6 +168,8 @@ class SendRequestEmailActiveUserSerializer(serializers.Serializer):
         
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
+            if user.is_active:
+                raise serializers.ValidationError({'email': 'Conta já ativada.'})
             if user.is_student:
                 student = Student.objects.get(user=user)
                 username = student.name

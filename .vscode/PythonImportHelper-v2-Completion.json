@@ -1685,14 +1685,6 @@
         "documentation": {}
     },
     {
-        "label": "urlpatterns",
-        "importPath": "core.urls",
-        "description": "core.urls",
-        "isExtraImport": true,
-        "detail": "core.urls",
-        "documentation": {}
-    },
-    {
         "label": "Response",
         "importPath": "rest_framework.response",
         "description": "rest_framework.response",
@@ -2759,7 +2751,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class SendRequestEmailActiveUser(generics.GenericAPIView):\n    serializer_class = SendRequestEmailActiveUserSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)\nclass ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))",
+        "peekOfCode": "class SendRequestEmailActiveUser(generics.GenericAPIView):\n    serializer_class = SendRequestEmailActiveUserSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)\nclass ActiveUser(generics.GenericAPIView):\n    def post(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -2768,7 +2760,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))\n            user = User.objects.get(id=id)\n            if not PasswordResetTokenGenerator().check_token(user, token):\n                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})\n            user.is_active = True\n            user.save()\n            return Response({'message': 'Conta ativada com sucesso!'})",
+        "peekOfCode": "class ActiveUser(generics.GenericAPIView):\n    def post(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))\n            user = User.objects.get(id=id)\n            if not PasswordResetTokenGenerator().check_token(user, token):\n                raise NotAuthenticated({'error': 'Token inválido, solicite um novo.'})\n            user.is_active = True\n            user.save()\n            return Response({'message': 'Conta ativada com sucesso!'})",
         "detail": "accounts.views",
         "documentation": {}
     },
