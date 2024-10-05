@@ -85,7 +85,7 @@ class SendRequestEmailActiveUser(generics.GenericAPIView):
         return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)
     
 class ActiveUser(generics.GenericAPIView):
-    def post(self, request, uidb64, token):
+    def get(self, request, uidb64, token):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
