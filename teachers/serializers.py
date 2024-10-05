@@ -185,6 +185,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         # Remover e atualizar campos não relacionados ao modelo Teacher
         email = validated_data.pop('user', {}).pop('email', instance.user.email)
+        if email != instance.user.email:
+            instance.user.is_active = False
         password = validated_data.pop('password', None)
         name = validated_data.pop('name', instance.name)
         description = validated_data.pop('description', instance.description)
