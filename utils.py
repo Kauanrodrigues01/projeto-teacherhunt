@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.core.mail import EmailMessage
 
 def verify_email(email):
     try:
@@ -7,9 +8,6 @@ def verify_email(email):
         return True
     except ValidationError:
         return False
-    
-# Redefine password by email
-from django.core.mail import EmailMessage
 
 def send_email(subject, message, to_email):
     '''

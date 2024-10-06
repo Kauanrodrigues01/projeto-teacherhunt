@@ -3786,7 +3786,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def verify_email(email):\n    try:\n        validate_email(email)\n        return True\n    except ValidationError:\n        return False\n# Redefine password by email\nfrom django.core.mail import EmailMessage\ndef send_email(subject, message, to_email):\n    '''",
+        "peekOfCode": "def verify_email(email):\n    try:\n        validate_email(email)\n        return True\n    except ValidationError:\n        return False\ndef send_email(subject, message, to_email):\n    '''\n    # The subject is the subject of the email.\n    # The message is the body of the email.",
         "detail": "utils",
         "documentation": {}
     },
