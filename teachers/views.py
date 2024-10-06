@@ -14,6 +14,7 @@ from rest_framework.exceptions import NotFound
 from classroom.models import Classroom
 from django.utils import timezone
 from django.db.models import Q
+from students.serializers import RatingSerializer
 
 class TeacherList(APIView):
     permission_classes = (TeacherListPermission,)
@@ -240,3 +241,18 @@ class TeacherCancelledClassroomView(APIView):
         classroom.status = 'C'
         classroom.save()
         return Response({'message': 'Aula recusada com sucesso.'}, status=status.HTTP_200_OK)
+    
+class TeacherRatingsView(APIView):
+    def get(self, request, pk):
+        try:
+            teacher = Teacher.objects.get(pk=pk)
+        except Teacher.DoesNotExist:
+            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        ratings = teacher.ratings.all()
+
+        if ratings.count() == 0:
+            return Response({'error': 'Nenhuma avaliação encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = RatingSerializer(ratings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        

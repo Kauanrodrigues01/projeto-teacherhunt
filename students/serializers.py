@@ -184,3 +184,20 @@ class RatingSerializer(serializers.ModelSerializer):
         
         return rating
     
+    def to_representation(self, instance):
+        professor = instance.teacher
+        aluno = instance.student
+        aluno_nome = aluno.name
+        professor_nome = professor.name
+        avaliacao = instance.rating
+        comentario = instance.comment
+
+        data = {
+            'professor': professor_nome,
+            'aluno': aluno_nome,
+            'avaliacao': avaliacao,
+            'comentario': comentario
+        }
+
+        return data
+    

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-from .views import TeacherDetail, TeacherList, TeacherMeView, TeacherProfileImageView, TeacherListForSubjects, SubjectsList, TeacherClassroomView, TeacherAcceptedClassroomView, TeacherCancelledClassroomView, TeacherClassroomDetailView
+from .views import TeacherDetail, TeacherList, TeacherMeView, TeacherProfileImageView, TeacherListForSubjects, SubjectsList, TeacherClassroomView, TeacherAcceptedClassroomView, TeacherCancelledClassroomView, TeacherClassroomDetailView, TeacherRatingsView
 
 app_name = 'teachers'
 
@@ -17,5 +17,6 @@ urlpatterns = [
     path('professores/aulas/<int:pk>', TeacherClassroomDetailView.as_view(), name='teacher-classroom-detail'),
     path('professores/aulas/aceitar/<int:pk>', TeacherAcceptedClassroomView.as_view(), name='teacher-accepted-classroom'),
     path('professores/aulas/cancelar/<int:pk>', TeacherCancelledClassroomView.as_view(), name='teacher-cancelled-classroom'),
+    path('professores/<int:pk>/avaliacoes', TeacherRatingsView.as_view(), name='rating-teacher'),
     path('', include(router.urls))
 ]
