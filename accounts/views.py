@@ -46,7 +46,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        return Response({'sucesso': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     '''
@@ -82,7 +82,7 @@ class SendRequestEmailActiveUser(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Foi enviado um email com link para ativação da conta.'}, status=status.HTTP_200_OK)
     
 class ActiveUser(generics.GenericAPIView):
     def get(self, request, uidb64, token):
