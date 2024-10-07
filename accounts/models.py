@@ -35,7 +35,7 @@ class Teacher(models.Model):
         return f'Teacher: {self.name}'
 
 class Subject(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=60, unique=True)
 
     def __str__(self):
         return self.name

@@ -37,7 +37,7 @@ class TeacherList(APIView):
         else:
             teachers = Teacher.objects.all()
         
-        teachers = teachers.order_by('-id')
+        teachers = teachers.filter(user__is_active=True).order_by('-id')
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
     

@@ -21,3 +21,17 @@ def send_email(subject, message, to_email):
         to=[to_email]
     )
     email.send()
+    
+    
+def round_rating(avaliacao):
+    valor = avaliacao * 2
+    if valor - int(valor) == 0.5:
+        valor += 0.1
+    valor_arredondado = round(valor)
+    
+    if valor % 1 == 0.25:
+        valor_arredondado += 1
+    elif valor % 1 == 0.75:
+        valor_arredondado += 1 
+
+    return valor_arredondado / 2
