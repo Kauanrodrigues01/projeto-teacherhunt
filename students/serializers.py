@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from accounts.models import Student, Rating, Teacher
+from accounts.models import Student, Rating, Teacher, User, FavoriteTeacher
 from accounts.serializers import UserSerializer
 from collections import defaultdict
 from utils import verify_email
-from accounts.models import User
 import re
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -153,7 +152,7 @@ class RatingSerializer(serializers.ModelSerializer):
         if not Teacher.objects.filter(id=teacher.id).exists():
             errors['professor'].append('Professor não encontrado.')
         if Rating.objects.filter(teacher=teacher, student=student).exists():
-            errors['detail'].append('Você já avaliou este professor.')
+            errors['error'].append('Você já avaliou este professor.')
         if rating is not None:
             if not isinstance(rating, int) and not isinstance(rating, float):
                 errors['avaliacao'].append('A nota deve ser um número.') 
@@ -200,4 +199,11 @@ class RatingSerializer(serializers.ModelSerializer):
         }
 
         return data
+
+class FavoriteTeacherSerializer(serializers.ModelSerializer):
+    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')
+    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')
     
+    class Meta:
+        model = FavoriteTeacher
+        fields = ['id', 'aluno', 'professor']

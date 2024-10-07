@@ -60,3 +60,13 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'Rating: {self.rating}'
+    
+    
+class FavoriteTeacher(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='favorite_teachers')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='favorite_students')
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Favorite Teacher: {self.teacher.name}'

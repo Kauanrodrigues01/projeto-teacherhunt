@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StudentList, StudentProfileImageView, StudentClassroomView, StudentClassroomDetailView, StudentMeView, ClassroomCreateView, ClassroomUpdateView, RatingTeacherView
+from .views import StudentList, StudentProfileImageView, StudentClassroomView, StudentClassroomDetailView, StudentMeView, ClassroomCreateView, ClassroomUpdateView, RatingTeacherView, FavoriteTeacherView
 
 app_name = 'students'
 urlpatterns = [
@@ -11,4 +11,6 @@ urlpatterns = [
     path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),
     path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),
     path('alunos/avaliar-professor', RatingTeacherView.as_view(), name='rating-teacher'),
+    path('alunos/professores-favoritos', FavoriteTeacherView.as_view(), name='list-favorite-teachers'),
+    path('alunos/professores-favoritos/<int:teacher_id>', FavoriteTeacherView.as_view(), name='add-remove-favorite-teacher'),
 ]

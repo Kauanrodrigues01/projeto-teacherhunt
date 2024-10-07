@@ -1,14 +1,15 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import StudentSerializer, StudentProfileImageSerializer, RatingSerializer
-from accounts.models import Student
+from .serializers import StudentSerializer, StudentProfileImageSerializer, RatingSerializer, FavoriteTeacherSerializer
+from accounts.models import Student, Teacher
 from .permissions import IsStudentAuthenticated, StudentListPermission
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
 from rest_framework import status
 from classroom.views import ClassroomView
+from teachers.serializers import TeacherSerializer
 
 class StudentList(APIView):
     permission_classes = (StudentListPermission,)
@@ -140,3 +141,58 @@ class RatingTeacherView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'message': 'Professor avaliado com sucesso.'}, status=status.HTTP_201_CREATED)
+    
+class FavoriteTeacherView(APIView):
+    permission_classes = [IsStudentAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({'message': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        teachers_id = student.favorite_teachers.values_list('teacher', flat=True)
+
+        if len(teachers_id) == 0:
+            return Response({'message': 'Nenhum professor favorito encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        teachers = Teacher.objects.filter(id__in=teachers_id)
+        serializer = TeacherSerializer(teachers, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request, teacher_id):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({'message': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            teacher = Student.objects.get(id=teacher_id)
+        except Student.DoesNotExist:
+            return Response({'message': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        data = {'aluno': student.id, 'professor': teacher.id}
+        serializer = FavoriteTeacherSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': 'Professor adicionado aos favoritos.'}, status=status.HTTP_200_OK)
+    
+    def delete(self, request, teacher_id):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response({'message': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            teacher = Teacher.objects.get(id=teacher_id)
+        except Teacher.DoesNotExist:
+            return Response({'message': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        favorite_teacher = student.favorite_teachers.filter(teacher=teacher)
+        if favorite_teacher.exists():
+            favorite_teacher.delete()
+            return Response({'message': 'Professor removido dos favoritos.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Professor não está na lista de favoritos.'}, status=status.HTTP_404_NOT_FOUND)
