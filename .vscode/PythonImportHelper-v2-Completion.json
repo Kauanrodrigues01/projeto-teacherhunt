@@ -120,6 +120,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1051,7 +1083,23 @@
         "documentation": {}
     },
     {
+        "label": "FavoriteTeacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1228,6 +1276,118 @@
     },
     {
         "label": "Rating",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "FavoriteTeacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Rating",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Student",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Subject",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1661,6 +1821,14 @@
         "documentation": {}
     },
     {
+        "label": "round_rating",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
         "label": "TokenRefreshView",
         "importPath": "rest_framework_simplejwt.views",
         "description": "rest_framework_simplejwt.views",
@@ -1762,6 +1930,14 @@
         "description": "accounts.serializers",
         "isExtraImport": true,
         "detail": "accounts.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "Classroom",
+        "importPath": "classroom.models",
+        "description": "classroom.models",
+        "isExtraImport": true,
+        "detail": "classroom.models",
         "documentation": {}
     },
     {
@@ -1950,6 +2126,22 @@
     },
     {
         "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -2462,6 +2654,14 @@
         "documentation": {}
     },
     {
+        "label": "TeacherSerializer",
+        "importPath": "teachers.serializers",
+        "description": "teachers.serializers",
+        "isExtraImport": true,
+        "detail": "teachers.serializers",
+        "documentation": {}
+    },
+    {
         "label": "SimpleRouter",
         "importPath": "rest_framework.routers",
         "description": "rest_framework.routers",
@@ -2478,12 +2678,55 @@
         "documentation": {}
     },
     {
+        "label": "RatingSerializer",
+        "importPath": "students.serializers",
+        "description": "students.serializers",
+        "isExtraImport": true,
+        "detail": "students.serializers",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "sleep",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "django",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django",
+        "description": "django",
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
         "documentation": {}
     },
     {
@@ -2549,6 +2792,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0007_favoriteteacher",
+        "description": "accounts.migrations.0007_favoriteteacher",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0006_alter_rating_rating\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"FavoriteTeacher\",\n            fields=[\n                (\n                    \"id\",",
+        "detail": "accounts.migrations.0007_favoriteteacher",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0008_alter_subject_name",
+        "description": "accounts.migrations.0008_alter_subject_name",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"accounts\", \"0007_favoriteteacher\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"subject\",\n            name=\"name\",\n            field=models.CharField(max_length=60, unique=True),\n        ),",
+        "detail": "accounts.migrations.0008_alter_subject_name",
+        "documentation": {}
+    },
+    {
         "label": "AccountsTest",
         "kind": 6,
         "importPath": "accounts.tests.test_login_refresh_logout",
@@ -2598,7 +2859,7 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=30, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Subject(models.Model):\n    name = models.CharField(max_length=60, unique=True)\n    def __str__(self):\n        return self.name\nclass Student(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', blank=False, null=False)\n    name = models.CharField(max_length=100, blank=False, null=False)\n    profile_image = models.ImageField(upload_to='students_image/', blank=True, null=True)\n    create_at = models.DateTimeField(default=now)\n    update_at = models.DateTimeField(auto_now=True)",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2616,7 +2877,16 @@
         "kind": 6,
         "importPath": "accounts.models",
         "description": "accounts.models",
-        "peekOfCode": "class Rating(models.Model):\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='ratings')\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='ratings')\n    rating = models.FloatField()\n    comment = models.TextField()\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Rating: {self.rating}'",
+        "peekOfCode": "class Rating(models.Model):\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='ratings')\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='ratings')\n    rating = models.FloatField()\n    comment = models.TextField()\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Rating: {self.rating}'\nclass FavoriteTeacher(models.Model):",
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "FavoriteTeacher",
+        "kind": 6,
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "peekOfCode": "class FavoriteTeacher(models.Model):\n    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='favorite_teachers')\n    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='favorite_students')\n    create_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Favorite Teacher: {self.teacher.name}'",
         "detail": "accounts.models",
         "documentation": {}
     },
@@ -2724,7 +2994,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class RequestPasswordResetEmail(generics.GenericAPIView):\n    '''\n    # Send request to reset password to the user's email\n    '''\n    serializer_class = RequestPasswordResetEmailSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'sucesso': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)\nclass PasswordTokenCheckAPI(generics.GenericAPIView):",
+        "peekOfCode": "class RequestPasswordResetEmail(generics.GenericAPIView):\n    '''\n    # Send request to reset password to the user's email\n    '''\n    serializer_class = RequestPasswordResetEmailSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Foi enviado um email com o link de redefinição de senha.'}, status=status.HTTP_200_OK)\nclass PasswordTokenCheckAPI(generics.GenericAPIView):",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -2751,7 +3021,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class SendRequestEmailActiveUser(generics.GenericAPIView):\n    serializer_class = SendRequestEmailActiveUserSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Email enviado com sucesso.'}, status=status.HTTP_200_OK)\nclass ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))",
+        "peekOfCode": "class SendRequestEmailActiveUser(generics.GenericAPIView):\n    serializer_class = SendRequestEmailActiveUserSerializer\n    def post(self, request):\n        serializer = self.serializer_class(data=request.data, context={'request': request})\n        serializer.is_valid(raise_exception=True)\n        return Response({'message': 'Foi enviado um email com link para ativação da conta.'}, status=status.HTTP_200_OK)\nclass ActiveUser(generics.GenericAPIView):\n    def get(self, request, uidb64, token):\n        try:\n            id = smart_str(urlsafe_base64_decode(uidb64))",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -3395,6 +3665,15 @@
         "documentation": {}
     },
     {
+        "label": "FavoriteTeacherSerializer",
+        "kind": 6,
+        "importPath": "students.serializers",
+        "description": "students.serializers",
+        "peekOfCode": "class FavoriteTeacherSerializer(serializers.ModelSerializer):\n    aluno = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), source='student')\n    professor = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), source='teacher')\n    class Meta:\n        model = FavoriteTeacher\n        fields = ['id', 'aluno', 'professor']",
+        "detail": "students.serializers",
+        "documentation": {}
+    },
+    {
         "label": "app_name",
         "kind": 5,
         "importPath": "students.urls",
@@ -3408,7 +3687,7 @@
         "kind": 5,
         "importPath": "students.urls",
         "description": "students.urls",
-        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n    path('alunos/avaliar-professor', RatingTeacherView.as_view(), name='rating-teacher'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('alunos', StudentList.as_view(), name='list'),\n    path('alunos/me', StudentMeView.as_view(), name='me'),\n    path('alunos/foto', StudentProfileImageView.as_view(), name='profile-image'),\n    path('alunos/aulas', StudentClassroomView.as_view(), name='student-classrooms'),\n    path('alunos/aulas/<int:pk>', StudentClassroomDetailView.as_view(), name='student-classroom-detail'),\n    path('alunos/agendar-aulas', ClassroomCreateView.as_view(), name='student-create-classroom'),\n    path('alunos/atualizar-aula/<int:pk>', ClassroomUpdateView.as_view(), name='student-update-classroom'),\n    path('alunos/avaliar-professor', RatingTeacherView.as_view(), name='rating-teacher'),\n    path('alunos/professores-favoritos', FavoriteTeacherView.as_view(), name='list-favorite-teachers'),",
         "detail": "students.urls",
         "documentation": {}
     },
@@ -3481,6 +3760,15 @@
         "importPath": "students.views",
         "description": "students.views",
         "peekOfCode": "class RatingTeacherView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def post(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'error': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        data = request.data.copy()\n        data['aluno'] = student.id",
+        "detail": "students.views",
+        "documentation": {}
+    },
+    {
+        "label": "FavoriteTeacherView",
+        "kind": 6,
+        "importPath": "students.views",
+        "description": "students.views",
+        "peekOfCode": "class FavoriteTeacherView(APIView):\n    permission_classes = [IsStudentAuthenticated]\n    def get(self, request):\n        user = request.user\n        try:\n            student = Student.objects.get(user=user)\n        except Student.DoesNotExist:\n            return Response({'message': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        teachers_id = student.favorite_teachers.values_list('teacher', flat=True)\n        if len(teachers_id) == 0:",
         "detail": "students.views",
         "documentation": {}
     },
@@ -3773,12 +4061,84 @@
         "documentation": {}
     },
     {
+        "label": "TeacherRatingsView",
+        "kind": 6,
+        "importPath": "teachers.views",
+        "description": "teachers.views",
+        "peekOfCode": "class TeacherRatingsView(APIView):\n    def get(self, request, pk):\n        try:\n            teacher = Teacher.objects.get(pk=pk)\n        except Teacher.DoesNotExist:\n            return Response({'error': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)\n        ratings = teacher.ratings.all()\n        if ratings.count() == 0:\n            return Response({'error': 'Nenhuma avaliação encontrada.'}, status=status.HTTP_404_NOT_FOUND)\n        serializer = RatingSerializer(ratings, many=True)",
+        "detail": "teachers.views",
+        "documentation": {}
+    },
+    {
         "label": "main",
         "kind": 2,
         "importPath": "manage",
         "description": "manage",
         "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"setup.settings\")\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
         "detail": "manage",
+        "documentation": {}
+    },
+    {
+        "label": "scripts_python",
+        "kind": 5,
+        "importPath": "populate",
+        "description": "populate",
+        "peekOfCode": "scripts_python = [\n    \"populate_subject.py\",\n    \"populate_student.py\",\n    \"populate_teacher.py\",\n    \"populate_rating.py\",\n    \"populate_favorite_teacher.py\",\n    \"populate_classroom.py\",\n]\nfor script in scripts_python:\n    result = subprocess.run([\"python\", script], capture_output=True, text=True)",
+        "detail": "populate",
+        "documentation": {}
+    },
+    {
+        "label": "populate_classrooms",
+        "kind": 2,
+        "importPath": "populate_classroom",
+        "description": "populate_classroom",
+        "peekOfCode": "def populate_classrooms():\n    classrooms_data = [\n        {\n            \"student\": random.choice(Student.objects.values_list('id', flat=True)),\n            \"teacher\": random.choice(Teacher.objects.values_list('id', flat=True)),\n            \"day_of_class\": datetime.now().date() + timedelta(days=i),\n            \"start_time\": datetime.now().time().replace(hour=random.randint(8, 17), minute=0, second=0),\n            \"number_of_hours\": random.randint(1, 3),\n            \"status\": random.choice(['A', 'C', 'P']),\n            \"description_about_class\": f\"Descrição da aula {i}\"",
+        "detail": "populate_classroom",
+        "documentation": {}
+    },
+    {
+        "label": "populate_favorite_teachers",
+        "kind": 2,
+        "importPath": "populate_favorite_teacher",
+        "description": "populate_favorite_teacher",
+        "peekOfCode": "def populate_favorite_teachers():\n    data =[\n        {\n            \"student\": random.choice(Student.objects.values_list('id', flat=True)),\n            \"teacher\": random.choice(Teacher.objects.values_list('id', flat=True))\n        } for i in range(0, 20)\n    ]\n    for value in data:\n        student = Student.objects.get(id=value[\"student\"])\n        teacher = Teacher.objects.get(id=value[\"teacher\"])",
+        "detail": "populate_favorite_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "populate_ratings",
+        "kind": 2,
+        "importPath": "populate_rating",
+        "description": "populate_rating",
+        "peekOfCode": "def populate_ratings():\n    data =[\n        {\n            \"student\": random.choice(Student.objects.values_list('id', flat=True)),\n            \"teacher\": random.choice(Teacher.objects.values_list('id', flat=True)),\n            \"rating\": round(random.uniform(0, 5.0) * 2) / 2,\n            \"comment\": f\"Comentário Aleatório {i}\"\n        } for i in range(0, 60)\n    ]\n    for value in data:",
+        "detail": "populate_rating",
+        "documentation": {}
+    },
+    {
+        "label": "populate_users_and_students",
+        "kind": 2,
+        "importPath": "populate_student",
+        "description": "populate_student",
+        "peekOfCode": "def populate_users_and_students():\n    users_data = [\n        {\n            \"email\": f\"Student{i}@example.com\",\n            \"is_teacher\": False,\n            \"is_student\": True,\n            \"is_active\": True,\n            \"is_staff\": False,\n            \"name\": f\"Aluno {chr(65 + i)}\", \n            \"profile_image\": None",
+        "detail": "populate_student",
+        "documentation": {}
+    },
+    {
+        "label": "subjects",
+        "kind": 5,
+        "importPath": "populate_subject",
+        "description": "populate_subject",
+        "peekOfCode": "subjects = {\n    \"Português\",\n    \"Matemática\",\n    \"Ciências\",\n    \"História\",\n    \"Geografia\",\n    \"Artes\",\n    \"Educação Física\",\n    \"Língua Estrangeira (Inglês, Espanhol)\",\n    \"Ensino Religioso\",",
+        "detail": "populate_subject",
+        "documentation": {}
+    },
+    {
+        "label": "populate_users_and_teachers",
+        "kind": 2,
+        "importPath": "populate_teacher",
+        "description": "populate_teacher",
+        "peekOfCode": "def populate_users_and_teachers():\n    users_data = [\n        {\n            \"email\": f\"teacher{i}@example.com\",\n            \"is_teacher\": True,\n            \"is_student\": False,\n            \"is_active\": True,\n            \"is_staff\": False,\n            \"name\": f\"Professor {chr(65 + i)}\", \n            \"age\": random.randint(30, 50),",
+        "detail": "populate_teacher",
         "documentation": {}
     },
     {
@@ -3796,6 +4156,15 @@
         "importPath": "utils",
         "description": "utils",
         "peekOfCode": "def send_email(subject, message, to_email):\n    '''\n    # The subject is the subject of the email.\n    # The message is the body of the email.\n    # The to_email is the email address to send the email to.\n    '''\n    email = EmailMessage(\n        subject=subject,\n        body=message,\n        to=[to_email]",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "round_rating",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def round_rating(avaliacao):\n    valor = avaliacao * 2\n    if valor - int(valor) == 0.5:\n        valor += 0.1\n    valor_arredondado = round(valor)\n    if valor % 1 == 0.25:\n        valor_arredondado += 1\n    elif valor % 1 == 0.75:\n        valor_arredondado += 1 \n    return valor_arredondado / 2",
         "detail": "utils",
         "documentation": {}
     }
