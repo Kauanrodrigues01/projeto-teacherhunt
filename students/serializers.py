@@ -190,12 +190,17 @@ class RatingSerializer(serializers.ModelSerializer):
         professor_nome = professor.name
         avaliacao = instance.rating
         comentario = instance.comment
+        if aluno.profile_image:
+            aluno_foto_de_perfil = aluno.profile_image.url
+        else:
+            aluno_foto_de_perfil = None 
 
         data = {
             'professor': professor_nome,
             'aluno': aluno_nome,
+            'foto_aluno': aluno_foto_de_perfil,
             'avaliacao': avaliacao,
-            'comentario': comentario
+            'comentario': comentario,
         }
 
         return data
