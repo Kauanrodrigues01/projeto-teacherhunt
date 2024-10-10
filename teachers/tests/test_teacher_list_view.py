@@ -1,3 +1,4 @@
+import django.urls
 from django.utils import timezone
 import django.utils.timezone
 from rest_framework import status
@@ -7,6 +8,7 @@ from classroom.models import Classroom
 from .base.test_base_teacher_view import TeacherTestBase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from datetime import timedelta
+from django.urls import reverse
 
 class TeacherListTests(TeacherTestBase):
     def test_get_teachers(self):
@@ -346,3 +348,17 @@ class TeacherListTests(TeacherTestBase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Teacher.objects.filter(id=self.teacher.id).exists())
+        
+    def test_if_filter_teacher_with_hourly_price_max(self):
+        user_alternative = User.objects.create_user(email='teacher2@example.com', password='@Password1234', is_teacher=True, is_active=True)
+        teacher_alternative = Teacher.objects.create(
+            user=user_alternative,
+            name='Johddn Doe',
+            description='A nice teacher',
+            hourly_price=60.00,
+            age=30
+        )
+        url = reverse('teachers:list')
+        # Fazendo a requisição GET com os parâmetros
+        response = self.client.get(url + '?preco_max=60')
+        print(response.data)

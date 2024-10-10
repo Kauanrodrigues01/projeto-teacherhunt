@@ -619,6 +619,15 @@
         "documentation": {}
     },
     {
+        "label": "django.urls",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -748,6 +757,14 @@
     },
     {
         "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
@@ -3388,7 +3405,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3397,7 +3414,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
+        "peekOfCode": "AUTH_USER_MODEL = \"accounts.User\"\nREST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3406,7 +3423,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
+        "peekOfCode": "REST_FRAMEWORK = {\n    \"COERCE_DECIMAL_TO_STRING\": False,\n    \"DEFAULT_AUTHENTICATION_CLASSES\": [\n        \"rest_framework_simplejwt.authentication.JWTAuthentication\",\n    ],\n    # Estou informando ao rest_framework que o metodo de tratamento de exceções será o custom_exeption_handler, que eu criei.\n    # \"EXCEPTION_HANDLER\": \"core.handlers.custom_exception_handler\",\n}\nSIMPLE_JWT = {\n    \"ACCESS_TOKEN_LIFETIME\": timedelta(",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3820,7 +3837,7 @@
         "kind": 6,
         "importPath": "teachers.tests.test_me_view",
         "description": "teachers.tests.test_me_view",
-        "peekOfCode": "class MeViewTest(TeacherTestBase):\n    def test_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
+        "peekOfCode": "class MeViewTest(TeacherTestBase):\n    def test_if_return_logged_teacher(self):\n        token = self.obtain_token()\n        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')\n        response = self.client.get(self.url, format='json')\n        teacher_serializer = TeacherSerializer(self.teacher)\n        self.assertEqual(response.data[0], teacher_serializer.data)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)",
         "detail": "teachers.tests.test_me_view",
         "documentation": {}
     },
@@ -4140,6 +4157,15 @@
         "documentation": {}
     },
     {
+        "label": "populate_subjects",
+        "kind": 2,
+        "importPath": "populate_subject",
+        "description": "populate_subject",
+        "peekOfCode": "def populate_subjects():\n    for subject in subjects:\n        if not Subject.objects.filter(name=subject).exists():\n            Subject.objects.create(name=subject)\nif __name__ == \"__main__\":\n    populate_subjects()",
+        "detail": "populate_subject",
+        "documentation": {}
+    },
+    {
         "label": "subjects",
         "kind": 5,
         "importPath": "populate_subject",
@@ -4180,7 +4206,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def round_rating(avaliacao):\n    valor = avaliacao * 2\n    if valor - int(valor) == 0.5:\n        valor += 0.1\n    valor_arredondado = round(valor)\n    if valor % 1 == 0.25:\n        valor_arredondado += 1\n    elif valor % 1 == 0.75:\n        valor_arredondado += 1 \n    return valor_arredondado / 2",
+        "peekOfCode": "def round_rating(avaliacao):\n    if avaliacao is None:\n        return None\n    valor = avaliacao * 2\n    if valor - int(valor) == 0.5:\n        valor += 0.1\n    valor_arredondado = round(valor)\n    if valor % 1 == 0.25:\n        valor_arredondado += 1\n    elif valor % 1 == 0.75:",
         "detail": "utils",
         "documentation": {}
     }

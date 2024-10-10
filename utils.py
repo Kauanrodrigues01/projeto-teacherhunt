@@ -24,6 +24,8 @@ def send_email(subject, message, to_email):
     
     
 def round_rating(avaliacao):
+    if avaliacao is None:
+        return None
     valor = avaliacao * 2
     if valor - int(valor) == 0.5:
         valor += 0.1

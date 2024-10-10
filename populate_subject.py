@@ -6,7 +6,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
 from accounts.models import Subject
-
 subjects = {
     "Português",
     "Matemática",
@@ -81,6 +80,11 @@ subjects = {
     "Diversidade e Inclusão",
 }
 
-for subject in subjects:
-    if not Subject.objects.filter(name=subject).exists():
-        Subject.objects.create(name=subject)
+
+def populate_subjects():
+    for subject in subjects:
+        if not Subject.objects.filter(name=subject).exists():
+            Subject.objects.create(name=subject)
+            
+if __name__ == "__main__":
+    populate_subjects()

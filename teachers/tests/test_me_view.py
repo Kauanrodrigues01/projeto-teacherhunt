@@ -3,7 +3,7 @@ from teachers.serializers import TeacherSerializer
 from .base.test_base_teacher_view import TeacherTestBase
 
 class MeViewTest(TeacherTestBase):
-    def test_logged_teacher(self):
+    def test_if_return_logged_teacher(self):
         token = self.obtain_token()
         
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')

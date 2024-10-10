@@ -25,7 +25,7 @@ class TeacherTestBase(TestCase):
         self.image = SimpleUploadedFile('test_image.jpg', self.create_test_image().read())
 
         self.data = {
-            'nome': 'Jane Doe',
+            'nome': 'Janed Doe',
             'descricao': 'An excellent teacher',
             'valor_hora': 60.00,
             'idade': 28,
