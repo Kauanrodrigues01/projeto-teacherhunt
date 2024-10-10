@@ -358,7 +358,7 @@ class TeacherListTests(TeacherTestBase):
             hourly_price=60.00,
             age=30
         )
+        serializer_alternative = TeacherSerializer(teacher_alternative)
         url = reverse('teachers:list')
-        # Fazendo a requisição GET com os parâmetros
-        response = self.client.get(url + '?preco_max=60')
-        print(response.data)
+        response = self.client.get(url + '?preco_max=50')
+        self.assertNotIn(serializer_alternative.data, response.data)

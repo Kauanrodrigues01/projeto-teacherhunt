@@ -1,5 +1,6 @@
+from django.urls import reverse
 from rest_framework import status
-from accounts.models import Student, User
+from accounts.models import Student, User, FavoriteTeacher
 from .base.test_base_student_view import StudentTestBase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -167,3 +168,25 @@ class StudentListTests(StudentTestBase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(User.objects.filter(id=self.student.user.id).exists())
+        
+    def test_whether_the_student_can_add_and_remove_a_teacher_to_their_favorites(self):
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        
+        self.client.post(reverse('students:add-remove-favorite-teacher', args=[self.teacher.id]))
+        self.assertTrue(FavoriteTeacher.objects.filter(student=self.student, teacher=self.teacher).exists())
+        
+        self.client.delete(reverse('students:add-remove-favorite-teacher', args=[self.teacher.id]))
+        self.assertFalse(FavoriteTeacher.objects.filter(student=self.student, teacher=self.teacher).exists())
+    
+    def test_whether_the_student_can_list_a_teacher_from_their_favorites(self):
+        token = self.obtain_token()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        
+        self.client.post(reverse('students:add-remove-favorite-teacher', args=[self.teacher.id]))
+        
+        response = self.client.get(reverse('students:list-favorite-teachers'))
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['nome'], self.teacher.name)
+        self.assertEqual(response.data[0]['descricao'], self.teacher.description)

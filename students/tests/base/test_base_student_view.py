@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from django.urls import reverse
-from accounts.models import User, Student
+from accounts.models import User, Student, Teacher
 from rest_framework.exceptions import ErrorDetail
 from io import BytesIO
 from PIL import Image
@@ -26,6 +26,15 @@ class StudentTestBase(TestCase):
             'password': '@Password1234',
             'password_confirmation': '@Password1234'
         }
+        
+        self.user_teacher = User.objects.create_user(email='teacher2@example.com', password='@Password1234', is_teacher=True, is_active=True)
+        self.teacher = Teacher.objects.create(
+            user=self.user_teacher,
+            name='Johddn Doe',
+            description='A nice teacher',
+            hourly_price=60.00,
+            age=30
+        )
         
     def obtain_token(self, email='user@example.com', password='@Password1234'):
         login_url = reverse('accounts:login')
