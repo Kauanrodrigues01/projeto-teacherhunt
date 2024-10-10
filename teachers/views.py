@@ -30,8 +30,7 @@ class TeacherList(APIView):
                 if len(term) > 3: 
                     query |= Q(description__icontains=term) | Q(subjects__name__icontains=term)
 
-        # Inicializa teachers com todos os professores, aplicando a busca se necessário
-        teachers = Teacher.objects.filter(user__is_active=True)  # Filtra os professores ativos
+        teachers = Teacher.objects.filter(user__is_active=True)
 
         if query:
             teachers = teachers.filter(query)
@@ -43,14 +42,12 @@ class TeacherList(APIView):
             avaliacao_min = None 
 
         if avaliacao_min is not None:
-            # Calcular a média das avaliações e filtrar os professores
             teachers = teachers.annotate(media_avaliacao=Avg('ratings__rating')).filter(media_avaliacao__gte=avaliacao_min)
             
         preco_max = request.query_params.get('preco_max', None)
         if preco_max:
             teachers = teachers.filter(hourly_price__lte=preco_max)
 
-        # Ordena e serializa os professores filtrados
         teachers = teachers.order_by('-id')
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
@@ -85,7 +82,6 @@ class TeacherList(APIView):
         if teacher.classrooms.all().filter(status='A', day_of_class__gt=timezone.now().date()).exists():
             return Response({'error': 'Você não pode excluir sua conta enquanto tiver aulas aceitas.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Deleta o professor e o usuário associado
         teacher.delete()
         user.delete()
 
