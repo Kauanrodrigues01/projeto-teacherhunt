@@ -6,14 +6,14 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from .serializers import TeacherSerializer, TeacherProfileImageSerializer, SubjectSerializer
 from .permissions import TeacherListPermission, IsTeacherAuthenticated
 from rest_framework import viewsets
-from accounts.models import Teacher, Subject
+from accounts.models import Rating, Subject, Teacher
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework import status
 from classroom.serializers import ClassroomSerializer
 from rest_framework.exceptions import NotFound
 from classroom.models import Classroom
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, Avg
 from students.serializers import RatingSerializer
 
 class TeacherList(APIView):
@@ -21,25 +21,40 @@ class TeacherList(APIView):
     
     def get(self, request):
         q = request.query_params.get('q', '')
+        query = Q()
+
         if q:
             search_terms = q.split()
-            query = Q()
-
             for term in search_terms:
                 term = term.strip()
                 if len(term) > 3: 
-                    query |= Q(description__icontains=term)
-                    query |= Q(subjects__name__icontains=term)
-            if query:
-                teachers = Teacher.objects.filter(query)
-            else:
-                teachers = Teacher.objects.all()
-        else:
-            teachers = Teacher.objects.all()
-        
-        teachers = teachers.filter(user__is_active=True).order_by('-id')
+                    query |= Q(description__icontains=term) | Q(subjects__name__icontains=term)
+
+        # Inicializa teachers com todos os professores, aplicando a busca se necessário
+        teachers = Teacher.objects.filter(user__is_active=True)  # Filtra os professores ativos
+
+        if query:
+            teachers = teachers.filter(query)
+
+        avaliacao_min = request.query_params.get('avaliacao_min', None)
+        try:
+            avaliacao_min = float(avaliacao_min) if avaliacao_min else None
+        except (ValueError, TypeError):
+            avaliacao_min = None 
+
+        if avaliacao_min is not None:
+            # Calcular a média das avaliações e filtrar os professores
+            teachers = teachers.annotate(media_avaliacao=Avg('ratings__rating')).filter(media_avaliacao__gte=avaliacao_min)
+            
+        preco_max = request.query_params.get('preco_max', None)
+        if preco_max:
+            teachers = teachers.filter(hourly_price__lte=preco_max)
+
+        # Ordena e serializa os professores filtrados
+        teachers = teachers.order_by('-id')
         serializer = TeacherSerializer(teachers, many=True, context={'request_method': request.method})
         return Response(serializer.data)
+
     
     def post(self, request):
         serializer = TeacherSerializer(data=request.data, context={'request_method': request.method})

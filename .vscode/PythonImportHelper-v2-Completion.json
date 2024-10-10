@@ -1291,7 +1291,7 @@
         "documentation": {}
     },
     {
-        "label": "Teacher",
+        "label": "Rating",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -1300,6 +1300,14 @@
     },
     {
         "label": "Subject",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
+        "label": "Teacher",
         "importPath": "accounts.models",
         "description": "accounts.models",
         "isExtraImport": true,
@@ -2678,6 +2686,14 @@
         "documentation": {}
     },
     {
+        "label": "Avg",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "RatingSerializer",
         "importPath": "students.serializers",
         "description": "students.serializers",
@@ -3975,7 +3991,7 @@
         "kind": 6,
         "importPath": "teachers.views",
         "description": "teachers.views",
-        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get('q', '')\n        if q:\n            search_terms = q.split()\n            query = Q()\n            for term in search_terms:\n                term = term.strip()\n                if len(term) > 3: ",
+        "peekOfCode": "class TeacherList(APIView):\n    permission_classes = (TeacherListPermission,)\n    def get(self, request):\n        q = request.query_params.get('q', '')\n        query = Q()\n        if q:\n            search_terms = q.split()\n            for term in search_terms:\n                term = term.strip()\n                if len(term) > 3: ",
         "detail": "teachers.views",
         "documentation": {}
     },
