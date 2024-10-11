@@ -5,6 +5,7 @@ from collections import defaultdict
 from utils import verify_email
 import re
 
+
 class StudentSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, source='user.email')
     password = serializers.CharField(write_only=True)
