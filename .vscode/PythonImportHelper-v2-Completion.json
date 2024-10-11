@@ -1084,6 +1084,14 @@
         "documentation": {}
     },
     {
+        "label": "Teacher",
+        "importPath": "accounts.models",
+        "description": "accounts.models",
+        "isExtraImport": true,
+        "detail": "accounts.models",
+        "documentation": {}
+    },
+    {
         "label": "User",
         "importPath": "accounts.models",
         "description": "accounts.models",

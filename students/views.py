@@ -169,8 +169,8 @@ class FavoriteTeacherView(APIView):
             return Response({'message': 'Aluno não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         
         try:
-            teacher = Student.objects.get(id=teacher_id)
-        except Student.DoesNotExist:
+            teacher = Teacher.objects.get(id=teacher_id)
+        except Teacher.DoesNotExist:
             return Response({'message': 'Professor não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
         
         data = {'aluno': student.id, 'professor': teacher.id}
@@ -194,5 +194,5 @@ class FavoriteTeacherView(APIView):
         favorite_teacher = student.favorite_teachers.filter(teacher=teacher)
         if favorite_teacher.exists():
             favorite_teacher.delete()
-            return Response({'message': 'Professor removido dos favoritos.'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Professor removido dos favoritos.'}, status=status.HTTP_204_NO_CONTENT)
         return Response({'message': 'Professor não está na lista de favoritos.'}, status=status.HTTP_404_NOT_FOUND)

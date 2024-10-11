@@ -1,6 +1,6 @@
 from django.urls import reverse
 from rest_framework import status
-from accounts.models import Student, User, FavoriteTeacher
+from accounts.models import Student, User, FavoriteTeacher, Teacher
 from .base.test_base_student_view import StudentTestBase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
