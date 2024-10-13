@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mariadb:latest  # Use a imagem do MariaDB
+    environment:
+      MYSQL_DATABASE: teacherhunt  # Nome do banco de dados a ser criado
+      MYSQL_ROOT_PASSWORD: Kauan0907  # Senha do usuário root
+    volumes:
+      - mariadb_data:/var/lib/mysql  # Mapeie o volume para o diretório do MariaDB
+
+  teacherhunt-app:
+    build: .  # Construa a imagem do seu app
+    volumes:
+      - .:/app  # Monte o diretório atual no container
+    ports:
+      - "8000:8000"  # Mapeie a porta 8000 do host para a porta 8000 do container
+    depends_on:
+      - db  # Garante que o db seja iniciado antes do app
+    environment:
+      DB_NAME: teacherhunt  # Nome do banco de dados
+      DB_USER: root  # Usuário root
+      DB_PASSWORD: Kauan0907  # Senha do usuário root
+      DB_HOST: db  # Nome do serviço do banco de dados
+      DB_PORT: 3306  # Porta padrão do MariaDB
+
+volumes:
+  mariadb_data:  # Declara o volume aqui
