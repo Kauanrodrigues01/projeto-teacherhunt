@@ -1,6 +1,7 @@
 services:
   db:
     image: mariadb:latest  # Use a imagem do MariaDB
+    container_name: teacherhunt-db-2
     environment:
       MYSQL_DATABASE: teacherhunt  # Nome do banco de dados a ser criado
       MYSQL_ROOT_PASSWORD: Kauan0907  # Senha do usuário root
@@ -9,6 +10,7 @@ services:
 
   teacherhunt-app:
     build: .  # Construa a imagem do seu app
+    container_name: teacherhunt-app-2
     volumes:
       - .:/app  # Monte o diretório atual no container
     ports:
