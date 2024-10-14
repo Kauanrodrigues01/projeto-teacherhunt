@@ -10,7 +10,7 @@
 - XAMPP (Mariadb 10.5 ou superior)
 - MySQL
 
-OBS: Se não for o Mariabd 10.5 ou superior pode dar um erro
+OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
 
 **links para instalação:**
 - [Python](https://www.python.org/ftp/python/3.12.6/python-3.12.6-amd64.exe)
