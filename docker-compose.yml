@@ -25,4 +25,4 @@ services:
       DB_PORT: ${DB_PORT}
 
 volumes:
-  mariadb_data:  # Declara o volume aqui
+  mariadb_data:
