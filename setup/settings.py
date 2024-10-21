@@ -97,10 +97,17 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": config(
+#         "DATABASE_URL", default="sqlite:///" + str(BASE_DIR / "db.sqlite3"), cast=dburl
+#     )
+# }
+
 DATABASES = {
-    "default": config(
-        "DATABASE_URL", default="sqlite:///" + str(BASE_DIR / "db.sqlite3"), cast=dburl
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
+    }
 }
 
 # Password validation

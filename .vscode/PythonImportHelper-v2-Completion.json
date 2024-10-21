@@ -3365,7 +3365,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "WSGI_APPLICATION = \"setup.wsgi.application\"\n# Database\n# https://docs.djangoproject.com/en/4.2/ref/settings/#databases\nDATABASES = {\n    \"default\": config(\n        \"DATABASE_URL\", default=\"sqlite:///\" + str(BASE_DIR / \"db.sqlite3\"), cast=dburl\n    )\n}\n# Password validation\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators",
+        "peekOfCode": "WSGI_APPLICATION = \"setup.wsgi.application\"\n# Database\n# https://docs.djangoproject.com/en/4.2/ref/settings/#databases\n# DATABASES = {\n#     \"default\": config(\n#         \"DATABASE_URL\", default=\"sqlite:///\" + str(BASE_DIR / \"db.sqlite3\"), cast=dburl\n#     )\n# }\nDATABASES = {\n    'default': {",
         "detail": "setup.settings",
         "documentation": {}
     },
@@ -3374,7 +3374,7 @@
         "kind": 5,
         "importPath": "setup.settings",
         "description": "setup.settings",
-        "peekOfCode": "DATABASES = {\n    \"default\": config(\n        \"DATABASE_URL\", default=\"sqlite:///\" + str(BASE_DIR / \"db.sqlite3\"), cast=dburl\n    )\n}\n# Password validation\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {\n        \"NAME\": \"django.contrib.auth.password_validation.UserAttributeSimilarityValidator\",",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3'\n    }\n}\n# Password validation\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {",
         "detail": "setup.settings",
         "documentation": {}
     },
