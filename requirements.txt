@@ -26,8 +26,6 @@ inflection==0.5.1
 iniconfig==2.0.0
 isort==5.13.2
 mccabe==0.7.0
-mysql-connector-python==9.0.0
-mysqlclient==2.2.4
 packaging==24.1
 pathspec==0.12.1
 pillow==10.4.0
