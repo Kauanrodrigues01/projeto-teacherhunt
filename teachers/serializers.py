@@ -51,7 +51,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         subjects = data.get('subjects')
         errors = defaultdict(list)
         request_method = self.context.get('request_method')
-        pattern = r'^[a-zA-Z]+$'
+        pattern = r'^[a-zA-ZÀ-ÖØ-öø-ÿ]+$'
         
         if request_method == 'PUT':
             if self.instance:
@@ -216,35 +216,26 @@ class TeacherSerializer(serializers.ModelSerializer):
         return instance
 
     def to_representation(self, instance):
-        '''Personalizar a saída de dados.'''
-        data = {}
         user = instance.user
-        
-        id = instance.id
-        age = instance.age
-        name = instance.name
-        description = instance.description
-        hourly_price = instance.hourly_price
-        profile_image = instance.profile_image.url if instance.profile_image else None
-        subjects = list(instance.subjects.values_list('id', flat=True))
-        subjects_obejcts = SubjectSerializer(instance.subjects.all(), many=True).data
-        create_at = instance.create_at
-        update_at = instance.update_at
         rating = Rating.objects.filter(teacher=instance).aggregate(models.Avg('rating'))['rating__avg']
         rating = round_rating(rating)
-        
-        data['id'] = id
-        data['nome'] = name
-        data['email'] = user.email
-        data['idade'] = age
-        data['descricao'] = description
-        data['valor_hora'] = hourly_price
-        data['foto_perfil'] = profile_image
-        data['avaliacao'] = rating
-        data['materias'] = subjects
-        data['materias_objetos'] = subjects_obejcts
-        data['create_at'] = create_at
-        data['update_at'] = update_at
+
+        fields = {
+            'id': instance.id,
+            'nome': instance.name,
+            'email': user.email,
+            'idade': instance.age,
+            'descricao': instance.description,
+            'valor_hora': instance.hourly_price,
+            'foto_perfil': instance.profile_image.url if instance.profile_image else None,
+            'avaliacao': rating,
+            'materias': list(instance.subjects.values_list('id', flat=True)),
+            'materias_objetos': SubjectSerializer(instance.subjects.all(), many=True).data,
+            'create_at': instance.create_at,
+            'update_at': instance.update_at
+        }
+
+        data = {key: value for key, value in fields.items()}
         return data
 
 
