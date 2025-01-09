@@ -7,36 +7,28 @@
 ### Requisitos:
 - VS Code
 - Python
-- XAMPP (Mariadb 10.5 ou superior)
-- MySQL
-
-OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
+- Docker e Docker Compose
 
 **links para instalação:**
 - [Python](https://www.python.org/ftp/python/3.12.6/python-3.12.6-amd64.exe)
-- [XAMPP](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.2.12/xampp-windows-x64-8.2.12-0-VS16-installer.exe)
-- [MySQL](https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.38-winx64.msi)
-
-**Link para video de atualização do Mariadb:**
-- [link para atualização do Mariadb no XAMPP](https://youtu.be/0zEMZ1yO5A8?si=sPB2yDbfHb9K-xN0)
+- [Docker](https://www.docker.com/products/docker-desktop)
 
 ### **Executar a API usando docker e docker-compose:**
 - [Link para acessar o passo a passo](#docker)
 
 ## Primeiros passos para usar a API
 
-- Abrir o XAMPP botar o apache o MySQL para rodar.
-- Abrir o MySQL workbench, criar uma connection com o **nome de usuário "root"**, o **hostname "127.0.0.1"**, a **port "3306"**.
-- Depois da connection criada, acesse ela e crie uma database com o nome **"teacherhunt"**
-
+- Certifique-se de que o Docker está instalado e em execução no seu sistema.
+- Execute o seguinte comando no terminal para criar e iniciar um container com o banco de dados MySQL:
     ```
-    CREATE DATABASE teacherhunt
-    CHARACTER SET utf8
-    COLLATE utf8_general_ci;
+    docker run --name teacherhunt-db -e MYSQL_ROOT_PASSWORD=rootpassword -e MYSQL_DATABASE=teacherhunt -p 3306:3306 -d mysql:5.7
     ```
+    
+    - **MYSQL_ROOT_PASSWORD:** Substitua "rootpassword" pela senha desejada para o usuário root.
+    - **MYSQL_DATABASE:** Garante que o banco de dados "teacherhunt" seja criado automaticamente.
 
-- Depois da database criada, vai no github e baixe ou faça um clone do repositório
-- Com o projeto no seu PC abra ele no vscode, abra o terminal e digite **"python -m venv venv"**, depois **"venv/scripts/activate"**, depois disso tem que instalar as dependências, use o comando **"pip install -r requirements.txt"**
+- Depois de criar o container, vá ao GitHub e baixe ou faça um clone do repositório da API.
+- Com o projeto no seu PC, abra-o no VS Code, abra o terminal e digite **"python -m venv venv"**, depois **"venv/scripts/activate"**, e em seguida instale as dependências com o comando **"pip install -r requirements.txt"**:
     ```
     python -m venv venv
 
@@ -45,20 +37,20 @@ OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
     pip install -r requirements.txt
     ```
 
-- Após todas as dependências instaladas, crie o arquivo **".env"** dentro do diretório principal, **cuidado para não criar ele dentro de outra paste sem ser o diretório principal**, coloque o seguinte conteúdo dentro do arquivo **".env"**
+- Após todas as dependências instaladas, crie o arquivo **".env"** dentro do diretório principal (cuidado para não criar o arquivo dentro de outra pasta que não seja o diretório principal) e insira o seguinte conteúdo:
     ```
     SECRET_KEY=-px9!&aurijpz9e*f_c8)jov!v=++5hx6r%vslywp2^l+8*@gr
     DEBUG=True
     ALLOWED_HOSTS=*
-    DATABASE_URL=mysql://root@127.0.0.1:3306/teacherhunt
+    DATABASE_URL=mysql://root:rootpassword@127.0.0.1:3306/teacherhunt
     # mysql://username:password@host:port/database
     ACCESS_TOKEN_LIFETIME_SECONDS = 3600
     REFRESH_TOKEN_LIFETIME_SECONDS = 7200
     ```
 
-- Depois disso volte no terminal e execute o comando "python manage.py migrate"
-- Pronto, a API está pronta para usar, para ativar o servidor use o comando "python manage.py runserver"
+    **Nota:** Certifique-se de usar a mesma senha configurada no comando `docker run` para o campo `rootpassword`.
 
+- Depois disso, volte ao terminal e execute os seguintes comandos para aplicar as migrações e iniciar o servidor:
     ```
     python manage.py migrate
 
@@ -66,8 +58,8 @@ OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
     python manage.py runserver
     ```
 
-## Popular banco de dados(Opcional)
-- Executando o arquivo populate, o banco de dados vai se preencher com vários dados aleatórios. Pode ajudar no desenvolvimento do front e mobile, pois vai ter dados para serem visualizados na aplicação.
+## Popular banco de dados (Opcional)
+- Executando o arquivo populate, o banco de dados será preenchido com vários dados aleatórios. Isso pode ajudar no desenvolvimento do front-end e mobile, pois haverá dados disponíveis para visualização na aplicação:
     ```
     python populate.py
     ```
@@ -81,7 +73,7 @@ OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
     docker-compose up --build
     ```
 
-- Certifique-se de que os container estejam rodando:
+- Certifique-se de que os containers estejam rodando:
     ```
     docker start teacherhunt-db
 
@@ -90,5 +82,6 @@ OBS: Se não for o Mariadb 10.5 ou superior pode dar um erro
 
 ## **Aviso importante:**
 
-- Sempre que fechar e abrir o VS Code tem que ativar a venv(ambiente virtual) antes de utilizar o "python manage.py runserver", sempre verificar se a venv está ativa antes de iniciar o servidor.
-- Quando a venv está ativa fica o nome (venv) em cima da linha principal do terminal
+- Sempre que fechar e abrir o VS Code, ative a venv (ambiente virtual) antes de utilizar o "python manage.py runserver". Verifique se a venv está ativa antes de iniciar o servidor.
+- Quando a venv está ativa, o nome (venv) aparece no início da linha principal do terminal.
+
